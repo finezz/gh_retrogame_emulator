@@ -1,0 +1,8 @@
+title=handy
+description=Atari Lynx emulator ported from A320
+icon=skins/Default/icons/lynx.png
+exec=/mnt/game/handy/handy320.dge
+volume=1
+selectorbrowser=true
+selectordir=/mnt/
+wrapper=true

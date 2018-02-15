@@ -1,0 +1,6 @@
+title=fbasdl
+description=FBA emulator ported from A320
+icon=skins/Default/icons/fbasdl.png
+exec=/mnt/game/fbaa320/fbasdl.dge
+volume=1
+wrapper=true
