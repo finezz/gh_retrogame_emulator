@@ -9075,7 +9075,6 @@ void tlcs_execute(int cycles)
     return;
 }
 
-
 //Flavor, this auto-frameskip code is messed up
 void ngpc_run()
 {

@@ -181,7 +181,7 @@ typedef struct {
 } MENU;
 
 char mnuYesNo[2][16] = {"no", "yes"};
-char mnuRatio[2][16] = { "Original show","Full screen"};
+char mnuRatio[2][16] = { "Origina lshow","Full screen"};
 
 char mnuButtons[7][16] = {
   "Up","Down","Left","Right","But #1","But #2", "Options"
@@ -370,7 +370,8 @@ void screen_prepback(SDL_Surface *s, unsigned char *bmpBuf, unsigned int bmpSize
 	SDL_FreeSurface(temp);
 	
 	// Display image
- 	SDL_BlitSurface(image, 0, s, 0);
+  //SDL_BlitSurface(image, NULL, s, NULL);
+  SDL_SoftStretch(image, NULL, s, NULL);
 	SDL_FreeSurface(image);
 }
 
@@ -534,6 +535,15 @@ void screen_showmainmenu(MENU *menu) {
 // Menu function that runs keys configuration
 void screen_showkeymenu(void) {
 	screen_showmainmenu(&mnuConfigMenu);
+}
+
+
+void draw_skin(void)
+{
+	// if no ratio, put skin
+	if (!GameConf.m_ScreenRatio) {
+		screen_prepback(actualScreen, RACE_SKIN, RACE_SKIN_SIZE);
+	}
 }
 
 // Menu function that runs main top menu
@@ -963,8 +973,8 @@ void system_loadcfg(char *cfg_name) {
     GameConf.OD_Joy[10] = 6;  GameConf.OD_Joy[11] = 6;
    
     GameConf.sndLevel=40;
-    GameConf.m_ScreenRatio=1; // 0 = original show, 1 = full screen
-    GameConf.m_DisplayFPS=1; // 0 = no
+    GameConf.m_ScreenRatio=0; // 0 = original show, 1 = full screen
+    GameConf.m_DisplayFPS=0; // 0 = no
 	getcwd(GameConf.current_dir_rom, MAX__PATH);
 }
 }

@@ -4,6 +4,8 @@
 unsigned int m_Flag;
 unsigned int interval;
 
+extern void draw_skin();
+
 unsigned int gameCRC;
 gamecfg GameConf;
 char gameName[512];
@@ -31,7 +33,11 @@ void graphics_paint(void) {
 	static char buffer[32];
 
 	if(SDL_MUSTLOCK(actualScreen)) SDL_LockSurface(actualScreen);
-	
+  
+  if (!GameConf.m_ScreenRatio) {
+		draw_skin();
+	}
+		
 	if (GameConf.m_ScreenRatio) { // Full screen
 		x=0;
 		y=0; 
@@ -59,14 +65,14 @@ void graphics_paint(void) {
 		#define BLIT_WIDTH (160)
 		#define BLIT_HEIGHT (152)
 		x=((screen->w - BLIT_WIDTH)/2);
-		y=((screen->h - BLIT_HEIGHT)/2); 
+		y=((/*screen->h*/240 - BLIT_HEIGHT)/2); 
 		W=BLIT_WIDTH;
 		H=BLIT_HEIGHT;
 		ix=(BLIT_WIDTH<<16)/W;
 		iy=(SYSVID_HEIGHT<<16)/H;
 		xfp = (x+BLIT_WIDTH)-20;yfp = y+1;
 		
-		buffer_scr += (y)*320;
+		buffer_scr += (y)*320*2;
 		buffer_scr += (x);
 		do   
 		{
@@ -94,7 +100,7 @@ void graphics_paint(void) {
 		sprintf(buffer,"%02d",FPS);
 		print_string_video_for_fps(xfp,yfp,buffer);
 	}
-		
+	
 	if (SDL_MUSTLOCK(actualScreen)) SDL_UnlockSurface(actualScreen);
 	SDL_Flip(actualScreen);
 
