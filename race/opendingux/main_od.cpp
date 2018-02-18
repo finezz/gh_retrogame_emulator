@@ -4,6 +4,7 @@
 unsigned int m_Flag;
 unsigned int interval;
 
+extern int redrawSkin;
 extern void draw_skin();
 
 unsigned int gameCRC;
@@ -34,9 +35,12 @@ void graphics_paint(void) {
 
 	if(SDL_MUSTLOCK(actualScreen)) SDL_LockSurface(actualScreen);
   
-  if (!GameConf.m_ScreenRatio) {
-		draw_skin();
-	}
+  if(redrawSkin > 0){
+    redrawSkin-= 1;
+    if(!GameConf.m_ScreenRatio) {
+		  draw_skin();
+	  }
+  }
 		
 	if (GameConf.m_ScreenRatio) { // Full screen
 		x=0;

@@ -6,6 +6,7 @@
 #include "./data/race_load.h"
 #include "./data/race_skin.h"
 
+int redrawSkin=0;
 extern unsigned int m_Flag;
 
 bool gameMenu;
@@ -181,7 +182,7 @@ typedef struct {
 } MENU;
 
 char mnuYesNo[2][16] = {"no", "yes"};
-char mnuRatio[2][16] = { "Origina lshow","Full screen"};
+char mnuRatio[2][16] = { "Original show","Full screen"};
 
 char mnuButtons[7][16] = {
   "Up","Down","Left","Right","But #1","But #2", "Options"
@@ -621,6 +622,7 @@ void menuQuit(void) {
 // Return to game if loaded
 void menuContinue(void) {
 	if (cartridge_IsLoaded()) {
+    redrawSkin = 3;
 		gameMenu=false;
 		m_bIsActive = TRUE;
 		m_Flag = GF_GAMERUNNING;
