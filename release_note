@@ -1,16 +1,21 @@
 v20180313:
- New: Add overclock feature for each apps/emulators/games
+ New: Add overclock setting for each apps/emulators/games
  New: Add snes9x4d emulator
  New: Add fba-a320 emulator
  New: Add handy emulator
  New: Add race-od emulator
  New: Add gngeo emulator
- New: Add new splash image
  New: Add libyaml-cpp library
  New: Add ASCIIpOrtal game
- New: Add wallpapers (boot.jpg, magicavoxel.jpg) in GMenu2X
- Fixed: Change menu key from SELECT to Backlight
+ New: Add wallpapers (boot.jpg, magicavoxel.jpg) contributed by Leo-brasil (Dingoonity forum)
+ New: Add PS4 theme contributed by m1024 (Dingoonity forum)
+ Fixed: Fix TVOut issue
+ Fixed: (Temper emulator) Change menu key from SELECT to Backlight
+ Changed: Update splash image ("/usr/share/splash/boot.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
+ Changed: Backlight level has been changed from 0~100 to 20~100 (interval is 20 that is same as previous)
+ Changed: X button has been changed from context help to speaker function (turn on/off)
+ Changed: Power button will toggle suspend mode on/off
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

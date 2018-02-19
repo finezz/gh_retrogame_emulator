@@ -1,6 +1,6 @@
 title=handy
 description=Atari Lynx emulator ported from A320
-icon=skins/Default/icons/lynx.png
+icon=skins/Default/icons/handy.png
 exec=/mnt/game/handy/handy320.dge
 volume=1
 selectorbrowser=true

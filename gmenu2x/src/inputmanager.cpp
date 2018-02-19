@@ -63,7 +63,7 @@ void InputManager::initJoysticks() {
 
 
 bool InputManager::readConfFile(const string &conffile) {
-	setActionsCount(20); // plus 2 for BACKLIGHT and SPEAKER
+	setActionsCount(20); // plus 2 for BACKLIGHT and POWER
 
 	if (!fileExists(conffile)) {
 		ERROR("File not found: %s", conffile.c_str());
@@ -106,7 +106,8 @@ bool InputManager::readConfFile(const string &conffile) {
 		else if (name=="volup")        action = VOLUP;
 		else if (name=="voldown")      action = VOLDOWN;
 		else if (name=="backlight")    action = BACKLIGHT;
-		else if (name=="speaker")      action = SPEAKER;
+		else if (name=="power")        action = POWER;
+		else if (name=="speaker") {}
 		else {
 			ERROR("%s:%d Unknown action '%s'.", conffile.c_str(), linenum, name.c_str());
 			return false;

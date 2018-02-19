@@ -907,6 +907,7 @@ void setBacklight(int val) {
 
 void GMenu2X::main() {
 	int ret;
+  int suspend=0;
 	pthread_t thread_id;
 	uint linksPerPage = linkColumns*linkRows;
 	int linkSpacingX = (resX-10 - linkColumns*skinConfInt["linkWidth"])/linkColumns;
@@ -1100,8 +1101,9 @@ void GMenu2X::main() {
     }
 
 		//On Screen Help
-		if (input.isActive(MODIFIER)) {
-			s->box(10,50,300,162, skinConfColors[COLOR_MESSAGE_BOX_BG]);
+    /*
+		if (input[MODIFIER]) {
+      s->box(10,50,300,162, skinConfColors[COLOR_MESSAGE_BOX_BG]);
 			s->rectangle( 12,52,296,158, skinConfColors[COLOR_MESSAGE_BOX_BORDER] );
 			s->write( font, tr["CONTROLS"], 20, 60 );
 			s->write( font, tr["A, Confirm action"], 20, 80 );
@@ -1113,6 +1115,7 @@ void GMenu2X::main() {
 			s->write( font, tr["Backlight: Adjust backlight level"], 20, 170 );
 			s->write( font, tr["Power: Toggle speaker on/off"], 20, 185 );
 		}
+    */
 
 		s->flip();
 
@@ -1149,6 +1152,17 @@ void GMenu2X::main() {
       usleep(50000);
       continue;
     }
+    if(suspend){
+      if ( input[POWER]) {
+        char buf[64];
+        sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
+        system(buf);
+        suspend = 0;
+        printf("exit suspend mode\n");
+        printf("restore backlight: %d\n", backlightLevel);
+      }
+      continue;
+    }
 		if(backlightLevel) {
 			if ( input[CONFIRM] && menu->selLink()!=NULL ) {
         setVolume(confInt["globalVolume"]);
@@ -1174,7 +1188,7 @@ void GMenu2X::main() {
 			else if ( input[UP   ]  ) menu->linkUp();
 			else if ( input[DOWN ]  ) menu->linkDown();
 			// SELLINKAPP SELECTED
-			else if (menu->selLinkApp()!=NULL) {
+			/*else if (menu->selLinkApp()!=NULL) {
 				if ( input[MANUAL] ) menu->selLinkApp()->showManual();
 				else if ( input.isActive(MODIFIER) ) {
 					// VOLUME
@@ -1191,23 +1205,11 @@ void GMenu2X::main() {
 						menu->selLinkApp()->setClock( constrain(menu->selLinkApp()->clock()+10,50,confInt["maxClock"]) );
 					if ( input.isActive(VOLUP) && input.isActive(VOLDOWN) ) menu->selLinkApp()->setClock(DEFAULT_CPU_CLK);
 				}
-			}
-			
-			if ( input.isActive(MODIFIER) ) {
-				if (input.isActive(SECTION_PREV) && input.isActive(SECTION_NEXT))
-					saveScreenshot();
-			} else {
-				// SECTIONS
-				if ( input[SECTION_PREV] ) {
-					menu->decSectionIndex();
-					offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
-				} else if ( input[SECTION_NEXT] ) {
-					menu->incSectionIndex();
-					offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
-				}
-			}
-
-		  if ( input.isActive(SPEAKER)) {
+			}*/
+			else if ( input.isActive(MODIFIER) ) {
+				//if (input.isActive(SECTION_PREV) && input.isActive(SECTION_NEXT)) {
+					//saveScreenshot();
+        //}
         int vol = getVolume();
 
         if (vol) {
@@ -1221,13 +1223,32 @@ void GMenu2X::main() {
         confInt["globalVolume"] = vol;
         setVolume(vol);
         writeConfig();
-      }
+			} else {
+				// SECTIONS
+				if ( input[SECTION_PREV] ) {
+					menu->decSectionIndex();
+					offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
+				} else if ( input[SECTION_NEXT] ) {
+					menu->incSectionIndex();
+					offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
+				}
+			}
     }
+		if (input[POWER]) {
+      char buf[64];
+
+      suspend = 1;
+      sprintf(buf, "echo 0 > /proc/jz/lcd_backlight");
+      system(buf);
+      printf("enter suspend mode\n");
+      printf("current backlight: %d\n", backlightLevel);
+    }
+
 		if ( input[BACKLIGHT]) {
       char buf[64];
       int val = getBacklight() + 20;
       if(val > 100){
-        val = 0;
+        val = 20;
       }
 			backlightLevel = val;
       confInt["backlight"] = val;
@@ -1433,6 +1454,39 @@ void GMenu2X::toggleTvOut() {
 		gp2x_tvout_off();
 	else
 		gp2x_tvout_on(confStr["tvoutEncoding"] == "PAL");
+#else
+  int tvout=0;
+  char buf[32]={0};
+  int fd = open("/mnt/game/gmenu2x/tvout", O_RDWR);
+  if(fd > 0){
+    read(fd, buf, sizeof(buf));
+    printf("current tvout value: %s\n", buf);
+    if(memcmp(buf, "1", 1) == 0){
+      tvout = 0;
+      sprintf(buf, "0");
+      printf("turn off tvout\n");
+    }
+    else{
+      tvout = 1;
+      sprintf(buf, "1");
+      printf("turn on tvout\n");
+    }
+    lseek(fd, 0, SEEK_SET);
+    write(fd, buf, 1);
+    close(fd);
+  }
+  else{
+    tvout = 1;
+    fd = open("/mnt/game/gmenu2x/tvout", O_CREAT);
+    sprintf(buf, "1");
+    write(fd, buf, 1);
+    close(fd);
+    printf("create new tvout file\n");
+  }
+
+  sprintf(buf, "/usr/bin/tvout.sh %d %d", tvout, confStr["tvoutEncoding"] == "PAL" ? 1 : 2);
+  system(buf);
+  printf("run cmd: %s\n", buf);
 #endif
 }
 
@@ -2106,7 +2160,7 @@ void GMenu2X::setInputSpeed() {
 	input.setInterval(300, PAGEUP);
 	input.setInterval(300, PAGEDOWN);
 	input.setInterval(1000, BACKLIGHT);
-	input.setInterval(1000, SPEAKER);
+	input.setInterval(1000, POWER);
 }
 
 void GMenu2X::applyRamTimings() {
