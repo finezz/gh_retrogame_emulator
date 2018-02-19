@@ -1,0 +1,6 @@
+title=ASCII
+description=ASCIIpOrtal ported from Github
+icon=skins/Default/icons/asciiportal.png
+exec=/mnt/game/asciiportal/asciiportal
+volume=1
+wrapper=true

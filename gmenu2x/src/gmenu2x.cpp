@@ -406,7 +406,7 @@ void GMenu2X::initBG() {
 	//volume.blit( sc["bgmain"], volumeX, bottomBarIconY );
 	//volumeX += 19;
 	//cpuX = volumeX+font->getTextWidth("1")+5;
-  cpuX+= 3;
+  cpuX = 3;
 	cpu.blit( sc["bgmain"], cpuX, bottomBarIconY );
 	cpuX += 19;
 	manualX = cpuX+font->getTextWidth("300Mhz")+5;
@@ -908,6 +908,8 @@ void setBacklight(int val) {
 void GMenu2X::main() {
 	int ret;
   int suspend=0;
+  unsigned short battlevel = getBatteryLevel();
+  int battMsgWidth=(19*2);
 	pthread_t thread_id;
 	uint linksPerPage = linkColumns*linkRows;
 	int linkSpacingX = (resX-10 - linkColumns*skinConfInt["linkWidth"])/linkColumns;
@@ -998,8 +1000,8 @@ void GMenu2X::main() {
 
 #if defined(TARGET_RETROGAME)
     switch(volumeMode) {
-      case VOLUME_MODE_MUTE:   sc.skinRes("imgs/mute.png")->blit(s,resX-38,bottomBarIconY); break;
-      default: sc.skinRes("imgs/volume.png")->blit(s,resX-38,bottomBarIconY); break;
+      case VOLUME_MODE_MUTE:   sc.skinRes("imgs/mute.png")->blit(s,resX-((19*2)+battMsgWidth),bottomBarIconY); break;
+      default: sc.skinRes("imgs/volume.png")->blit(s,resX-((19*2) + battMsgWidth),bottomBarIconY); break;
     }
 
 #else
@@ -1029,7 +1031,7 @@ void GMenu2X::main() {
 		}
 		if ((tickNow-tickBattery) >= 3000) {
 			tickBattery = tickNow;
-			unsigned short battlevel = getBatteryLevel();
+			battlevel = getBatteryLevel();
 			if (battlevel > 5) {
 				batteryIcon = "imgs/battery/ac.png";
 			} else {
@@ -1039,7 +1041,38 @@ void GMenu2X::main() {
 				batteryIcon = "imgs/battery/"+batteryIcon+".png";
 			}
 		}
-		sc.skinRes(batteryIcon)->blit( s, resX-19, bottomBarIconY );
+
+    switch(battlevel){
+    case 0:
+      battMsgWidth = font->getTextWidth("00%") + 5; 
+      s->write(font, "10%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    case 1:
+      battMsgWidth = font->getTextWidth("00%") + 5; 
+      s->write(font, "30%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    case 2:
+      battMsgWidth = font->getTextWidth("00%") + 5; 
+      s->write(font, "45%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    case 3:
+      battMsgWidth = font->getTextWidth("00%") + 5; 
+      s->write(font, "65%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    case 4:
+      battMsgWidth = font->getTextWidth("00%") + 5; 
+      s->write(font, "80%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    case 5:
+      battMsgWidth = font->getTextWidth("000%") + 5; 
+      s->write(font, "100%", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    default:
+      battMsgWidth = font->getTextWidth("AC") + 5; 
+      s->write(font, "AC", resX-battMsgWidth, bottomBarTextY, HAlignLeft, VAlignMiddle);
+      break;
+    }
+		sc.skinRes(batteryIcon)->blit( s, resX-((19 * 1) + battMsgWidth), bottomBarIconY );
 
     if ((tickNow - tickMMC) >= 1000) {
       tickMMC = tickNow;
@@ -1061,7 +1094,7 @@ void GMenu2X::main() {
     }
 
     if (preMMCStatus == MMC_INSERT) {
-      sc.skinRes("imgs/sd1.png")->blit(s, resX-56, bottomBarIconY);
+      sc.skinRes("imgs/sd1.png")->blit(s, resX-((19 * 3) + battMsgWidth), bottomBarIconY);
     }
 
     if ((tickNow - tickUSB) >= 1000) {
