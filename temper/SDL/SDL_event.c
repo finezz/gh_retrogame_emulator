@@ -138,8 +138,8 @@ u32 update_input(event_input_struct *event_input)
 
         switch(event.key.keysym.sym)
         {
-          case SDLK_ESCAPE:
-			event_input->config_button_action = CONFIG_BUTTON_MENU;
+          case /*SDLK_ESCAPE*/51:
+			      event_input->config_button_action = CONFIG_BUTTON_MENU;
             //event_input->key_action = KEY_ACTION_QUIT;
             break;
 

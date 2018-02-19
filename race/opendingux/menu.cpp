@@ -884,6 +884,7 @@ char *file_ext[] = { (char *) ".ngp", (char *) ".npc", NULL };
 
 void menuFileBrowse(void) {
 	if (load_file(file_ext, gameName) != -1) { // exit if file is chosen
+    redrawSkin = 3;
 		gameMenu=false;
 		m_Flag = GF_GAMEINIT;
 	}

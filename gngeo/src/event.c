@@ -214,9 +214,6 @@ int handle_pdep_event(SDL_Event *event) {
 	switch (event->type) {
 	case SDL_KEYDOWN:
 		switch (event->key.keysym.sym) {
-		case SDLK_ESCAPE:
-			return 1;
-			break;
 		case SDLK_F3:
 			draw_message("Test Switch ON");
 			conf.test_switch = 1;
@@ -238,17 +235,63 @@ int handle_pdep_event(SDL_Event *event) {
 #define EVGAME 1
 #define EVMENU 2
 
+void handle_key_for_retrogame(SDL_Event event)
+{
+  switch (event.type) {
+  case SDL_KEYUP:
+		if(event.key.keysym.sym == SDLK_LCTRL){ // A
+			joy_state[0][GN_B] = 0;
+    }
+		else if(event.key.keysym.sym == SDLK_LALT){ // B
+			joy_state[0][GN_A] = 0;
+    }
+		else if(event.key.keysym.sym == SDLK_LSHIFT){ // Y
+			joy_state[0][GN_C] = 0;
+    }
+		else if(event.key.keysym.sym == SDLK_SPACE){ // X
+			joy_state[0][GN_D] = 0;
+    }
+		else if(event.key.keysym.sym == SDLK_BACKSPACE){ // R
+			joy_state[0][GN_START] = 0;
+    }
+		else if(event.key.keysym.sym == SDLK_TAB){ // L
+			joy_state[0][GN_SELECT_COIN] = 0;
+    }
+    break;
+  case SDL_KEYDOWN:
+		if(event.key.keysym.sym == SDLK_LCTRL){ // A
+			joy_state[0][GN_B] = 1;
+    }
+		else if(event.key.keysym.sym == SDLK_LALT){ // B
+			joy_state[0][GN_A] = 1;
+    }
+		else if(event.key.keysym.sym == SDLK_LSHIFT){ // Y
+			joy_state[0][GN_C] = 1;
+    }
+		else if(event.key.keysym.sym == SDLK_SPACE){ // X
+			joy_state[0][GN_D] = 1;
+    }
+		else if(event.key.keysym.sym == SDLK_BACKSPACE){ // R
+			joy_state[0][GN_START] = 1;
+    }
+		else if(event.key.keysym.sym == SDLK_TAB){ // L
+			joy_state[0][GN_SELECT_COIN] = 1;
+    }
+    break;
+  }
+}
+
 int handle_event(void) {
-	SDL_Event event;
-//	int i;
+  SDL_Event event;
+  // int i;
 	int ret;
 	int jaxis_threshold=10000;
 	//int jaxis_threshold=2;
 
-	while (SDL_PollEvent(&event)) {
-	    if ((ret=handle_pdep_event(&event))!=0) {
-	    	return ret;
-	    }
+	while(SDL_PollEvent(&event)){
+	  if((ret=handle_pdep_event(&event))!=0){
+	    return ret;
+	  }
 		switch (event.type) {
 		case SDL_KEYUP:
 			//printf("%d\n",jmap->key[event.key.keysym.sym].player);
@@ -266,24 +309,26 @@ int handle_event(void) {
 			default:
 				break;
 			}
-		break;
-	    case SDL_KEYDOWN:
-				//printf("%d\n", event.key.keysym.sym);
-		    switch (jmap->key[event.key.keysym.sym].player) {
-			case 1:
-				joy_state[0][jmap->key[event.key.keysym.sym].map]=1;
-				break;
-			case 2:
-				joy_state[1][jmap->key[event.key.keysym.sym].map]=1;
-				break;
-			case 3:
-				joy_state[1][jmap->key[event.key.keysym.sym].map]=1;
-				joy_state[0][jmap->key[event.key.keysym.sym].map]=1;
-				break;
-			default:
-				break;
-		    }
-		    break;
+      handle_key_for_retrogame(event);
+		  break;
+	  case SDL_KEYDOWN:
+			//printf("%d\n", jmap->key[event.key.keysym.sym].map);
+		  switch (jmap->key[event.key.keysym.sym].player) {
+      case 1:
+        joy_state[0][jmap->key[event.key.keysym.sym].map]=1;
+        break;
+      case 2:
+        joy_state[1][jmap->key[event.key.keysym.sym].map]=1;
+        break;
+      case 3:
+        joy_state[1][jmap->key[event.key.keysym.sym].map]=1;
+        joy_state[0][jmap->key[event.key.keysym.sym].map]=1;
+        break;
+      default:
+        break;
+      }
+      handle_key_for_retrogame(event);
+		  break;
 		case SDL_JOYHATMOTION: /* Hat only support Joystick map */
 		{
 			int player=jmap->jhat[event.jhat.which][event.jhat.hat].player;
@@ -499,10 +544,11 @@ int wait_event(void) {
 	case SDL_KEYDOWN:
 		/* Some default keyboard standard key */
 		switch (event.key.keysym.sym) {
-		case SDLK_TAB:
-			joy_state[0][GN_MENU_KEY]=1;
-			//last=GN_MENU_KEY;
-			//return GN_MENU_KEY;
+		case SDLK_LCTRL: // A
+			joy_state[0][GN_C]=1;
+			break;	
+		case SDLK_LALT: // B
+			joy_state[0][GN_A]=1;
 			break;	
 		case SDLK_UP:
 			joy_state[0][GN_UP]=1;
@@ -524,17 +570,17 @@ int wait_event(void) {
 			//last=GN_RIGHT;
 			//return GN_RIGHT;
 			break;	
-		case SDLK_ESCAPE:
-			joy_state[0][GN_A]=1;
+		//case SDLK_ESCAPE: // select
+			//joy_state[0][GN_A]=1;
 			//last=GN_A;
 			//return GN_A;
-			break;
-		case SDLK_RETURN:
-		case SDLK_KP_ENTER:
-			joy_state[0][GN_B]=1;
+			//break;
+		//case SDLK_RETURN: // start
+		//case SDLK_KP_ENTER:
+			//joy_state[0][GN_B]=1;
 			//last=GN_B;
 			//return GN_B;
-			break;
+			//break;
 		default:
 			SDL_PushEvent(&event);
 			handle_event();

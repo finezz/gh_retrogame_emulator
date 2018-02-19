@@ -271,22 +271,32 @@ blitter_soft_update()
 					screen_rect.h = 480;
 					SDL_SoftStretch(buffer, &visible_area, screen, &screen_rect);
 #else
+          //printf("%d %d %d %d %d\n", visible_area.x, visible_area.y, visible_area.w, visible_area.h, buffer->pitch);
+          //printf("%d %d %d %d %d\n\n", screen_rect.x, screen_rect.y, screen_rect.w, screen_rect.h, screen->pitch);
+					if(SDL_MUSTLOCK(buffer)) SDL_LockSurface(buffer);
 					if(SDL_MUSTLOCK(screen)) SDL_LockSurface(screen);
 					int x, y;
 					int sw = visible_area.w >> 1;
 					int sh = visible_area.h;
 					int sx = visible_area.x >> 1;
-					int sy = ((visible_area.y >> 1) * (352 >> 1));
+					int sy = visible_area.y * (buffer->pitch >> 2);
+					int dw = screen_rect.w >> 1;
+					int dh = screen_rect.h;
+					int dx = screen_rect.x >> 1;
+					//int dy = (screen_rect.y + ((screen->h - visible_area.h) >> 1)) * (screen->pitch >> 2);
+					int dy = visible_area.y * (screen->pitch >> 2);
+          
 					uint32_t *s = ((uint32_t*)buffer->pixels) + sx + sy;
-					uint32_t *d = (uint32_t*)screen->pixels;
+					uint32_t *d = ((uint32_t*)screen->pixels) + dx + dy;
 
-					for(y=0; y<240; y++){
+					for(y=0; y<sh; y++){
 						for(x=0; x<sw; x++){
 							*d++ = *s++;
 						}
-						s+= ((352 - 320) >> 1);
-						d+= 160;
+						s+= (((buffer->pitch >> 1) - visible_area.w) >> 1);
+						d+= (screen->pitch >> 2);
 					}
+					if(SDL_MUSTLOCK(buffer)) SDL_UnlockSurface(buffer);
 					if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
 #endif
 					break;

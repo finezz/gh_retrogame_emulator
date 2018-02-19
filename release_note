@@ -5,7 +5,12 @@ v20180313:
  New: Add handy emulator
  New: Add race-od emulator
  New: Add gngeo emulator
- Changed: Update Chinese(CN) translation in GMenu2X
+ New: Add new splash image
+ New: Add libyaml-cpp library
+ New: Add ASCIIpOrtal game
+ New: Add wallpapers (boot.jpg, magicavoxel.jpg) in GMenu2X
+ Fixed: Change menu key from SELECT to Backlight
+ Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

@@ -68,7 +68,6 @@ int check_dir(char *dir_name) {
 
 char *get_gngeo_dir(void) {
     static char *filename = ROOTPATH"";
-    printf("steward, %s\n", filename);
     return filename;
 }
 #else

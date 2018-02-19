@@ -112,11 +112,11 @@ void draw_message(const char *string)
 
 int SDL_getchar(void)
 {
-    SDL_Event event;
-    SDL_WaitEvent(&event);
-    //while(SDL_PollEvent(&event)){}
-    switch (event.type) {
-    case SDL_KEYDOWN:
+  SDL_Event event;
+  SDL_WaitEvent(&event);
+  //while(SDL_PollEvent(&event)){}
+  switch (event.type) {
+  case SDL_KEYDOWN:
 	switch(event.key.keysym.sym) {
 	case SDLK_RETURN:
 	    return -1;
