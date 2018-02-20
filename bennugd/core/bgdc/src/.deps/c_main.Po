@@ -53,8 +53,10 @@ c_main.o: c_main.c ../../include/loadlib.h \
  ../../include/files.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
- ../../include/arrange.h ../../include/files_st.h ../../include/xctype.h \
- ../../include/xctype_st.h ../../include/typedef.h \
+ ../../include/arrange.h ../../include/files_st.h \
+ /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h \
+ /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zconf.h \
+ ../../include/xctype.h ../../include/xctype_st.h ../../include/typedef.h \
  ../../include/typedef_st.h ../include/constants.h \
  ../include/identifiers.h ../../include/xstrings.h \
  ../../include/arrange.h ../include/segment.h ../include/varspace.h \
@@ -180,6 +182,10 @@ c_main.o: c_main.c ../../include/loadlib.h \
 ../../include/arrange.h:
 
 ../../include/files_st.h:
+
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h:
+
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zconf.h:
 
 ../../include/xctype.h:
 

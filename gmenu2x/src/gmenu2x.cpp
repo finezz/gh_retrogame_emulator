@@ -133,10 +133,12 @@ int main(int /*argc*/, char * /*argv*/[]) {
 }
 
 void GMenu2X::gp2x_init() {
-#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO)
+#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO) || (TARGET_RETROGAME)
 	memdev = open("/dev/mem", O_RDWR);
-	if (memdev < 0)
+	if (memdev < 0){
 		WARNING("Could not open /dev/mem");
+  }
+  printf("steward, memdev: 0x%x\n", memdev);
 #endif
 
 	if (memdev > 0) {
@@ -145,6 +147,9 @@ void GMenu2X::gp2x_init() {
 		MEM_REG=&memregs[0];
 #elif defined(TARGET_WIZ) || defined(TARGET_CAANOO)
 		memregs = (unsigned short*)mmap(0, 0x20000, PROT_READ|PROT_WRITE, MAP_SHARED, memdev, 0xc0000000);
+#elif defined(TARGET_RETROGAME)
+		memregs = (unsigned long*)mmap(0, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, memdev, 0x10000000);
+    printf("steward, memregs: 0x%x\n", memregs);
 #endif
 		if (memregs == MAP_FAILED) {
 			ERROR("Could not mmap hardware registers!");
@@ -273,7 +278,7 @@ GMenu2X::GMenu2X() {
 #endif
 	batteryHandle = 0;
 	memdev = 0;
-#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO)
+#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO) || defined(TARGET_RETROGAME)
 	gp2x_init();
 #endif
 
@@ -374,6 +379,8 @@ void GMenu2X::quit() {
 		}
 		gp2x_deinit();
 	}
+#elif defined(TARGET_RETROGMAE)
+	gp2x_deinit();
 #endif
 }
 
@@ -616,7 +623,10 @@ void GMenu2X::readConfig() {
 	evalIntConf( &confInt["menuClock"], 140, 50,300 );
 #elif defined(TARGET_WIZ) || defined(TARGET_CAANOO)
 	evalIntConf( &confInt["maxClock"], 900, 200,900 );
-	evalIntConf( &confInt["menuClock"], DEFAULT_CPU_CLK, 50,300 );
+	evalIntConf( &confInt["menuClock"], DEFAULT_CPU_CLK, 250,300 );
+#elif defined(TARGET_RETROGAME)
+	evalIntConf( &confInt["maxClock"], 750, 750,750 );
+	evalIntConf( &confInt["menuClock"], DEFAULT_CPU_CLK, 528,528 );
 #endif
 	evalIntConf( &confInt["globalVolume"], 67, 0,100 );
 	evalIntConf( &confInt["gamma"], 10, 1,100 );
@@ -922,6 +932,7 @@ void GMenu2X::main() {
   udc_status preUDCStatus = UDC_REMOVE;
   int needUSBUmount=0;
 	int backlightLevel=confInt["backlight"];
+  int backlightOffset;
   bool inputAction;
 	bool quit = false;
 	int x,y, offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6, helpBoxHeight = fwType=="open2x" ? 154 : 139;
@@ -930,6 +941,7 @@ void GMenu2X::main() {
 	long tickMMC = -1000;
 	long tickUSB = -1000;
 	string batteryIcon = "imgs/battery/0.png";
+  char backlightMsg[16]={0};
 	stringstream ss;
 	uint sectionsCoordX = 24;
 	SDL_Rect re = {0,0,0,0};
@@ -945,6 +957,7 @@ void GMenu2X::main() {
 		printf("%s, failed to create main thread\n", __func__);
 	}
 
+  setClock(528);
 	while (!quit) {
 		tickNow = SDL_GetTicks();
 
@@ -1094,8 +1107,15 @@ void GMenu2X::main() {
     }
 
     if (preMMCStatus == MMC_INSERT) {
+      backlightOffset = resX-((19 * 4) + battMsgWidth);
       sc.skinRes("imgs/sd1.png")->blit(s, resX-((19 * 3) + battMsgWidth), bottomBarIconY);
     }
+    else{
+      backlightOffset = resX-((19 * 3) + battMsgWidth);
+    }
+    sprintf(backlightMsg, "Lv%d", backlightLevel/20);
+    sc.skinRes("imgs/brightness.png")->blit(s, backlightOffset-30, bottomBarIconY);
+    s->write(font, backlightMsg, backlightOffset-10, bottomBarTextY, HAlignLeft, VAlignMiddle);
 
     if ((tickNow - tickUSB) >= 1000) {
       tickUSB = tickNow;
@@ -1193,6 +1213,7 @@ void GMenu2X::main() {
         suspend = 0;
         printf("exit suspend mode\n");
         printf("restore backlight: %d\n", backlightLevel);
+        setClock(528);
       }
       continue;
     }
@@ -1275,6 +1296,7 @@ void GMenu2X::main() {
       system(buf);
       printf("enter suspend mode\n");
       printf("current backlight: %d\n", backlightLevel);
+      setClock(250);
     }
 
 		if ( input[BACKLIGHT]) {
@@ -1357,7 +1379,9 @@ void GMenu2X::options() {
 	if (sd.exec() && sd.edited()) {
 		//G
 		if (prevgamma != confInt["gamma"]) setGamma(confInt["gamma"]);
-		if (curMenuClock!=confInt["menuClock"]) setClock(confInt["menuClock"]);
+		if (curMenuClock!=confInt["menuClock"]) {
+      setClock(confInt["menuClock"]);
+    }
 		if (curGlobalVolume!=confInt["globalVolume"]) setVolume(confInt["globalVolume"]);
 		if (lang == "English") lang = "";
 		if (lang != tr.lang()) tr.setLang(lang);
@@ -1823,7 +1847,8 @@ void GMenu2X::editLink() {
 	sd.addSetting(new MenuSettingImage(       this, tr["Icon"],                 tr.translate("Select an icon for the link: $1", linkTitle.c_str(), NULL), &linkIcon, ".png,.bmp,.jpg,.jpeg", wd ));
 	//sd.addSetting(new MenuSettingFile(        this, tr["Manual"],               tr["Select a graphic/textual manual or a readme"], &linkManual, ".man.png,.txt", wd ));
 
-	//sd.addSetting(new MenuSettingInt(         this, tr.translate("Clock (default: $1)",strClock.c_str(), NULL), tr["Cpu clock frequency to set when launching this link"], &linkClock, 50, confInt["maxClock"] ));
+	//sd.addSetting(new MenuSettingInt(         this, tr.translate("Clock (default: $1)","528", NULL), tr["Cpu clock frequency to set when launching this link"], &linkClock, 50, confInt["maxClock"] ));
+	sd.addSetting(new MenuSettingInt(         this, tr.translate("Clock (default: $1)","528", NULL), tr["Cpu clock frequency to set when launching this link"], &linkClock, 250, 750, 6));
 	//sd.addSetting(new MenuSettingBool(        this, tr["Tweak RAM Timings"],    tr["This usually speeds up the application at the cost of stability"], &linkUseRamTimings ));
 	//sd.addSetting(new MenuSettingInt(         this, tr["Volume"],               tr["Volume to set for this link"], &linkVolume, 0, 1 ));
 	sd.addSetting(new MenuSettingString(      this, tr["Parameters"],           tr["Parameters to pass to the application"], &linkParams, diagTitle, diagIcon ));
@@ -1860,6 +1885,7 @@ void GMenu2X::editLink() {
 		menu->selLinkApp()->setUseRamTimings(linkUseRamTimings);
 		menu->selLinkApp()->setSelectorScreens(linkSelScreens);
 		menu->selLinkApp()->setAliasFile(linkSelAliases);
+
 		menu->selLinkApp()->setClock(linkClock);
 		menu->selLinkApp()->setVolume(linkVolume);
 		//G
@@ -1986,7 +2012,7 @@ void GMenu2X::scanner() {
 	uint lineY = 42;
 #endif
 
-	if (confInt["menuClock"]<DEFAULT_CPU_CLK) {
+	if (confInt["menuClock"] < DEFAULT_CPU_CLK) {
 		setClock(DEFAULT_CPU_CLK);
 		string strClock;
 		stringstream ss;
@@ -2219,7 +2245,7 @@ void GMenu2X::applyDefaultTimings() {
 }
 
 void GMenu2X::setClock(unsigned mhz) {
-	mhz = constrain(mhz,50,confInt["maxClock"]);
+	mhz = constrain(mhz,250,confInt["maxClock"]);
 	if (memdev > 0) {
 		DEBUG("Setting clock to %d", mhz);
 #ifdef TARGET_GP2X
@@ -2251,6 +2277,12 @@ void GMenu2X::setClock(unsigned mhz) {
 		for (int i = 0; (PWRMODE & 0x8000) && i < 0x100000; i++);
 #endif
 	}
+#if defined(TARGET_RETROGAME)
+	#define CPPCR     (0x10 >> 2)
+  unsigned long m = mhz / 6;
+  printf("steward, set cpu clock: %d, %d\n", mhz, m);
+	memregs[CPPCR] = (m << 24) | 0x090520;
+#endif
 }
 
 void GMenu2X::setGamma(int gamma) {

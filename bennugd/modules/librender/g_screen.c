@@ -484,8 +484,19 @@ void gr_unlock_screen()
 
         if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
         if ( waitvsync ) gr_wait_vsync();
-        printf("steward, screen 1\n");
-        SDL_Flip( screen ) ;
+        //SDL_Flip( screen ) ;
+        if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_LockSurface( ScreenSurface ) ;
+        int x, y;
+        uint32_t* s=screen->pixels;
+        uint32_t* d=ScreenSurface->pixels;
+        for(y=0; y<240; y++){
+          for(x=0; x<160; x++){
+            *d++ = *s++;
+          }
+          d+= 160;
+        }
+        if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_UnlockSurface( ScreenSurface ) ;
+        SDL_Flip(ScreenSurface);
     }
     else if ( scrbitmap->info_flags & GI_EXTERNAL_DATA )
     {
@@ -501,8 +512,7 @@ void gr_unlock_screen()
         {
             if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
             if ( waitvsync ) gr_wait_vsync();
-            //SDL_Flip( screen ) ;
-            
+            //SDL_Flip( screen ) ; 
             if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_LockSurface( ScreenSurface ) ;
             int x, y;
             uint32_t* s=screen->pixels;

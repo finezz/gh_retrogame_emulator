@@ -51,7 +51,7 @@ const int LOOP_DELAY=30000;
 #if defined(TARGET_GP2X)
 	#define DEFAULT_CPU_CLK 200
 #else
-	#define DEFAULT_CPU_CLK 533
+	#define DEFAULT_CPU_CLK 528
 #endif
 
 extern const char *CARD_ROOT;
@@ -145,7 +145,12 @@ private:
 	IconButton *btnContextMenu;
 
 	unsigned int memdev;
+#ifdef TARGET_RETROGAME
+  volatile unsigned long *memregs;
+#else
 	volatile unsigned short *memregs;
+#endif
+
 #ifdef TARGET_GP2X
 	volatile unsigned short *MEM_REG;
 	int cx25874; //tv-out

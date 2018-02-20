@@ -13,7 +13,7 @@ SYSROOT     := $(shell $(CC) --print-sysroot)
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
-CFLAGS = -DTARGET_RETROGAME -DTARGET=$(TARGET) -DLOG_LEVEL=3 -Wall -Wundef -Wno-deprecated -Wno-unknown-pragmas -Wno-format -g3 $(SDL_CFLAGS) -I/home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL/
+CFLAGS = -ggdb -DTARGET_RETROGAME -DTARGET=$(TARGET) -DLOG_LEVEL=3 -Wall -Wundef -Wno-deprecated -Wno-unknown-pragmas -Wno-format -g3 $(SDL_CFLAGS) -I/home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL/
 CXXFLAGS = $(CFLAGS)
 LDFLAGS = $(SDL_LIBS) -lfreetype -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL -lpthread
 

@@ -141,7 +141,9 @@ int LinkApp::clock() {
 }
 
 const string &LinkApp::clockStr(int maxClock) {
-	if (iclock>maxClock) setClock(maxClock);
+	if (iclock > maxClock){
+    setClock(maxClock);
+  }
 	return sclock;
 }
 
@@ -150,10 +152,12 @@ void LinkApp::setClock(int mhz) {
 	iclock = constrain(mhz,50,325);
 #elif defined(TARGET_WIZ) || defined(TARGET_CAANOO)
 	iclock = constrain(mhz,50,900);
+#elif defined(TARGET_RETROGAME)
+	iclock = constrain(mhz,528,750);
 #endif
 	stringstream ss;
 	sclock = "";
-	ss << /*iclock*/528 << "Mhz"; // fixed cpu for current retrogame
+	ss << iclock << "Mhz";
 	ss >> sclock;
 
 	edited = true;
@@ -433,8 +437,10 @@ void LinkApp::launch(const string &selectedFile, const string &selectedDir) {
 		if (selectedFile=="")
 			gmenu2x->writeTmp();
 		gmenu2x->quit();
-		if (clock()!=gmenu2x->confInt["menuClock"])
+
+		if (clock()!=gmenu2x->confInt["menuClock"]){
 			gmenu2x->setClock(clock());
+    }
 		if (gamma()!=0 && gamma()!=gmenu2x->confInt["gamma"])
 			gmenu2x->setGamma(gamma());
 		execlp("/bin/sh","/bin/sh","-c",command.c_str(),NULL);

@@ -67,9 +67,9 @@ host=mipsel-unknown-linux-gnu
 host_os=linux-gnu
 
 # The build system.
-build_alias=x86_64
-build=x86_64-pc-none
-build_os=none
+build_alias=
+build=x86_64-unknown-linux-gnu
+build_os=linux-gnu
 
 # A sed program that does not truncate output.
 SED="/bin/sed"
@@ -138,7 +138,7 @@ DLLTOOL="false"
 sharedlib_from_linklib_cmd="printf %s\\n"
 
 # The archiver.
-AR="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-ar"
+AR="mipsel-linux-ar"
 
 # Flags to create an archive.
 AR_FLAGS="cru"
@@ -147,10 +147,10 @@ AR_FLAGS="cru"
 archiver_list_spec="@"
 
 # A symbol stripping program.
-STRIP="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-strip"
+STRIP="mipsel-linux-strip"
 
 # Commands used to install an old-style archive.
-RANLIB="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-ranlib"
+RANLIB="mipsel-linux-ranlib"
 old_postinstall_cmds="chmod 644 \$oldlib~\$RANLIB \$oldlib"
 old_postuninstall_cmds=""
 
@@ -158,10 +158,10 @@ old_postuninstall_cmds=""
 lock_old_archive_extraction=no
 
 # A C compiler.
-LTCC="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-gcc"
+LTCC="mipsel-linux-gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-DNO_ZLIB -D_REENTRANT -DTARGET_DINGUX_A320 -O2 -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/include -msoft-float -funroll-loops -ffast-math -fomit-frame-pointer -fno-strength-reduce -finline-functions -G0 -march=mips32 -mtune=r4600 -mno-mips16 -finline-functions -fno-strict-aliasing "
+LTCFLAGS="-g -O2 -finline-functions -fno-strict-aliasing "
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | sed '/ __gnu_lto/d'"
@@ -284,15 +284,15 @@ dlopen_self=unknown
 dlopen_self_static=unknown
 
 # Commands to strip libraries.
-old_striplib="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-strip --strip-debug"
-striplib="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-strip --strip-unneeded"
+old_striplib="mipsel-linux-strip --strip-debug"
+striplib="mipsel-linux-strip --strip-unneeded"
 
 # Assembler program.
-AS="as"
+AS="mipsel-linux-as"
 
 
 # The linker used to build libraries.
-LD="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-ld"
+LD="mipsel-linux-ld"
 
 # How to create reloadable object files.
 reload_flag=" -r"
@@ -302,7 +302,7 @@ reload_cmds="\$LD\$reload_flag -o \$output\$reload_objs"
 old_archive_cmds="\$AR \$AR_FLAGS \$oldlib\$oldobjs~\$RANLIB \$oldlib"
 
 # A language specific compiler.
-CC="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/bin/mipsel-linux-gcc"
+CC="mipsel-linux-gcc"
 
 # Is the compiler the GNU compiler?
 with_gcc=yes
@@ -317,7 +317,7 @@ pic_flag=" -fPIC -DPIC"
 wl="-Wl,"
 
 # Compiler flag to prevent dynamic linking.
-link_static_flag=""
+link_static_flag="-static"
 
 # Does compiler simultaneously support -c and -o options?
 compiler_c_o="yes"
