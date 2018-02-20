@@ -608,6 +608,6 @@ void graphics_init (bool fullscreen, int height, int width, bool usePureAscii)
 void graphics_deinit () {
   endwin ();
 #ifndef __NOSDL__
-//  SDL_Quit();
+  SDL_Quit();
 #endif
 }

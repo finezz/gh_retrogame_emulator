@@ -47,16 +47,7 @@ void PDC_retile(void)
             dest.y += pdc_back->h;
         }
 
-        //SDL_BlitSurface(pdc_tileback, 0, pdc_screen, 0);
-        int x, y;
-        uint32_t *s=pdc_tileback->pixels;
-        uint32_t *d=pdc_screen->pixels;
-        for(y=0; y<240; y++){
-          for(x=0; x<160; x++){
-            *d++ = *s++;
-          }
-          d+= 160;
-        }
+        SDL_BlitSurface(pdc_tileback, 0, pdc_screen, 0);
     }
 }
 

@@ -1,0 +1,6 @@
+title=Supertux
+description=Supertux ported from GCW0
+icon=skins/Default/icons/supertux.png
+exec=/mnt/game/supertux/supertux
+volume=1
+wrapper=true
