@@ -90,8 +90,20 @@ int Selector::exec(int startSelection) {
 		//Selection
 		iY = selected-firstElement;
 		iY = 42+(iY*16);
-		if (selected<fl.size())
+		if(selected<fl.size()){
 			gmenu2x->s->box(1, iY, 309, 14, gmenu2x->skinConfColors[COLOR_SELECTION_BG]);
+
+			if(fl.isFile(selected)){
+        string preview = dir + "preview/" + fl[selected] + ".jpg";
+
+        struct stat st;
+        int statRet = stat(preview.c_str(), &st);
+        if (statRet != -1) {
+					Surface pre(preview.c_str(), gmenu2x->confStr["skin"]);
+  				pre.blit( gmenu2x->s, 320 - 128 - 10, 240 - 128 - 25);
+        }
+      }
+    }
 
 		//Screenshot
 		if (selected-fl.dirCount()<screens.size() && screens[selected-fl.dirCount()]!="") {
@@ -104,17 +116,17 @@ int Selector::exec(int startSelection) {
 		gmenu2x->s->setClipRect(0,41,311,179);
 		for (i=firstElement; i<fl.size() && i<firstElement+SELECTOR_ELEMENTS; i++) {
 			iY = i-firstElement;
-			if (fl.isDirectory(i)) {
+			if(fl.isDirectory(i)){
 				gmenu2x->sc["imgs/folder.png"]->blit(gmenu2x->s, 4, 42+(iY*16));
 				gmenu2x->s->write(gmenu2x->font, fl[i], 21, 49+(iY*16), HAlignLeft, VAlignMiddle);
-			} else
+			} 
+      else{
 				gmenu2x->s->write(gmenu2x->font, titles[i-fl.dirCount()], 4, 49+(iY*16), HAlignLeft, VAlignMiddle);
+      }
 		}
 		gmenu2x->s->clearClipRect();
-
 		gmenu2x->drawScrollBar(SELECTOR_ELEMENTS,fl.size(),firstElement,42,175);
 		gmenu2x->s->flip();
-
 
 		gmenu2x->input.update();
 		if ( gmenu2x->input[SETTINGS] ) { close = true; result = false; }

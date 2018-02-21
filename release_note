@@ -12,16 +12,21 @@ v20180313:
  New: [Port request] Streets of Rage Remake 5.1
  New: [Feature Request] Ability to always show battery power remaining as a percentage.
  New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
+ New: Add more wallpapers contributed by jutleys (Dingoonity forum)
+ New: Add DekUI theme contributed by jutleys (Dingoonity forum)
+ New: Add preview image (jpg only, size=128*128) when select rom from file list (ex: xxx.nes, preview/xxx.nes.jpg)
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
  Fixed: The 2 additional themes do not display all emulator icons.
+ Fixed: (MidPATH) cannot save settings
  Changed: Change some emulator icons
- Changed: Update splash image ("/usr/share/splash/boot.jpg")
+ Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
  Changed: Backlight level has been changed from 0~100 to 20~100 (interval is 20 that is same as previous)
  Changed: X button has been changed from context help to speaker function (turn on/off)
  Changed: Power button will toggle suspend mode on/off
+ Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

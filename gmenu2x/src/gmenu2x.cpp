@@ -138,7 +138,6 @@ void GMenu2X::gp2x_init() {
 	if (memdev < 0){
 		WARNING("Could not open /dev/mem");
   }
-  printf("steward, memdev: 0x%x\n", memdev);
 #endif
 
 	if (memdev > 0) {
@@ -149,7 +148,6 @@ void GMenu2X::gp2x_init() {
 		memregs = (unsigned short*)mmap(0, 0x20000, PROT_READ|PROT_WRITE, MAP_SHARED, memdev, 0xc0000000);
 #elif defined(TARGET_RETROGAME)
 		memregs = (unsigned long*)mmap(0, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, memdev, 0x10000000);
-    printf("steward, memregs: 0x%x\n", memregs);
 #endif
 		if (memregs == MAP_FAILED) {
 			ERROR("Could not mmap hardware registers!");
@@ -2280,7 +2278,6 @@ void GMenu2X::setClock(unsigned mhz) {
 #if defined(TARGET_RETROGAME)
 	#define CPPCR     (0x10 >> 2)
   unsigned long m = mhz / 6;
-  printf("steward, set cpu clock: %d, %d\n", mhz, m);
 	memregs[CPPCR] = (m << 24) | 0x090520;
 #endif
 }
