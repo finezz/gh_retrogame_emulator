@@ -1,7 +1,7 @@
 # Define compilation type
 #OSTYPE=msys
-OSTYPE=oda320
-#OSTYPE=gcw0
+#OSTYPE=oda320
+OSTYPE=gcw0
 
 ifeq ($(TARGET),)
 TARGET = mame
@@ -56,7 +56,6 @@ F_OPTS = -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision
 CFLAGS = -O2 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib $(W_OPTS) $(F_OPTS)
 CFLAGS += -g
 
-LIB_PATH  = $(TOOLCHAIN)/lib
 LIBS      = -lSDLmain -lSDL -lm -lmingw32 -mwindows
 LDFLAGS = $(CFLAGS) $(LIBS) 
 else
@@ -71,10 +70,9 @@ F_OPTS = -fpermissive -falign-functions -falign-loops -falign-labels -falign-jum
 
 ifeq "$(OSTYPE)" "gcw0"	
 #CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32r2 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -mhard-float -mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
-CFLAGS = -D_GCW0_ -march=mips32 -mtune=mips32r2 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -mhard-float -mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
+CFLAGS = -D_GCW0_ -g -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -mhard-float -mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
 else
-#CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -msoft-float --mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
-CFLAGS = -D_GCW0_ -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -mno-mips16 $(W_OPTS) $(F_OPTS)
+CFLAGS = -D_GCW0_ -G0 -O3 -march=mips32 -mtune=mips32 -Isrc -Isrc/$(MAMEOS) -Isrc/zlib -msoft-float --mbranch-likely -mno-mips16 $(W_OPTS) $(F_OPTS)
 endif
 #CFLAGS += -g
 
@@ -104,14 +102,15 @@ CDEFS = $(DEFS) $(COREDEFS) $(CPUDEFS) $(SOUNDDEFS)
 
 $(EMULATOR): $(COREOBJS) $(OSOBJS) $(DRVOBJS)
 	$(LD) $(LDFLAGS) $(COREOBJS) $(OSOBJS) $(LIBS) $(DRVOBJS) -o $@
+	$(MV) $(EMULATOR) distrib/mame4all/$(EMULATOR)
 
 $(EMULATOR).dge: $(FEOBJS)
 	@echo Linking $@ ...
 	$(LD) $(LDFLAGS) $(FEOBJS) $(LIBS) -o $@
 ifeq "$(OSTYPE)" "msys"
-	$(MV) $(EMULATOR).dge $(EMULATOR).dge.exe
+	$(MV) $(EMULATOR).dge distrib/mame4all/$(EMULATOR).dge.exe
 else
-	$(MV) $(EMULATOR).dge $(EMULATOR).dge
+	$(MV) $(EMULATOR).dge distrib/mame4all/$(EMULATOR).dge
 endif
 
 $(OBJ)/%.o: src/%.c
