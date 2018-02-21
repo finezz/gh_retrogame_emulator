@@ -172,7 +172,7 @@ int InitVideo(FCEUGI *gi) {
 		//{
 			//if(SDL_VideoModeOK(VModes[vm].x, VModes[vm].y, 16, SDL_HWSURFACE | DINGOO_MULTIBUF) != 0)
 			//{
-				screen = SDL_SetVideoMode(320, 480, /*VModes[vm].x, VModes[vm].y,*/ 16, SDL_HWSURFACE | DINGOO_MULTIBUF);
+				screen = SDL_SetVideoMode(320, 480, /*VModes[vm].x, VModes[vm].y,*/ 16, SDL_SWSURFACE);
 				s_VideoModeSet = true;
 				//break;
 			//}
@@ -439,10 +439,12 @@ void FCEUI_SetAviDisableMovieMessages(bool disable) {
 void dingoo_clear_video(void) {
 	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
 	SDL_Flip(screen);
-	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
-	SDL_Flip(screen);
+
+  // commented by steward
+	//SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
+	//SDL_Flip(screen);
 #ifdef SDL_TRIPLEBUF
-	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
-	SDL_Flip(screen);
+	//SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
+	//SDL_Flip(screen);
 #endif
 }
