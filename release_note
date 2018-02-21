@@ -11,6 +11,7 @@ v20180313:
  New: Add backlight indicator(Lv1 ~ Lv5) on status bar
  New: [Port request] Streets of Rage Remake 5.1
  New: [Feature Request] Ability to always show battery power remaining as a percentage.
+ New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
