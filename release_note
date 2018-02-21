@@ -14,12 +14,13 @@ v20180313:
  New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
  New: Add more wallpapers contributed by jutleys (Dingoonity forum)
  New: Add DekUI theme contributed by jutleys (Dingoonity forum)
- New: Add preview image (jpg only, size=128*128) when select rom from file list (ex: xxx.nes, preview/xxx.nes.jpg)
+ New: Add preview image (jpg only, size=128*128) when select rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
  Fixed: The 2 additional themes do not display all emulator icons.
- Fixed: (MidPATH) cannot save settings
+ Fixed: (MidPATH emulator) cannot save settings
+ Fixed: (FBA a320 emulator) cannot show preview image
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
