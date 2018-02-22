@@ -28,6 +28,7 @@ v20180313:
  Changed: X button has been changed from context help to speaker function (turn on/off)
  Changed: Power button will toggle suspend mode on/off
  Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
+ Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
