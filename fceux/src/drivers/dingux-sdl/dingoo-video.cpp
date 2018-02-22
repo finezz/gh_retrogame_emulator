@@ -371,6 +371,8 @@ void BlitScreen(uint8 *XBuf) {
 					dest += screen->w - 280;
           dest += 320;
 				}
+    }
+#endif
 		}
 	} else { // native res
 		//int pinc = (320 - NWIDTH) >> 1;

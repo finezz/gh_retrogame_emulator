@@ -219,7 +219,7 @@ W_OPTS	= -Wno-write-strings -Wno-sign-compare
 
 F_OPTS = -fomit-frame-pointer -fno-builtin -fno-common
 
-CC_OPTS	= -O2 -mips32 $(F_OPTS) $(W_OPTS)
+CC_OPTS	= -O2 -mips32 $(F_OPTS) $(W_OPTS) -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL
 
 CFLAGS += $(CC_OPTS)
 CFLAGS += -DDINGUX \

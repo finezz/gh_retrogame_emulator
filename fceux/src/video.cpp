@@ -654,7 +654,7 @@ int SaveSnapshot(void)
 #else
 			for(x=256;x;x--)
 			{
-				u32 color = ModernDeemphColorMap(tmp,XBuf,1,1);
+				u32 color = 0; //ModernDeemphColorMap(tmp,XBuf,1,1);
 				*dest++=(color>>0x10)&0xFF;
 				*dest++=(color>>0x08)&0xFF;
 				*dest++=(color>>0x00)&0xFF;
