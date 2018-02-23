@@ -6,7 +6,7 @@
 #include "./data/race_load.h"
 #include "./data/race_skin.h"
 
-int redrawSkin=0;
+int redrawSkin=3;
 extern unsigned int m_Flag;
 
 bool gameMenu;
@@ -704,15 +704,14 @@ signed int load_file(char **wildcards, char *result) {
 							else if(file_name[file_name_length - 3] == '.') ext_pos = file_name_length - 3;
 							else ext_pos = 0;
 
-							for(i = 0; wildcards[i] != NULL; i++) {
-								if(!strcasecmp((file_name + ext_pos), wildcards[i])) {
-									filedir_list[num_filedir].type = 0; // 0 -> file
-									strcpy(filedir_list[num_filedir].name, file_name);
-									num_filedir++;
-
-									break;
-								}
-							}
+              for(i = 0; wildcards[i] != NULL; i++) {
+                if(!strcasecmp((file_name + ext_pos), wildcards[i])) {
+                  filedir_list[num_filedir].type = 0; // 0 -> file
+                  strcpy(filedir_list[num_filedir].name, file_name);
+                  num_filedir++;
+                  break;
+                }
+              }
 						}
 					}
 				}
@@ -880,7 +879,7 @@ signed int load_file(char **wildcards, char *result) {
 	return return_value;
 }
 
-char *file_ext[] = { (char *) ".ngp", (char *) ".npc", NULL };
+char *file_ext[] = { (char *) ".ngp", (char *) ".npc", (char *) ".ngc", NULL };
 
 void menuFileBrowse(void) {
 	if (load_file(file_ext, gameName) != -1) { // exit if file is chosen
