@@ -442,11 +442,10 @@ void dingoo_clear_video(void) {
 	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
 	SDL_Flip(screen);
 
-  // commented by steward
-	//SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
-	//SDL_Flip(screen);
+	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
+	SDL_Flip(screen);
 #ifdef SDL_TRIPLEBUF
-	//SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
-	//SDL_Flip(screen);
+	SDL_FillRect(screen,NULL,SDL_MapRGBA(screen->format, 0, 0, 0, 255));
+	SDL_Flip(screen);
 #endif
 }

@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
 	if (argc > 1)
 		parse_cmd_line(argc, argv);
-
+/*
 	if (engineState == PGS_ReloadRom)
 	{
 		if (emu_reload_rom(rom_fname_reload)) {
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-
+*/
 	for (;;)
 	{
 		switch (engineState)

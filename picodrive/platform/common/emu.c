@@ -355,11 +355,11 @@ int emu_reload_rom(const char *rom_fname_in)
 {
 	// use setting before rom config is loaded
 	int autoload = g_autostateld_opt;
-	char *rom_fname = NULL;
+	char *rom_fname;
 	char ext[5];
 	enum media_type_e media_type;
 	int menu_romload_started = 0;
-	char carthw_path[512];
+	char carthw_path[255];
 	int retval = 0;
 
 	lprintf("emu_ReloadRom(%s)\n", rom_fname_in);
@@ -367,8 +367,7 @@ int emu_reload_rom(const char *rom_fname_in)
 	rom_fname = strdup(rom_fname_in);
 	if (rom_fname == NULL)
 		return 0;
-
-	get_ext(rom_fname, ext);
+  get_ext(rom_fname, ext);
 
 	// early cleanup
 	PicoPatchUnload();
@@ -426,8 +425,12 @@ int emu_reload_rom(const char *rom_fname_in)
 		get_ext(rom_fname, ext);
 	}
 
-	menu_romload_prepare(rom_fname); // also CD load
-	menu_romload_started = 1;
+  // fixed for retrogame
+  // load might be loaded from GMenu2X, not from its GUI interface
+  if(g_menuscreen_ptr){
+	  menu_romload_prepare(rom_fname); // also CD load
+	  menu_romload_started = 1;
+  }
 
 	emu_make_path(carthw_path, "carthw.cfg", sizeof(carthw_path));
 
@@ -525,6 +528,7 @@ int emu_reload_rom(const char *rom_fname_in)
 out:
 	if (menu_romload_started)
 		menu_romload_end();
+
 	free(rom_fname);
 	return retval;
 }
@@ -555,6 +559,7 @@ void emu_make_path(char *buff, const char *end, int size)
 
 	end_len = strlen(end);
 	pos = plat_get_root_dir(buff, size);
+
 	strncpy(buff + pos, end, size - pos);
 	buff[size - 1] = 0;
 	if (pos + end_len > size - 1)

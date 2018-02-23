@@ -8,6 +8,8 @@ v20180313:
  New: Add ASCIIpOrtal game
  New: Add wallpapers (boot.jpg, magicavoxel.jpg) contributed by Leo-brasil (Dingoonity forum)
  New: Add PS4(v4) theme contributed by m1024 (Dingoonity forum)
+ New: Add zelda(v1) theme contributed by m1024 (Dingoonity forum)
+ New: Add oldboy(v1) theme contributed by m1024 (Dingoonity forum)
  New: Add backlight indicator(Lv1 ~ Lv5) on status bar
  New: [Port request] Streets of Rage Remake 5.1
  New: [Feature Request] Ability to always show battery power remaining as a percentage.
@@ -21,6 +23,7 @@ v20180313:
  Fixed: The 2 additional themes do not display all emulator icons.
  Fixed: (MidPATH emulator) cannot save settings
  Fixed: (FBA a320 emulator) cannot show preview image
+ Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
