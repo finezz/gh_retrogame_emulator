@@ -13,13 +13,12 @@
 # the License. See the file COPYING in the Gmu's main directory
 # for details.
 #
-Q?=@
+#Q?=@
 STATIC?=0
 TARGET?=dingux
-#TARGET?=unknown
 include $(TARGET).mk
 
-#CROSS_COMPILE ?= mipsel-linux-
+CROSS_COMPILE ?= mipsel-linux-
 CC          := $(CROSS_COMPILE)gcc
 STRIP       := $(CROSS_COMPILE)strip
 
@@ -28,10 +27,10 @@ SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
 PREFIX = 
-CFLAGS+=$(COPTS) -Wall -Wno-variadic-macros -Wuninitialized -Wcast-align -Wredundant-decls -Wmissing-declarations -DFILE_HW_H="\"hw_$(TARGET).h\"" -I/home/steward/Github/gh_retrogame_emulator/libmikmod-3.1.21.1/include -I.
+CFLAGS+=$(COPTS) -Wall -Wno-variadic-macros -Wuninitialized -Wcast-align -Wredundant-decls -Wmissing-declarations -DFILE_HW_H="\"hw_$(TARGET).h\"" -I/home/steward/Github/gh_retrogame_emulator/libmikmod-3.1.21.1/include -I. $(SDL_CFLAGS)
 
-LFLAGS_CORE=$(SDL_LIB) -ldl -lrt
-LFLAGS_SDLFE=$(SDL_LIB) -lSDL_image
+LFLAGS_CORE=$(SDL_LIBS) -ldl -lrt
+LFLAGS_SDLFE=$(SDL_LIBS) -lSDL_image
 ifneq ($(SDLFE_WITHOUT_SDL_GFX),1)
 LFLAGS_SDLFE+=-lSDL_gfx
 else
@@ -68,11 +67,10 @@ PLUGIN_FE_HTTP_OBJECTFILES=gmuhttp.o sha1.o base64.o httpd.o queue.o json.o webs
 
 # Decoder configs
 DEC_vorbis_LFLAGS=-lvorbisidec 
-DEC_mpg123_LFLAGS=-lmpg123
+#DEC_mpg123_LFLAGS=-lmpg123
 DEC_flac_LFLAGS=-lFLAC
 DEC_musepack_LFLAGS=-lmpcdec
-#DEC_mikmod_LFLAGS=/home/steward/Github/gh_retrogame_emulator/libmikmod-3.1.21.1/.libs/libmikmod.a
-DEC_mikmod_LFLAGS=-lmikmod
+DEC_mikmod_LFLAGS=libmikmod.a
 DEC_speex_LFLAGS=-logg -lspeex
 
 ifeq (1,$(STATIC))

@@ -17,6 +17,7 @@ v20180313:
  New: Add more wallpapers contributed by jutleys (Dingoonity forum)
  New: Add DekUI theme contributed by jutleys (Dingoonity forum)
  New: Add preview image (jpg only, size=128*128) when select rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
+ New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
