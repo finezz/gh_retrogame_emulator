@@ -1,0 +1,8 @@
+dstrings.o: dstrings.c dstrings.h d_englsh.h \
+ /home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stddef.h
+
+dstrings.h:
+
+d_englsh.h:
+
+/home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stddef.h:

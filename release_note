@@ -20,6 +20,7 @@ v20180313:
  New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
  New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
  New: [Port request] GP2Xpectrum (I use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
+ New: Add czdoom game
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
