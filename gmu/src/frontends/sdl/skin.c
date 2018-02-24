@@ -318,7 +318,19 @@ static void skin_update_widget(Skin *skin, GmuWidget *gw, SDL_Surface *display, 
 	drect.y = srect.y;
 	SDL_BlitSurface(buffer, &srect, display, &drect);
 	//SDL_UpdateRects(display, 1, &drect);
-  SDL_SoftStretch(display, NULL, ScreenSurface, NULL);
+  //SDL_SoftStretch(display, NULL, ScreenSurface, NULL);
+
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+  int x, y;
+  uint32_t *s = (uint32_t*)display->pixels;
+  uint32_t *d = (uint32_t*)ScreenSurface->pixels;
+  for(y=0; y<240; y++){
+    for(x=0; x<160; x++){
+      *d++ = *s++;
+    }
+    d+= 160;
+  }
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
   SDL_Flip(ScreenSurface);
 }
 
@@ -366,7 +378,19 @@ void skin_update_bg(Skin *skin, SDL_Surface *display, SDL_Surface *buffer)
 {
 	SDL_BlitSurface(buffer, NULL, display, NULL);
 	//SDL_UpdateRect(display, 0, 0, 0, 0);
-  SDL_SoftStretch(display, NULL, ScreenSurface, NULL);
+  //SDL_SoftStretch(display, NULL, ScreenSurface, NULL);
+
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+  int x, y;
+  uint32_t *s = (uint32_t*)display->pixels;
+  uint32_t *d = (uint32_t*)ScreenSurface->pixels;
+  for(y=0; y<240; y++){
+    for(x=0; x<160; x++){
+      *d++ = *s++;
+    }
+    d+= 160;
+  }
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
   SDL_Flip(ScreenSurface);
 }
 
