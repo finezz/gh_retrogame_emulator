@@ -43,7 +43,7 @@ using namespace std;
 extern FileManager filemgr;
 
 const int num_music_files = 5;
-#if 0
+#if 1
 string music_files[num_music_files] = {
   "ascii.ogg",
   "ascii_threat2.ogg",
@@ -62,7 +62,7 @@ string music_files[num_music_files] = {
 
 #endif
 
-#if 0
+#if 1
 string sound_files[MAXSound] = {
   "stub.ogg", // SILENT
   "win.ogg", // WIN
@@ -134,10 +134,13 @@ int sound_init () {
 
   for(int c = 0; c < MAXSound; c++){
     soundEffects[c] = Mix_LoadWAV(filemgr.get_media(sound_files[c]).c_str());
+    if(soundEffects[c] == NULL){
+      printf("failed to load WAV for sound: %s\n", filemgr.get_media(sound_files[c]).c_str());
+    }
   }
   ambience = Mix_LoadMUS( filemgr.get_media(music_files[0]).c_str() );
   if(ambience == NULL){
-    printf("failed to load MUS: %s\n", filemgr.get_media(music_files[0]).c_str());
+    printf("failed to load MUS for music: %s\n", filemgr.get_media(music_files[0]).c_str());
     return 0;
   }
   return 1;

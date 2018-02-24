@@ -22,7 +22,7 @@ CXXFLAGS := $(CXXFLAGS) -U__NOSDL__ -U__NOSOUND__ -D__DINGOO__ -U__GP2X__ -I./PD
 
 # Custom link flags: either dynamic (default) or static linking (see the last form,
 # 'man ld' for details).
-LINKFLAGS := $(LINKFLAGS) -lSDL -lSDL_mixer PDCurses/sdl1/libpdcurses.a
+LINKFLAGS := $(LINKFLAGS) -lSDL PDCurses/sdl1/libpdcurses.a /home/steward/Github/gh_retrogame_emulator/SDL_mixer-1.2.12/build/.libs/libSDL_mixer.so /home/steward/Github/gh_retrogame_emulator/libmikmod-3.1.21.1/.libs/libmikmod.so
 
 # Additional files to be included in release tarball.
 #FILES_INCLUDE_DIST := $(FILES_INCLUDE_DIST) custom_readme.txt example.dll foo/bar.xml
