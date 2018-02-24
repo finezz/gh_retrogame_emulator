@@ -23,6 +23,7 @@ v20180313:
  New: Add czdoom game
  New: Add wolf3d game
  New: Add hhexen game
+ New: Add hheretic game
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
