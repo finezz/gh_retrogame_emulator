@@ -16,7 +16,7 @@ v20180313:
  New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
  New: Add more wallpapers contributed by jutleys (Dingoonity forum)
  New: Add DekUI theme contributed by jutleys (Dingoonity forum)
- New: Add preview image (jpg only, size=128*128) when select rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
+ New: Add preview image (support jpg, png and bmp with size=128*128) when select rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
  New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
  New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
  New: [Port request] GP2Xpectrum (I use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
@@ -29,6 +29,7 @@ v20180313:
  New: Add sms_sdl emulator
  New: Add oswan emulator
  New: Add dingux-cap32 emulator
+ New: Add uae4all emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
