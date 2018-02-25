@@ -32,6 +32,9 @@ v20180313:
  New: Add uae4all emulator
  New: Add mrdrillux game
  New: Add Bermuda Syndrome game
+ New: Add opentitus game
+ New: Add wizznic game
+ New: Add spartak-chess game
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
