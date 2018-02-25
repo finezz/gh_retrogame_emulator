@@ -33,7 +33,7 @@ v20180313:
  Fixed: (MidPATH emulator) cannot save settings
  Fixed: (FBA a320 emulator) cannot show preview image
  Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
- Fixed: (ReGBA emulator) "Aspect. fast" refine by TonyJih(開源掌機群)
+ Fixed: (ReGBA emulator) Aspect rate refine by TonyJih(開源掌機群)
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
