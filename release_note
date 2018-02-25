@@ -28,6 +28,7 @@ v20180313:
  New: Add eduke32 game
  New: Add sms_sdl emulator
  New: Add oswan emulator
+ New: Add dingux-cap32 emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
