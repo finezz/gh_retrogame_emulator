@@ -32,11 +32,12 @@ v20180313:
  New: Add uae4all emulator
  New: Add mrdrillux game
  New: Add Bermuda Syndrome game
- New: Add opentitus game
+ New: Add opentitus game (sometimes crash)
  New: Add wizznic game
  New: Add spartak-chess game
  New: Add last-mission game
  New: Add ketm game
+ New: Add OnScripter-Jh emulator (font render issue and crash issue)
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme

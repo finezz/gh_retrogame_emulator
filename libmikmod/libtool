@@ -38,7 +38,7 @@ available_tags=''
 # ### BEGIN LIBTOOL CONFIG
 
 # Assembler program.
-AS="mipsel-linux-as"
+AS="as"
 
 # DLL creation program.
 DLLTOOL="dlltool"
@@ -308,7 +308,7 @@ striplib="mipsel-linux-strip --strip-unneeded"
 
 
 # The linker used to build libraries.
-LD="mipsel-linux-ld"
+LD="/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/bin/ld"
 
 # How to create reloadable object files.
 reload_flag=" -r"

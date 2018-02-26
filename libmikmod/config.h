@@ -18,7 +18,7 @@
 /* #undef DRV_AIX */
 
 /* Define if the Linux ALSA driver is compiled */
-/* #undef DRV_ALSA */
+#define DRV_ALSA 1
 
 /* Define if the OS/2 direct audio (DART) driver is compiled */
 /* #undef DRV_DART */
@@ -73,7 +73,7 @@
 /* #undef HAVE_AF_AFLIB_H */
 
 /* Define to 1 if you have the <alsa/asoundlib.h> header file. */
-/* #undef HAVE_ALSA_ASOUNDLIB_H */
+#define HAVE_ALSA_ASOUNDLIB_H 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
