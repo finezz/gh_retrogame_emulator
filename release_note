@@ -6,16 +6,16 @@ v20180313:
  New: Add race-od emulator
  New: Add gngeo emulator
  New: Add ASCIIpOrtal game
- New: Add wallpapers (boot.jpg, magicavoxel.jpg) contributed by Leo-brasil (Dingoonity forum)
- New: Add PS4(v4) theme contributed by m1024 (Dingoonity forum)
- New: Add zelda(v1) theme contributed by m1024 (Dingoonity forum)
- New: Add oldboy(v1) theme contributed by m1024 (Dingoonity forum)
+ New: Add wallpapers (boot.jpg, magicavoxel.jpg) (thanks Leo-brasil)
+ New: Add PS4(v4) theme (thanks m1024)
+ New: Add zelda(v1) theme (thanks m1024)
+ New: Add oldboy(v1) theme (thanks m1024)
  New: Add backlight indicator(Lv1 ~ Lv5) on status bar
  New: [Port request] Streets of Rage Remake 5.1
  New: [Feature Request] Ability to always show battery power remaining as a percentage.
  New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
- New: Add more wallpapers contributed by jutleys (Dingoonity forum)
- New: Add DekUI theme contributed by jutleys (Dingoonity forum)
+ New: Add more wallpapers (thanks jutleys)
+ New: Add DekUI theme (thanks jutleys)
  New: Add preview image (support jpg, png and bmp with size=128*128) when select rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
  New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
  New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
@@ -45,7 +45,8 @@ v20180313:
  Fixed: (MidPATH emulator) cannot save settings
  Fixed: (FBA a320 emulator) cannot show preview image
  Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
- Fixed: (ReGBA emulator) Aspect rate refine by TonyJih(開源掌機群)
+ Fixed: (ReGBA emulator) Aspect rate refine by TonyJih
+ Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X

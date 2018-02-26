@@ -221,7 +221,7 @@ AUTOMAKE = ${SHELL} /home/steward/Github/gh_retrogame_emulator/libmikmod/autotoo
 AWK = gawk
 CC = mipsel-linux-gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -pthread -ffast-math -Wall -D_REENTRANT -DSYM_VISIBILITY -fvisibility=hidden
+CFLAGS = -g -O2 -pthread -ffast-math -Wall -D_REENTRANT -DSYM_VISIBILITY -fvisibility=hidden -fPIC
 CPP = mipsel-linux-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

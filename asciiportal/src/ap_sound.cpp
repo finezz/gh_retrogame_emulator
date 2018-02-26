@@ -135,12 +135,12 @@ int sound_init () {
   for(int c = 0; c < MAXSound; c++){
     soundEffects[c] = Mix_LoadWAV(filemgr.get_media(sound_files[c]).c_str());
     if(soundEffects[c] == NULL){
-      printf("failed to load WAV for sound: %s\n", filemgr.get_media(sound_files[c]).c_str());
+      printf("failed to load WAV for sound: '%s' '%s'\n", filemgr.get_media(sound_files[c]).c_str(), Mix_GetError());
     }
   }
   ambience = Mix_LoadMUS( filemgr.get_media(music_files[0]).c_str() );
   if(ambience == NULL){
-    printf("failed to load MUS for music: %s\n", filemgr.get_media(music_files[0]).c_str());
+    printf("failed to load MUS for music: '%s' '%s'\n", filemgr.get_media(music_files[0]).c_str(), Mix_GetError());
     return 0;
   }
   return 1;
