@@ -37,7 +37,6 @@ v20180313:
  New: Add spartak-chess game
  New: Add last-mission game
  New: Add ketm game
- New: Add OnScripter-Jh emulator (font render issue and crash issue)
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
@@ -55,6 +54,7 @@ v20180313:
  Changed: Power button will toggle suspend mode on/off
  Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
  Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
+ Backlogs: xmame, onscrioter-jh
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

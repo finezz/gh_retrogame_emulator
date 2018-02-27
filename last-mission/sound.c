@@ -25,7 +25,7 @@ void LoadSoundFiles()
 	if (isInitialized) return;
 
 	isInitialized = 1;
-#if 0
+#if 1
 	music_intro = Mix_LoadMUS("sound/music_intro.ogg");
 	music_game = Mix_LoadMUS("sound/music.ogg");
 	bonus = Mix_LoadWAV("sound/bonus.ogg");
