@@ -11,7 +11,6 @@ typedef unsigned char u8;
 
 void TXT_Printf(TTF_Font *ttf, SDL_Surface *surface, int x, int y, SDL_Color color, char *format, ...) {
 	char buf[1024];
-	SDL_Rect rect;
 	SDL_Surface *pSurfaceText;
 
 	va_list arg;
@@ -20,9 +19,9 @@ void TXT_Printf(TTF_Font *ttf, SDL_Surface *surface, int x, int y, SDL_Color col
 	vsprintf(buf, format, arg);
 	va_end(arg);
 
-	pSurfaceText = TTF_RenderUTF8_Blended (ttf, buf, color);
-	
-	if (pSurfaceText) {
+	pSurfaceText = TTF_RenderUTF8_Blended (ttf, buf, color);	
+	if(pSurfaceText){
+	  SDL_Rect rect;
 		rect.x = x; rect.y = y;
 		SDL_BlitSurface(pSurfaceText, NULL, surface, &rect);
 		SDL_FreeSurface(pSurfaceText);

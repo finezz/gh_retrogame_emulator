@@ -1,10 +1,14 @@
-$ export TARGETMACH=mipsel-openwrt-linux
+$ export TARGETMACH=mipsel-linux
 $ export BUILDMACH=i686-pc-linux-gnu
-$ export CROSS=mipsel-openwrt-linux
+$ export CROSS=mipsel-linux
 $ export CC=${CROSS}-gcc
 $ export LD=${CROSS}-ld
 $ export AS=${CROSS}-as
 $ export CXX=${CROSS}-g++
+
+get libdes.so
+$ cd 3rdparty/des-4.04b
+$ make
 
 $ cd core
 $ ./configure --host=$TARGETMACH

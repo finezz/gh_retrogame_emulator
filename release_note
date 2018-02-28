@@ -37,6 +37,15 @@ v20180313:
  New: Add spartak-chess game
  New: Add last-mission game
  New: Add ketm game
+ New: Add Just4Qix game
+ New: Add Arkanoid game
+ New: Add Zelda-Roth game
+ New: Add Boulder game
+ New: Add Pang game
+ New: Add Digger game
+ New: Add ProfaDeluxe game
+ New: Add Noiz2sa game
+ New: Add NXEngine emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
@@ -45,6 +54,7 @@ v20180313:
  Fixed: (FBA a320 emulator) cannot show preview image
  Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
  Fixed: (ReGBA emulator) Aspect rate refine by TonyJih
+ Fixed: (Fceux emulator) Original rate refine by TonyJih
  Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")

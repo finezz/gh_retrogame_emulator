@@ -169,15 +169,16 @@ int InitVideo(FCEUGI *gi) {
 			{480, 272}
 		};
 
-		for(vm = NUMOFVIDEOMODES-1; vm >= 0; vm--)
-		{
-			if(SDL_VideoModeOK(VModes[vm].x, VModes[vm].y, 16, SDL_HWSURFACE | DINGOO_MULTIBUF) != 0)
-			{
-				screen = SDL_SetVideoMode(VModes[vm].x, VModes[vm].y, 16, SDL_HWSURFACE | DINGOO_MULTIBUF);
+		//TonyJih@CTC for RS97 screen
+		//for(vm = NUMOFVIDEOMODES-1; vm >= 0; vm--)
+		//{
+			//if(SDL_VideoModeOK(VModes[vm].x, VModes[vm].y, 16, SDL_HWSURFACE | DINGOO_MULTIBUF) != 0)
+			//{
+				screen = SDL_SetVideoMode(320, 480, /*VModes[vm].x, VModes[vm].y,*/ 16, SDL_HWSURFACE);
 				s_VideoModeSet = true;
-				break;
-			}
-		}
+				//break;
+			//}
+		//}
 	}
 
 	// a hack to bind inner buffer to nes_screen surface
@@ -405,7 +406,7 @@ void BlitScreen(uint8 *XBuf) {
 				src += (s_firstline * 256) + 8;
 				register uint16 *dest = (uint16 *) screen->pixels;
 				//dest += (320 * s_firstline) + 20;
-				dest += (screen->w * s_firstline) + (screen->w - 280) / 2 + ((screen->h - 240) / 2) * screen->w;
+				dest += (screen->w * s_firstline) + (screen->w - 280) / 2 + ((screen->h - 466) / 2) * screen->w;
 
 				// semi fullscreen no blur
 				for (y = s_tlines; y; y--) {
@@ -424,12 +425,13 @@ void BlitScreen(uint8 *XBuf) {
 					src += 16;
 					//dest += 40;
 					dest += screen->w - 280;
+					dest += 320;
+
 				}
 		}
 	} else { // native res
 		//int pinc = (320 - NWIDTH) >> 1;
 		int32 pinc = (screen->w - NWIDTH) >> 1;
-
 		//SDL_Rect dstrect;
 
 		// center windows
@@ -444,18 +446,27 @@ void BlitScreen(uint8 *XBuf) {
 		// XXX soules - not entirely sure why this is being done yet
 		src += (s_firstline * 256) + NOFFSET;
 		//dest += (s_firstline * 320) + pinc >> 1;
-		dest += (screen->w/2 * s_firstline) + pinc / 2 + ((screen->h - 240) / 4) * screen->w;
+		
+		//TonyJih@CTC for RS97 screen
+		//dest += (screen->w/2 * s_firstline) + pinc / 2 + ((screen->h - 240) / 4) * screen->w;
+		dest += (screen->w/2 * s_firstline) + pinc / 2 + ((screen->h - 466) / 4) * screen->w;
 
 		for (y = s_tlines; y; y--, src += 256 - NWIDTH) {
 			for (x = NWIDTH >> 3; x; x--) {
 				__builtin_prefetch(dest + 4, 1);
+				*(dest + 160) = palettetranslate[*(uint16 *) src];
 				*dest++ = palettetranslate[*(uint16 *) src];
+				*(dest + 160) = palettetranslate[*(uint16 *) (src + 2)];
 				*dest++ = palettetranslate[*(uint16 *) (src + 2)];
+				*(dest + 160) = palettetranslate[*(uint16 *) (src + 4)];
 				*dest++ = palettetranslate[*(uint16 *) (src + 4)];
+				*(dest + 160) = palettetranslate[*(uint16 *) (src + 6)];
 				*dest++ = palettetranslate[*(uint16 *) (src + 6)];
 				src += 8;
 			}
 			dest += pinc;
+			//TonyJih@CTC for RS97 screen
+			dest += 160;
 		}
 	}
 
