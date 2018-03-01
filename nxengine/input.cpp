@@ -37,12 +37,12 @@ bool input_init(void)
 		mappings[SDLK_RIGHT] = RIGHTKEY;
 		mappings[SDLK_UP] = UPKEY;
 		mappings[SDLK_DOWN] = DOWNKEY;
-		mappings[SDLK_z] = JUMPKEY;
-		mappings[SDLK_x] = FIREKEY;
-		mappings[SDLK_a] = PREVWPNKEY;
-		mappings[SDLK_s] = NEXTWPNKEY;
-		mappings[SDLK_q] = INVENTORYKEY;
-		mappings[SDLK_w] = MAPSYSTEMKEY;
+		mappings[SDLK_LCTRL] = JUMPKEY;
+		mappings[SDLK_LALT] = FIREKEY;
+		mappings[SDLK_SPACE] = PREVWPNKEY;
+		mappings[SDLK_LSHIFT] = NEXTWPNKEY;
+		mappings[SDLK_TAB] = INVENTORYKEY;
+		mappings[SDLK_BACKSPACE] = MAPSYSTEMKEY;
 		
 		mappings[SDLK_ESCAPE] = ESCKEY;
 		
@@ -59,12 +59,11 @@ bool input_init(void)
 		mappings[SDLK_F11] = F11KEY;
 		mappings[SDLK_F12] = F12KEY;
 		
-		mappings[SDLK_SPACE] = FREEZE_FRAME_KEY;
-		mappings[SDLK_c] = FRAME_ADVANCE_KEY;
-		mappings[SDLK_v] = DEBUG_FLY_KEY;
+		mappings[SDLK_a] = FREEZE_FRAME_KEY;
+		mappings[SDLK_b] = FRAME_ADVANCE_KEY;
+		mappings[SDLK_c] = DEBUG_FLY_KEY;
 	}
 	#endif
-	
 	return 0;
 }
 
@@ -114,9 +113,11 @@ static const char *input_names[] =
 
 void input_set_mappings(int *array)
 {
+#if 0
 	memset(mappings, 0xff, sizeof(mappings));
 	for(int i=0;i<INPUT_COUNT;i++)
 		mappings[array[i]] = i;
+#endif
 }
 
 /*
@@ -125,9 +126,9 @@ void c------------------------------() {}
 
 void input_poll(void)
 {
-SDL_Event evt;
-int ino, key;
-	
+  SDL_Event evt;
+  int ino, key;
+		
 	while(SDL_PollEvent(&evt))
 	{
 		switch(evt.type)
@@ -140,7 +141,7 @@ int ino, key;
 				#ifndef __SDLSHIM__
 				static uint8_t shiftstates = 0;
 				extern bool freezeframe;
-				
+
 				if (console.IsVisible() && !IsNonConsoleKey(key))
 				{
 					if (key == SDLK_LSHIFT)
@@ -230,7 +231,6 @@ static const int nosend[] = { SDLK_LEFT, SDLK_RIGHT, 0 };
 	for(int i=0;nosend[i];i++)
 		if (key == nosend[i])
 			return true;
-	
 	return false;
 }
 

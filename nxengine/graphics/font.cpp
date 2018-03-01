@@ -36,6 +36,7 @@ static bool rendering = true;
 static bool shrink_spaces = true;
 static int fontheight = 0;
 
+TTF_Font *chFont=NULL;
 NXFont whitefont;
 NXFont greenfont;
 NXFont bluefont;		// used for "F3:Options" text on pause screen
@@ -115,7 +116,6 @@ bool error = false;
 
 void font_close(void)
 {
-	
 }
 
 bool font_reload()
@@ -418,17 +418,18 @@ SDL_Rect dstrect;
 }
 #endif
 
-
 // draw a text string
 static int text_draw(int x, int y, const char *text, int spacing, NXFont *font)
 {
-int orgx = x;
-int i;
-SDL_Rect dstrect;
-	
+  int orgx = x;
+  int i;
+  SDL_Rect dstrect;
+
 	for(i=0;text[i];i++)
 	{
 		uint8_t ch = text[i];
+    printf("0x%x,", ch);
+    
 		SDL_Surface *letter = font->letters[ch];
 		
 		if (ch == '=' && game.mode != GM_CREDITS)
@@ -466,7 +467,8 @@ SDL_Rect dstrect;
 			}
 		}
 	}
-	
+  printf("\n");
+
 	// return the final width of the text drawn
 	return (x - orgx);
 }

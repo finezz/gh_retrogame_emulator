@@ -277,9 +277,8 @@ void TextBox::DrawTextBox()
 	
 	for(int i=0;i<MSG_NLINES;i++)
 	{
-		int lineWidth = \
-			font_draw(text_x, y, fLines[i], char_spacing);
-		
+		int lineWidth = font_draw(text_x, y, fLines[i], char_spacing);
+
 		// draw the cursor
 		if (i == fCurLine && fCursorTimer < 7)
 		{

@@ -67,7 +67,7 @@ bool Graphics::init(int resolution)
 void Graphics::close()
 {
 	stat("Graphics::Close()");
-	SDL_ShowCursor(0);
+	SDL_ShowCursor(1);
 }
 
 /*
@@ -87,7 +87,8 @@ SDL_Surface *sdl_screen;
 	#ifndef __SDLSHIM__
 	putenv((char *)"SDL_VIDEO_CENTERED=1");
 	#endif
-	
+
+  screen_bpp = 16;
 	stat("SDL_SetVideoMode: %dx%d @ %dbpp", SCREEN_WIDTH*SCALE, SCREEN_HEIGHT*SCALE, screen_bpp);
 	//sdl_screen = SDL_SetVideoMode(SCREEN_WIDTH*SCALE, /*SCREEN_HEIGHT*SCALE*/480, screen_bpp, flags);
 	ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
@@ -97,7 +98,6 @@ SDL_Surface *sdl_screen;
 		staterr("Graphics::InitVideo: error setting video mode");
 		return 1;
 	}
-  SDL_ShowCursor(0);
 	
 	if (use_palette && !(sdl_screen->flags & SDL_HWPALETTE))
 	{
@@ -106,7 +106,8 @@ SDL_Surface *sdl_screen;
 	}
 	
 	SDL_WM_SetCaption("NXEngine", NULL);
-	SDL_ShowCursor(is_fullscreen == false);
+	//SDL_ShowCursor(is_fullscreen == false);
+  SDL_ShowCursor(0);
 	
 	screen = new NXSurface(sdl_screen, false);
 	if (!drawtarget) drawtarget = screen;
