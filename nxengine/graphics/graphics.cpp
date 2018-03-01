@@ -67,7 +67,6 @@ bool Graphics::init(int resolution)
 void Graphics::close()
 {
 	stat("Graphics::Close()");
-	SDL_ShowCursor(1);
 }
 
 /*
