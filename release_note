@@ -47,6 +47,8 @@ v20180313:
  New: Add Noiz2sa game
  New: Add NXEngine emulator
  New: Add Chocolate-doom game
+ New: Add FreeDroidClassic game
+ New: Add vice emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
@@ -57,6 +59,7 @@ v20180313:
  Fixed: (ReGBA emulator) Aspect rate refine by TonyJih
  Fixed: (Fceux emulator) Original rate refine by TonyJih
  Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
+ Fixed: czdoom issue (use chocolate-doom if you suffer from some issues)
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
@@ -65,7 +68,8 @@ v20180313:
  Changed: Power button will toggle suspend mode on/off
  Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
  Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
- Backlogs: xmame, onscrioter-jh
+ Pending: xmame (speed it very slow)
+ Pending: onscrioter-jh (crash sometimes)
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

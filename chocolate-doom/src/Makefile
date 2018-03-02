@@ -430,12 +430,12 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-ACLOCAL = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
-AUTOCONF = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing autoconf
-AUTOHEADER = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing autoheader
-AUTOMAKE = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing automake-1.15
+AUTOCONF = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing autoconf
+AUTOHEADER = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing autoheader
+AUTOMAKE = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing automake-1.15
 AWK = gawk
 CC = mipsel-linux-gcc
 CCDEPMODE = depmode=gcc3
@@ -457,11 +457,11 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS =  -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread
+LDFLAGS =  -L/usr/lib/x86_64-linux-gnu -lSDL
 LIBOBJS = 
 LIBS = -lm -lpng -lz 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing makeinfo
+MAKEINFO = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = chocolate-doom
@@ -484,19 +484,19 @@ SDLMIXER_CFLAGS =
 SDLMIXER_LIBS =  -lSDL_mixer
 SDLNET_CFLAGS = 
 SDLNET_LIBS =  -lSDL_net
-SDL_CFLAGS = -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-SDL_CONFIG = /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/bin/sdl-config
-SDL_LIBS = -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread
+SDL_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+SDL_CONFIG = /usr/bin/sdl-config
+SDL_LIBS = -L/usr/lib/x86_64-linux-gnu -lSDL
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = mipsel-linux-strip
 VERSION = 2.2.1
 WINDOWS_RC_VERSION = 2, 2, 1, 0
 WINDRES = 
-abs_builddir = /home/steward/Downloads/chocolate-doom/src
-abs_srcdir = /home/steward/Downloads/chocolate-doom/src
-abs_top_builddir = /home/steward/Downloads/chocolate-doom
-abs_top_srcdir = /home/steward/Downloads/chocolate-doom
+abs_builddir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom/src
+abs_srcdir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom/src
+abs_top_builddir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom
+abs_top_srcdir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom
 ac_aux_dir = autotools
 ac_ct_CC = 
 am__include = include
@@ -516,7 +516,7 @@ host_alias = mipsel-linux
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/install-sh
+install_sh = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -575,7 +575,7 @@ net_structrw.c       net_structrw.h        \
 z_native.c           z_zone.h
 
 chocolate-server_SOURCES = $(COMMON_SOURCE_FILES) $(DEDSERV_FILES)
-chocolate-server_LDADD =  -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread  -lSDL_net
+chocolate-server_LDADD =  -L/usr/lib/x86_64-linux-gnu -lSDL  -lSDL_net
 
 # Source files used by the game binaries (chocolate-doom, etc.)
 GAME_SOURCE_FILES = \
@@ -673,8 +673,8 @@ EXTRA_LIBS = \
                $(top_builddir)/textscreen/libtextscreen.a  \
                $(top_builddir)/pcsound/libpcsound.a        \
                $(top_builddir)/opl/libopl.a                \
-                -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread                                   \
-               -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread                                  \
+                -L/usr/lib/x86_64-linux-gnu -lSDL                                   \
+               -L/usr/lib/x86_64-linux-gnu -lSDL                                  \
                 -lSDL_mixer                             \
                 -lSDL_net
 
@@ -710,7 +710,7 @@ chocolate-setup_SOURCES = $(SETUP_FILES) $(COMMON_SOURCE_FILES)
 #chocolate-setup_SOURCES = $(SETUP_FILES) $(COMMON_SOURCE_FILES) setup-res.rc
 chocolate-setup_LDADD = setup/libsetup.a                             \
                         $(top_builddir)/textscreen/libtextscreen.a   \
-                         -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread  -lSDL_mixer  -lSDL_net
+                         -L/usr/lib/x86_64-linux-gnu -lSDL -L/usr/lib/x86_64-linux-gnu -lSDL  -lSDL_mixer  -lSDL_net
 
 EXTRA_DIST = \
         icon.c                      \
@@ -1367,10 +1367,10 @@ icon.c : $(top_builddir)/data/doom8.ico
 	$(top_builddir)/data/convert-icon $< $@
 
 midiread : midifile.c
-	$(CC) -DTEST $(CFLAGS)  -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread $< -o $@
+	$(CC) -DTEST $(CFLAGS)  -L/usr/lib/x86_64-linux-gnu -lSDL $< -o $@
 
 mus2mid : mus2mid.c memio.c z_native.c i_system.c m_argv.c m_misc.c
-	$(CC) -DSTANDALONE -I$(top_builddir) $(CFLAGS)  -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread $^ -o $@
+	$(CC) -DSTANDALONE -I$(top_builddir) $(CFLAGS)  -L/usr/lib/x86_64-linux-gnu -lSDL $^ -o $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -202,16 +202,16 @@ am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/setup-manifest.xml.in $(srcdir)/setup.desktop.in \
 	$(top_srcdir)/autotools/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
-AUTOCONF = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing autoconf
-AUTOHEADER = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing autoheader
-AUTOMAKE = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing automake-1.15
+AUTOCONF = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing autoconf
+AUTOHEADER = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing autoheader
+AUTOMAKE = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing automake-1.15
 AWK = gawk
 CC = mipsel-linux-gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -O2 -g -Wall -Wdeclaration-after-statement -Wredundant-decls  -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+CFLAGS = -O2 -g -Wall -Wdeclaration-after-statement -Wredundant-decls  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 CPP = mipsel-linux-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -229,11 +229,11 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
-LDFLAGS =  -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread
+LDFLAGS =  -L/usr/lib/x86_64-linux-gnu -lSDL
 LIBOBJS = 
 LIBS = -lm -lpng -lz 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/missing makeinfo
+MAKEINFO = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/missing makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = chocolate-doom
@@ -256,19 +256,19 @@ SDLMIXER_CFLAGS =
 SDLMIXER_LIBS =  -lSDL_mixer
 SDLNET_CFLAGS = 
 SDLNET_LIBS =  -lSDL_net
-SDL_CFLAGS = -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-SDL_CONFIG = /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/bin/sdl-config
-SDL_LIBS = -L/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib -lSDL -lpthread
+SDL_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+SDL_CONFIG = /usr/bin/sdl-config
+SDL_LIBS = -L/usr/lib/x86_64-linux-gnu -lSDL
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = mipsel-linux-strip
 VERSION = 2.2.1
 WINDOWS_RC_VERSION = 2, 2, 1, 0
 WINDRES = 
-abs_builddir = /home/steward/Downloads/chocolate-doom/src/setup
-abs_srcdir = /home/steward/Downloads/chocolate-doom/src/setup
-abs_top_builddir = /home/steward/Downloads/chocolate-doom
-abs_top_srcdir = /home/steward/Downloads/chocolate-doom
+abs_builddir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom/src/setup
+abs_srcdir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom/src/setup
+abs_top_builddir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom
+abs_top_srcdir = /home/steward/Github/gh_retrogame_emulator/chocolate-doom
 ac_aux_dir = autotools
 ac_ct_CC = 
 am__include = include
@@ -288,7 +288,7 @@ host_alias = mipsel-linux
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/steward/Downloads/chocolate-doom/autotools/install-sh
+install_sh = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/autotools/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -310,7 +310,7 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
 gamesdir = $(prefix)/games
-AM_CFLAGS = -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT                                           \
+AM_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT                                           \
                                                   \
             -I$(top_srcdir)/textscreen -I$(top_srcdir)/src
 

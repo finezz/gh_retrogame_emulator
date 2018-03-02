@@ -486,11 +486,11 @@ static int TranslateKey(SDL_keysym *sym)
 
       case SDLK_LSHIFT:
       case SDLK_RSHIFT:
-	return KEY_RSHIFT;
+				return KEY_RSHIFT;
 	
       case SDLK_LCTRL:
       case SDLK_RCTRL:
-	return KEY_RCTRL;
+				return KEY_RCTRL;
 	
       case SDLK_LALT:
       case SDLK_RALT:

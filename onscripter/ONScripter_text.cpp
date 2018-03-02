@@ -23,7 +23,7 @@
  */
 
 #include "ONScripter.h"
-
+extern int convUTF16ToUTF8( unsigned char dst[4], unsigned short src );
 extern unsigned short convSJIS2UTF16( unsigned short in );
 
 #define IS_ROTATION_REQUIRED(x)	\
@@ -93,12 +93,17 @@ void ONScripter::drawGlyph( SDL_Surface *dst_surface, FontInfo *info, SDL_Color 
                       &minx, &maxx, &miny, &maxy, &advanced );
     //printf("min %d %d %d %d %d %d\n", minx, maxx, miny, maxy, advanced,TTF_FontAscent((TTF_Font*)info->ttf_font[0])  );
 
+		char buf[4]={0};
     static SDL_Color fcol={0xff, 0xff, 0xff}, bcol={0, 0, 0};
-    SDL_Surface *tmp_surface = TTF_RenderGlyph_Shaded((TTF_Font*)info->ttf_font[0], unicode, fcol, bcol);
+
+		convUTF16ToUTF8((unsigned char*)buf, unicode);
+    //SDL_Surface *tmp_surface = TTF_RenderGlyph_Shaded((TTF_Font*)info->ttf_font[0], unicode, fcol, bcol);
+    SDL_Surface *tmp_surface = TTF_RenderUTF8_Shaded((TTF_Font*)info->ttf_font[0], buf, fcol, bcol);
     
     SDL_Surface *tmp_surface_s = tmp_surface;
     if (shadow_flag && render_font_outline){
-        tmp_surface_s = TTF_RenderGlyph_Shaded((TTF_Font*)info->ttf_font[1], unicode, fcol, bcol);
+        //tmp_surface_s = TTF_RenderGlyph_Shaded((TTF_Font*)info->ttf_font[1], unicode, fcol, bcol);
+    		tmp_surface = TTF_RenderUTF8_Shaded((TTF_Font*)info->ttf_font[0], buf, fcol, bcol);
         if (tmp_surface && tmp_surface_s){
             if ((tmp_surface_s->w-tmp_surface->w) & 1) shiftHalfPixelX(tmp_surface_s);
             if ((tmp_surface_s->h-tmp_surface->h) & 1) shiftHalfPixelY(tmp_surface_s);
