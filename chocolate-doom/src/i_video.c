@@ -1071,7 +1071,7 @@ static void UpdateRect(int x1, int y1, int x2, int y2)
                        y2_scaled - y1_scaled);
 #else
         {
-          if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+          /*if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
           int x, y;
           int w = screen->w >> 1;
           int h = screen->h;
@@ -1084,7 +1084,8 @@ static void UpdateRect(int x1, int y1, int x2, int y2)
             d+= (160 - w);
             d+= 160;
           }
-          if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
+          if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);*/
+          SDL_SoftStretch(screen, NULL, ScreenSurface, NULL);
           SDL_Flip(ScreenSurface);
         }
 #endif
@@ -1225,7 +1226,7 @@ void I_FinishUpdate (void)
 
     //SDL_Flip(screen);
     {
-        if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+        /*if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
         int x, y;
         int w = screen->w >> 1;
         int h = screen->h;
@@ -1238,7 +1239,8 @@ void I_FinishUpdate (void)
           d+= (160 - w);
           d+= 160;
         }
-        if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
+        if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);*/
+        SDL_SoftStretch(screen, NULL, ScreenSurface, NULL);
         SDL_Flip(ScreenSurface);
     }
 }

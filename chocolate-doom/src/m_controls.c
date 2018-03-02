@@ -25,18 +25,24 @@
 //
 // Keyboard controls
 //
+//SDLK_LCTRL     = 306 (A)
+//SDLK_LALT      = 308 (B)
+//SDLK_SPACE     = 32  (X)
+//SDLK_LSHIFT    = 304 (Y)
+//SDLK_BACKSPACE = 8   (R)
+//SDLK_TAB       = 9   (L)
 
 int key_right = KEY_RIGHTARROW;
 int key_left = KEY_LEFTARROW;
 
 int key_up = KEY_UPARROW;
 int key_down = KEY_DOWNARROW; 
-int key_strafeleft = ',';
-int key_straferight = '.';
-int key_fire = KEY_RCTRL;
-int key_use = ' ';
-int key_strafe = KEY_RALT;
-int key_speed = KEY_RSHIFT; 
+int key_strafeleft = KEY_TAB;//',';
+int key_straferight = KEY_BACKSPACE;//'.';
+int key_fire = KEY_RALT;//KEY_RCTRL;
+int key_use = KEY_RSHIFT;// ' ';
+int key_strafe = ' ';//KEY_RALT;
+int key_speed = KEY_RCTRL;//KEY_RSHIFT; 
 
 // 
 // Heretic keyboard controls
