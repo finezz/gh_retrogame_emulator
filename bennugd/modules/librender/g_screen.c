@@ -32,7 +32,6 @@
 
 #include "librender.h"
 
-extern SDL_Surface *ScreenSurface;
 /* --------------------------------------------------------------------------- */
 
 static GRAPH * scrbitmap_extra = NULL ;
@@ -172,7 +171,8 @@ int gr_lock_screen()
 
         if ( !scrbitmap )
         {
-            scrbitmap = bitmap_new( 0, screen->w / 2, screen->h / 2, sys_pixel_format->depth ) ;
+            //scrbitmap = bitmap_new( 0, screen->w / 2, screen->h / 2, sys_pixel_format->depth ) ;
+            scrbitmap = bitmap_new( 0, screen->w / 2, screen->h, sys_pixel_format->depth ) ; // fix by steward for retrogame
             bitmap_add_cpoint( scrbitmap, 0, 0 ) ;
         }
     }
@@ -181,7 +181,8 @@ int gr_lock_screen()
         if ( !scrbitmap || !( scrbitmap->info_flags & GI_EXTERNAL_DATA ) )
         {
             if ( scrbitmap ) bitmap_destroy( scrbitmap ) ;
-            scrbitmap = bitmap_new_ex( 0, screen->w, screen->h, screen->format->BitsPerPixel, screen->pixels, screen->pitch );
+            //scrbitmap = bitmap_new_ex( 0, screen->w, screen->h, screen->format->BitsPerPixel, screen->pixels, screen->pitch );
+            scrbitmap = bitmap_new_ex( 0, screen->w, screen->h, screen->format->BitsPerPixel, screen->pixels, screen->pitch * 2); // fix by steward for retrogame
             bitmap_add_cpoint( scrbitmap, 0, 0 ) ;
         }
     }
@@ -414,8 +415,6 @@ void gr_unlock_screen()
 
         if ( SDL_MUSTLOCK( scale_screen ) ) SDL_UnlockSurface( scale_screen ) ;
         if ( waitvsync ) gr_wait_vsync();
-
-        printf("steward, scale_screen\n");
         SDL_Flip( scale_screen ) ;
     }
     else if ( enable_scale )
@@ -484,23 +483,12 @@ void gr_unlock_screen()
 
         if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
         if ( waitvsync ) gr_wait_vsync();
-        //SDL_Flip( screen ) ;
-        if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_LockSurface( ScreenSurface ) ;
-        int x, y;
-        uint32_t* s=screen->pixels;
-        uint32_t* d=ScreenSurface->pixels;
-        for(y=0; y<240; y++){
-          for(x=0; x<160; x++){
-            *d++ = *s++;
-          }
-          d+= 160;
-        }
-        if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_UnlockSurface( ScreenSurface ) ;
-        SDL_Flip(ScreenSurface);
+        SDL_Flip( screen ) ;
     }
     else if ( scrbitmap->info_flags & GI_EXTERNAL_DATA )
     {
-        if ( double_buffer ||
+#if 0
+        /*if ( double_buffer ||
                 (
                     updaterects_count == 1 &&
                     updaterects[0].x == 0 &&
@@ -512,19 +500,7 @@ void gr_unlock_screen()
         {
             if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
             if ( waitvsync ) gr_wait_vsync();
-            //SDL_Flip( screen ) ; 
-            if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_LockSurface( ScreenSurface ) ;
-            int x, y;
-            uint32_t* s=screen->pixels;
-            uint32_t* d=ScreenSurface->pixels;
-            for(y=0; y<240; y++){
-              for(x=0; x<160; x++){
-                *d++ = *s++;
-              }
-              d+= 160;
-            }
-            if ( SDL_MUSTLOCK( ScreenSurface ) ) SDL_UnlockSurface( ScreenSurface ) ;
-            SDL_Flip(ScreenSurface);
+            SDL_Flip( screen ) ;
         }
         else
         {
@@ -541,10 +517,47 @@ void gr_unlock_screen()
                 }
                 if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
                 if ( waitvsync ) gr_wait_vsync();
-                printf("steward, screen 3\n");
+                SDL_UpdateRects( screen, updaterects_count, rects ) ;
+            }
+        }*/
+
+				// fix by steward for retrogame
+        if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
+        SDL_Flip( screen ) ;
+#else
+        if ( double_buffer ||
+                (
+                    updaterects_count == 1 &&
+                    updaterects[0].x == 0 &&
+                    updaterects[0].y == 0 &&
+                    updaterects[0].x2 == scr_width - 1 &&
+                    updaterects[0].y2 == scr_height - 1
+                )
+           )
+        {
+            if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
+            //if ( waitvsync ) gr_wait_vsync(); // fix by steward for retrogame
+            SDL_Flip( screen ) ;
+        }
+        else
+        {
+            if ( updaterects_count )
+            {
+                int i;
+
+                for ( i = 0 ; i < updaterects_count ; i++ )
+                {
+                    rects[ i ].x = updaterects[ i ].x;
+                    rects[ i ].y = updaterects[ i ].y * 2;
+                    rects[ i ].w = ( updaterects[ i ].x2 - rects[ i ].x + 1 );
+                    rects[ i ].h = ( (updaterects[ i ].y2 * 2) - rects[ i ].y + 1 );
+                }
+                if ( SDL_MUSTLOCK( screen ) ) SDL_UnlockSurface( screen ) ;
+                //if ( waitvsync ) gr_wait_vsync(); // fix by steward for retrogame
                 SDL_UpdateRects( screen, updaterects_count, rects ) ;
             }
         }
+#endif
     }
 }
 

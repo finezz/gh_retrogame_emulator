@@ -48,7 +48,6 @@
 GRAPH * icon = NULL ;
 
 SDL_Surface * screen = NULL ;
-SDL_Surface * ScreenSurface = NULL ;
 SDL_Surface * scale_screen = NULL ;
 
 char * apptitle = NULL ;
@@ -450,14 +449,7 @@ int gr_set_mode( int width, int height, int depth )
     }
     else
     {
-        if(surface_height){
-          surface_height = 480;
-        }
-        ScreenSurface = SDL_SetVideoMode( surface_width, 480/*surface_height*/, depth, sdl_flags );
-        if(screen){
-          SDL_FreeSurface(screen);
-        }
-        screen = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 240, 16, 0, 0, 0, 0);
+        screen = SDL_SetVideoMode( surface_width, surface_height << 1, depth, /*sdl_flags*/SDL_SWSURFACE ); // fix by steward for retrogame
     }
 
     if ( !screen ) return -1;

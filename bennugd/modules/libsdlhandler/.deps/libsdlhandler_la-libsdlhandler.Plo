@@ -1,6 +1,6 @@
 libsdlhandler_la-libsdlhandler.lo: libsdlhandler.c \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/bgddl.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/features.h \
@@ -8,13 +8,13 @@ libsdlhandler_la-libsdlhandler.lo: libsdlhandler.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sys/cdefs.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wordsize.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h \
  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
  /usr/include/SDL/SDL_platform.h \
@@ -68,9 +68,9 @@ libsdlhandler_la-libsdlhandler.lo: libsdlhandler.c \
  /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
  /usr/include/SDL/SDL_version.h
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h:
+/home/steward/Downloads/bennugd/modules/../core/include/bgddl.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
+/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h:
 
@@ -86,19 +86,19 @@ libsdlhandler_la-libsdlhandler.lo: libsdlhandler.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wordsize.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h:
+/home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h:
 
 /usr/include/SDL/SDL.h:
 

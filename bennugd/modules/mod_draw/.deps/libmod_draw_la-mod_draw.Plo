@@ -34,22 +34,22 @@ libmod_draw_la-mod_draw.lo: mod_draw.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sys/sysmacros.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/pthreadtypes.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/bgddl.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dlvaracc.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/dlvaracc.h \
  ../libgrbase/libgrbase.h ../libgrbase/g_pal.h ../libgrbase/g_bitmap.h \
  ../libgrbase/g_clear.h \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
  ../libgrbase/g_region.h ../libgrbase/g_grlib.h ../libgrbase/g_blendop.h \
  ../libgrbase/g_conversion.h ../libblit/libblit.h ../libblit/g_blit.h \
  ../libblit/g_pixel.h ../librender/librender.h ../librender/g_fade.h \
@@ -158,9 +158,9 @@ libmod_draw_la-mod_draw.lo: mod_draw.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h:
+/home/steward/Downloads/bennugd/modules/../core/include/bgddl.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
+/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h:
 
@@ -168,21 +168,21 @@ libmod_draw_la-mod_draw.lo: mod_draw.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h:
+/home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dlvaracc.h:
+/home/steward/Downloads/bennugd/modules/../core/include/dlvaracc.h:
 
 ../libgrbase/libgrbase.h:
 
@@ -192,7 +192,7 @@ libmod_draw_la-mod_draw.lo: mod_draw.c \
 
 ../libgrbase/g_clear.h:
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
 
 ../libgrbase/g_region.h:
 

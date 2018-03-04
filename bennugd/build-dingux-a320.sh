@@ -4,7 +4,7 @@
 
 ## DINGUX - This should point to the root of your tool-chain {i.e. folder above the BIN dir}
 
-DINGUX=/home/steward/Downloads/buildroot-2017.02.9/output/host/usr
+DINGUX=/opt/dingux-a320/mipsel-linux-uclibc/usr
 
 ## HOST and TARGET - These should be the canonical tool names of your tool.
 ## For the sake of this script HOST and TARGET should be the same.
@@ -13,7 +13,7 @@ DINGUX=/home/steward/Downloads/buildroot-2017.02.9/output/host/usr
 HOST=mipsel-linux
 TARGET=mipsel-linux
 BUILD=`uname -m`
-PKG_CONFIG_PATH=/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/pkgconfig
+PKG_CONFIG_PATH=/opt/dingux-a320/mipsel-linux-uclibc/usr/lib/pkgconfig
 
 ## -- END DINGUX USER SETTINGS
 

@@ -350,7 +350,7 @@ configure:10890: checking how to hardcode library paths into programs
 configure:10915: result: immediate
 configure:11009: checking for shl_load
 configure:11009: mipsel-linux-gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccQCJhrZ.o: In function `main':
+/tmp/ccDDvopQ.o: In function `main':
 /home/steward/Downloads/bennugd/tools/moddesc/conftest.c:57: undefined reference to `shl_load'
 /home/steward/Downloads/bennugd/tools/moddesc/conftest.c:57: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status

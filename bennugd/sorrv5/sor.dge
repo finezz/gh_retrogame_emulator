@@ -1,0 +1,16 @@
+#!/bin/sh
+dir=`dirname $0`
+file=/usr/lib/libogg.so.0.8.1
+
+cd $dir
+if [ -f "$file" ]
+then
+	echo "$file found."
+else
+	echo "$file not found."
+	mount -o remount,rw / /
+	cp -a runtime/* /
+	mount -o remount,ro / /
+fi
+bgdi ./SorR.dat
+

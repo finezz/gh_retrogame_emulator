@@ -60,6 +60,8 @@ v20180313:
  Fixed: (Fceux emulator) Original rate refine by TonyJih
  Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
  Fixed: czdoom issue (use chocolate-doom if you suffer from some issues)
+ Fixed: Fix SDL_mixer MIDI music issue
+ Fixed: Fix SDL_mixer Ogg music issue
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
@@ -70,6 +72,8 @@ v20180313:
  Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
  Pending: xmame (speed it very slow)
  Pending: onscrioter-jh (crash sometimes)
+ Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
+ Workaround: SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed

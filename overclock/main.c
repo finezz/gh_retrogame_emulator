@@ -235,6 +235,7 @@ int main(int argc, char* argv[])
   }
 
 #if !defined(DEBUG)
+	munmap(mem, 1024);
 	close(fd);
 #endif
   SDL_RWclose(rw);

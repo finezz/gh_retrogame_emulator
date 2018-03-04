@@ -1,5 +1,5 @@
 libbgload_la-bgload.lo: bgload.c \
- /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h \
+ /home/steward/Downloads/bennugd/modules/../core/include/xstrings.h \
  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
  /usr/include/SDL/SDL_platform.h \
@@ -60,7 +60,7 @@ libbgload_la-bgload.lo: bgload.c \
  /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
  /usr/include/SDL/SDL_version.h bgload.h
 
-/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h:
+/home/steward/Downloads/bennugd/modules/../core/include/xstrings.h:
 
 /usr/include/SDL/SDL.h:
 

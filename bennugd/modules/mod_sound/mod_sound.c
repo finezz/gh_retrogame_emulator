@@ -232,9 +232,7 @@ static int load_song( const char * filename )
 
     if ( !( fp = file_open( filename, "rb0" ) ) ) return ( 0 );
 
-    // steward
     if ( !( music = Mix_LoadMUS_RW( SDL_RWFromBGDFP( fp ) ) ) )
-    //if ( !( music = Mix_LoadWAV_RW( SDL_RWFromBGDFP( fp ), 1 )) )
     {
         file_close( fp );
         fprintf( stderr, "Couldn't load %s: %s\n", filename, SDL_GetError() );

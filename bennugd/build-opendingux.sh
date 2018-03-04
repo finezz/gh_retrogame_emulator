@@ -148,7 +148,7 @@ fi
 cd -
 
 echo "### Copying files to bin folder ###"
-
+rm -rf bin
 mkdir -p bin/$TARGET 2>/dev/null
 cp 3rdparty/des-4.04b/libdes.so bin/$TARGET
 cp core/bgdi/src/.libs/bgdi bin/$TARGET
