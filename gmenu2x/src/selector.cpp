@@ -94,14 +94,18 @@ int Selector::exec(int startSelection) {
 			gmenu2x->s->box(1, iY, 309, 14, gmenu2x->skinConfColors[COLOR_SELECTION_BG]);
 
 			if(fl.isFile(selected)){
-        string previews = dir + "previews/" + fl[selected] + ".jpg";
+				int i;
+				string ext[3] = {".jpg", ".png", ".bmp"};
 
-        struct stat st;
-        int statRet = stat(previews.c_str(), &st);
-        if (statRet != -1) {
-					Surface pre(previews.c_str(), gmenu2x->confStr["skin"]);
-  				pre.blit( gmenu2x->s, 320 - 128 - 10, 240 - 128 - 25);
-        }
+				for(i=0; i<3; i++){
+					struct stat st;
+        	string preview = dir + "previews/" + fl[selected] + ext[i];
+					if(stat(preview.c_str(), &st) != -1){
+						Surface pre(preview.c_str(), gmenu2x->confStr["skin"]);
+						pre.blit( gmenu2x->s, 320 - 128 - 10, 240 - 128 - 25);
+						break;
+					}
+				}
       }
     }
 

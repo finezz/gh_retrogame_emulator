@@ -913,6 +913,25 @@ void setBacklight(int val) {
   system(buf);
 }
 
+void GMenu2X::setSuspend(int enter) {
+	char buf[64];
+
+	if(enter){	
+		sprintf(buf, "echo 0 > /proc/jz/lcd_backlight");
+		system(buf);
+		printf("enter suspend mode\n");
+		printf("current backlight: %d\n", backlightLevel);
+		setClock(250);
+	}
+	else{
+		sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
+		system(buf);
+		printf("exit suspend mode\n");
+		printf("restore backlight: %d\n", backlightLevel);
+		setClock(528);
+	}
+}
+
 void GMenu2X::main() {
 	int ret;
   int suspend=0;
@@ -929,9 +948,9 @@ void GMenu2X::main() {
   udc_status curUDCStatus = UDC_REMOVE;
   udc_status preUDCStatus = UDC_REMOVE;
   int needUSBUmount=0;
-	int backlightLevel=confInt["backlight"];
   int backlightOffset;
   bool inputAction;
+	int suspendTick=0;
 	bool quit = false;
 	int x,y, offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6, helpBoxHeight = fwType=="open2x" ? 154 : 139;
 	uint i;
@@ -944,6 +963,7 @@ void GMenu2X::main() {
 	uint sectionsCoordX = 24;
 	SDL_Rect re = {0,0,0,0};
 
+	backlightLevel = confInt["backlight"];
   setBacklight(backlightLevel);
 	btnContextMenu = new IconButton(this,"skin:imgs/menu.png");
 	btnContextMenu->setPosition(resX-38, bottomBarIconY);
@@ -1201,21 +1221,27 @@ void GMenu2X::main() {
 		inputAction = input.update(0);
     if (inputAction == 0) {
       usleep(50000);
+			if(suspendTick <= 300){
+				suspendTick+= 1;
+			}
+			else{
+				if(suspend == 0){
+					suspend = 1;
+					setSuspend(1);
+				}
+			}
       continue;
     }
     if(suspend){
       if ( input[POWER]) {
-        char buf[64];
-        sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
-        system(buf);
-        suspend = 0;
-        printf("exit suspend mode\n");
-        printf("restore backlight: %d\n", backlightLevel);
-        setClock(528);
+				suspend = 0;
+				setSuspend(0);
+				suspendTick = 0;
       }
       continue;
     }
 		if(backlightLevel) {
+			suspendTick = 0;
 			if ( input[CONFIRM] && menu->selLink()!=NULL ) {
         setVolume(confInt["globalVolume"]);
         menu->selLink()->run();
@@ -1287,14 +1313,8 @@ void GMenu2X::main() {
 			}
     }
 		if (input[POWER]) {
-      char buf[64];
-
-      suspend = 1;
-      sprintf(buf, "echo 0 > /proc/jz/lcd_backlight");
-      system(buf);
-      printf("enter suspend mode\n");
-      printf("current backlight: %d\n", backlightLevel);
-      setClock(250);
+			suspend = 1;
+			setSuspend(1);
     }
 
 		if ( input[BACKLIGHT]) {

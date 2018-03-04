@@ -94,6 +94,8 @@ class Menu;
 class GMenu2X {
 private:
   int getBacklight();
+	void setSuspend(int enter);
+	int backlightLevel;
 
 	string path; //!< Contains the working directory of GMenu2X
 	/*!
