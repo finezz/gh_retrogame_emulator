@@ -54,6 +54,7 @@ v20180313:
  New: Add NP2 emulator
  New: Add scummvm emulator
  New: Add gpsp emulator
+ New: Add Sonic Robo Blast 2 game
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme

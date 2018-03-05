@@ -1,0 +1,5 @@
+#!/bin/sh
+dir=`dirname $0`
+cd $dir
+rm -rf /mnt/game/.srb2
+./srb2
