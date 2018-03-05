@@ -273,7 +273,7 @@ static int frameskip = 0;
 			game.pause(GP_PAUSED);
 		}
 	}
-	else if (justpushed(F3KEY))
+	else if (justpushed(NEXTWPNKEY))
 	{
 		game.pause(GP_OPTIONS);
 	}

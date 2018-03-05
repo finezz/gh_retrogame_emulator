@@ -16,24 +16,24 @@ void pause_tick()
 	int cy = (SCREEN_HEIGHT / 2) - (sprites[SPR_RESETPROMPT].h / 2);
 	draw_sprite(cx, cy, SPR_RESETPROMPT);
 	
-	const char *str = "F3:Options";
+	const char *str = "Y:Options";
 	cx = (SCREEN_WIDTH / 2) - (GetFontWidth(str, 0) / 2) - 4;
 	cy = (SCREEN_HEIGHT - 8) - GetFontHeight();
-	int f3wd = font_draw(cx, cy, "F3", 0);
+	int f3wd = font_draw(cx, cy, "Y", 0);
 	font_draw(cx + f3wd, cy, ":Options", 0, &bluefont);
 	
 	// resume
-	if (justpushed(F1KEY))
+	if (justpushed(JUMPKEY))
 	{
-		lastinputs[F1KEY] = true;
+		lastinputs[JUMPKEY] = true;
 		game.pause(false);
 		return;
 	}
 	
 	// reset
-	if (justpushed(F2KEY))
+	if (justpushed(FIREKEY))
 	{
-		lastinputs[F2KEY] = true;
+		lastinputs[FIREKEY] = true;
 		game.reset();
 		return;
 	}

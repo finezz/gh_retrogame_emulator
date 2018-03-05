@@ -52,6 +52,8 @@ v20180313:
  New: Enter suspend mode automatically if no any action for 30 seconds
  New: Add OpenMSX emulator
  New: Add NP2 emulator
+ New: Add scummvm emulator
+ New: Add gpsp emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
