@@ -75,10 +75,10 @@ v20180313:
  Changed: Power button will toggle suspend mode on/off
  Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
  Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
- Pending: xmame (speed it very slow)
+ Pending: xmame (speed is very slow)
  Pending: onscrioter-jh (crash sometimes)
  Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
- Workaround: SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
+ Workaround: SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
