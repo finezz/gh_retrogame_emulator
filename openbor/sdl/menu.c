@@ -24,7 +24,6 @@
 #include "../resources/OpenBOR_Menu_320x240_png.h"
 
 #include <dirent.h>
-
 extern int videoMode;
 extern s_videomodes videomodes;
 extern s_screen* vscreen;
@@ -53,7 +52,7 @@ s_screen* bgscreen;
 #define LOG_SCREEN_TOP 2
 #define LOG_SCREEN_END (isWide ? 26 : 23)
 
-int bpp = 32;
+int bpp = 16;//32;
 int isWide = 0;
 int isFull = 0;
 int flags;
@@ -174,7 +173,8 @@ int findPaks(void)
 #ifdef WII
 	dp = opendir("sd:/apps/OpenBOR/Paks");
 #elif GCW0
-	dp = opendir("/usr/local/share/OpenBOR/Paks");
+	//dp = opendir("/usr/local/share/OpenBOR/Paks");
+	dp = opendir("Paks");
 #else
 	dp = opendir(paksDir);
 #endif
@@ -593,10 +593,12 @@ void drawBGMPlayer()
 #endif
 
 	if(!bgmPlay) bgmCurrent = dListCurrentPosition+dListScrollPosition;
-	if(strlen(filelist[bgmCurrent].filename)-4 < 24)
-		strncpy(bgmListing, filelist[bgmCurrent].filename, strlen(filelist[bgmCurrent].filename)-4);
-	if(strlen(filelist[bgmCurrent].filename)-4 > 24)
-		strncpy(bgmListing, filelist[bgmCurrent].filename, 24);
+	if(filelist[bgmCurrent].filename){
+		if(strlen(filelist[bgmCurrent].filename)-4 < 24)
+			strncpy(bgmListing, filelist[bgmCurrent].filename, strlen(filelist[bgmCurrent].filename)-4);
+		if(strlen(filelist[bgmCurrent].filename)-4 > 24)
+			strncpy(bgmListing, filelist[bgmCurrent].filename, 24);
+	}
 	if(!sound_query_music(a1, t1))
 	{
 		PlayBGM();

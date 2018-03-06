@@ -213,10 +213,9 @@ BUILD_PTHREAD   = 1
 BUILD_SDL_IO    = 1
 BUILD_TREMOR    = 1
 BUILDING        = 1
-CC              = $(OPENDINGUX_TOOLCHAIN)/usr/bin/mipsel-linux-gcc
-INCLUDES        = $(OPENDINGUX_TOOLCHAIN_PREFIX)/include \
-                  $(OPENDINGUX_TOOLCHAIN_PREFIX)/include/SDL /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL/
-LIBRARIES       = $(OPENDINGUX_TOOLCHAIN_PREFIX)/lib
+CC              = mipsel-linux-gcc
+INCLUDES        = /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL/
+LIBRARIES       = 
 #ifeq ($(BUILD_OPENDINGUX), 0)
 BUILD_DEBUG     = 1
 #endif

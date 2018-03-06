@@ -51,7 +51,6 @@ SDL_Palette *screenPalette = NULL;
 FPSmanager framerate_manager;
 
 s_videomodes stored_videomodes;
-//static SDL_Surface *ScreenSurface = NULL;
 static SDL_Surface *screen = NULL;
 static SDL_Surface *bscreen = NULL;
 static SDL_Surface *bscreen2 = NULL;
@@ -128,7 +127,7 @@ void initSDL()
 	video_info = SDL_GetVideoInfo();
 #ifndef GP2X
 	nativeWidth = video_info->current_w;
-	nativeHeight = video_info->current_h;
+	nativeHeight = 240; //video_info->current_h; fix for retrogame
 	printf("debug:nativeWidth, nativeHeight, bpp  %d, %d, %d\n", nativeWidth, nativeHeight, video_info->vfmt->BitsPerPixel);
 #endif
 
@@ -185,15 +184,9 @@ SDL_Surface* SetVideoMode(int w, int h, int bpp, bool gl)
 	if(gl) return NULL;
 	else return SDL_CreateRGBSurface(0, w, h, bpp, masks[bpp/8-1][2], masks[bpp/8-1][1], masks[bpp/8-1][0], masks[bpp/8-1][3]);
 #elif defined(OPENDINGUX)
-	return SDL_SetVideoMode(w, h, bpp, savedata.fullscreen?(SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_HWSURFACE|SDL_DOUBLEBUF));
-  printf("steward, %s, %d %d %d\n", __func__, w, h, bpp);
-	//ScreenSurface = SDL_SetVideoMode(320, 480, 16, savedata.fullscreen?(SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_HWSURFACE|SDL_DOUBLEBUF));
-  //return SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, bpp, 0, 0, 0, 0);
+	return SDL_SetVideoMode(w, /*h*/480, /*bpp*/16, SDL_SWSURFACE/*savedata.fullscreen?(SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_HWSURFACE|SDL_DOUBLEBUF)*/);
 #else
-  printf("steward, %s, %d %d %d\n", __func__, w, h, bpp);
 	return SDL_SetVideoMode(w, h, bpp, savedata.fullscreen?(SDL_SWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_SWSURFACE|SDL_DOUBLEBUF));
-	//ScreenSurface = SDL_SetVideoMode(w, h, bpp, savedata.fullscreen?(SDL_SWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_SWSURFACE|SDL_DOUBLEBUF));
-  //return SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, bpp, 0, 0, 0, 0);
 #endif
 }
 
@@ -211,7 +204,7 @@ int video_set_mode(s_videomodes videomodes)
 
 	// FIXME: OpenGL surfaces aren't freed when switching from OpenGL to SDL
 
-	bytes_per_pixel = videomodes.pixel;
+	bytes_per_pixel = videomodes.pixel = 2; // fix for retrogame
 	if(videomodes.hRes==0 && videomodes.vRes==0)
 	{
 		Term_Gfx();
@@ -348,26 +341,50 @@ int video_copy_screen(s_screen* src)
 	if(SDL_MUSTLOCK(screen)) SDL_LockSurface(screen);
 
 	sp = (unsigned char*)src->data;
-	ds = (bscreen?bscreen:screen);
+	ds = (bscreen ? bscreen : screen);
 	dp = ds->pixels;
 
 	linew = width*bytes_per_pixel;
 	slinew = src->width*bytes_per_pixel;
 
+	// retrogame
+#if 0
 	do{
 		memcpy(dp, sp, linew);
 		sp += slinew;
 		dp += ds->pitch;
 	}while(--h);
+#else
+	if(src->pixelformat == 4){ // 32bit
+		printf("steward1, %d %d %d, %d %d %d\n", ds->w, ds->h, ds->pitch, src->width, src->height, src->pixelformat);
+		/*int x, y;
+		uint16_t *s = (uint16_t*)sp;
+		uint16_t *d = (uint16_t*)dp;
+		for(y=0; y<240; y++){
+			for(x=0; x<320; x++){
+				*d++ = *s++;
+			}
+			d+= 320;
+		}*/
+	}
+	else{ // 16bit
+		do{
+			memcpy(dp, sp, linew);
+			sp += slinew;
+			dp += ds->pitch;
+		}while(--h);
+	}
+#endif
 
 	if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
 
 	if(bscreen)
 	{
-		//printf(" bscreen ");
+		printf(" bscreen ");
 		if(SDL_MUSTLOCK(bscreen)) SDL_UnlockSurface(bscreen);
 		if(bscreen2)
 		{
+			printf(" bscreen2 ");
 			SDL_BlitSurface(bscreen, NULL, bscreen2, &rectsrc);
 			if(SDL_MUSTLOCK(bscreen2)) SDL_LockSurface(bscreen2);
 			if(SDL_MUSTLOCK(screen)) SDL_LockSurface(screen);
@@ -391,8 +408,6 @@ int video_copy_screen(s_screen* src)
 	SDL_UpdateWindowSurface(window);
 #else
 	SDL_Flip(screen);
-  //SDL_SoftStretch(screen, NULL, ScreenSurface, NULL);
-	//SDL_Flip(ScreenSurface);
 #endif
 
 #if WIN || LINUX

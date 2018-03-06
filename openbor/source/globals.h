@@ -60,7 +60,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef PP_TEST
-#define printf writeToLogFile
+//#define printf writeToLogFile
 
 #undef assert
 #define assert(x)    exitIfFalse((x)?1:0, #x, __func__, __FILE__, __LINE__)

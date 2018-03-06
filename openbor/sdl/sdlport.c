@@ -31,10 +31,14 @@ char packfile[128] = {"bor.pak"};
 char rootDir[128] = {"/mnt/sdcard/OpenBOR"};
 #endif
 #if GCW0
-char paksDir[128] = {"/usr/local/share/OpenBOR/Paks"};
-char savesDir[128] = {"/usr/local/home/.OpenBOR/Saves"};
-char logsDir[128] = {"/usr/local/home/.OpenBOR/Logs"};
-char screenShotsDir[128] = {"/usr/local/home/.OpenBOR/ScreenShots"};
+//char paksDir[128] = {"/usr/local/share/OpenBOR/Paks"};
+//char savesDir[128] = {"/usr/local/home/.OpenBOR/Saves"};
+//char logsDir[128] = {"/usr/local/home/.OpenBOR/Logs"};
+//char screenShotsDir[128] = {"/usr/local/home/.OpenBOR/ScreenShots"};
+char paksDir[128] = {"Paks"};
+char savesDir[128] = {"/mnt/game/.OpenBOR/Saves"};
+char logsDir[128] = {"/mnt/game/.OpenBOR/Logs"};
+char screenShotsDir[128] = {"/mnt/game/.OpenBOR/ScreenShots"};
 #else
 char paksDir[128] = {"Paks"};
 char savesDir[128] = {"Saves"};
@@ -65,7 +69,6 @@ int main(int argc, char *argv[])
 	struct sigaction sigact;
 #endif
 
-  printf("steward, %s1\n", __func__);
 #ifdef DARWIN
 	char resourcePath[PATH_MAX];
 	CFBundleRef mainBundle;
@@ -82,7 +85,6 @@ int main(int argc, char *argv[])
 	fatInitDefault();
 #endif
 
-  printf("steward, %s2\n", __func__);
 #ifdef CUSTOM_SIGNAL_HANDLER
 	sigact.sa_sigaction = handleFatalSignal;
 	sigact.sa_flags = SA_RESTART | SA_SIGINFO;
@@ -94,12 +96,9 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-  printf("steward, %s3\n", __func__);
 	setSystemRam();
 
-  printf("steward, %s4\n", __func__);
 	initSDL();
-  printf("steward, %s5\n", __func__);
 
 	packfile_mode(0);
 #ifdef ANDROID
