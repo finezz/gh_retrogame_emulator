@@ -22,18 +22,18 @@
 #include <png.h>
 
 #include "global.h"
-#include "atari.h"
+#include "Coleco.h"
 #include "psp_sdl.h"
+#include "psp_sound.h"
 #include "psp_danzeff.h"
 
 SDL_Surface *ScreenSurface;
-
   extern unsigned char psp_font_8x8[];
   extern unsigned char psp_font_6x10[];
 
   unsigned char *psp_font;
-  int            psp_font_width  = 8;
-  int            psp_font_height = 8;
+  int            psp_font_width  = 8; 
+  int            psp_font_height = 8; 
 
   SDL_Surface *back_surface;
   SDL_Surface *back2_surface;
@@ -58,12 +58,6 @@ psp_sdl_get_vram_addr(uint x, uint y)
   return vram + x + (y*PSP_LINE_SIZE);
 }
 
-ushort *
-psp_sdl_get_blit_addr()
-{
-  return (ushort *)blit_surface->pixels;
-}
-
 void
 loc_psp_debug(char *file, int line, char *message)
 {
@@ -80,14 +74,14 @@ loc_psp_debug(char *file, int line, char *message)
     } else {
       current_col = 200;
     }
-
+    
     current_line = 10;
   }
   sprintf(buffer,"%s:%d %s", file, line, message);
   psp_sdl_print(current_col, current_line, buffer, psp_sdl_rgb(0xff,0xff,0xff) );
 }
 
-void
+void 
 psp_sdl_print(int x,int y, char *str, int color)
 {
   int index;
@@ -108,7 +102,7 @@ psp_sdl_clear_screen(int color)
 {
   int x; int y;
   ushort *vram = psp_sdl_get_vram_addr(0,0);
-
+  
   for (y = 0; y < PSP_SDL_SCREEN_HEIGHT; y++) {
     for (x = 0; x < PSP_SDL_SCREEN_WIDTH; x++) {
       vram[x + (y*PSP_LINE_SIZE)] = color;
@@ -142,8 +136,8 @@ psp_sdl_clear_blit(int color)
   }
 }
 
-void
-psp_sdl_draw_rectangle(int x, int y, int w, int h, int border, int mode)
+void 
+psp_sdl_draw_rectangle(int x, int y, int w, int h, int border, int mode) 
 {
   ushort *vram = (ushort *)psp_sdl_get_vram_addr(x, y);
   int xo, yo;
@@ -170,7 +164,7 @@ psp_sdl_draw_rectangle(int x, int y, int w, int h, int border, int mode)
   }
 }
 
-void
+void 
 psp_sdl_fill_rectangle(int x, int y, int w, int h, int color, int mode)
 {
   ushort *vram  = (ushort *)psp_sdl_get_vram_addr(x, y);
@@ -209,7 +203,7 @@ psp_sdl_get_back2_color(int x, int y)
   return color;
 }
 
-void
+void 
 psp_sdl_back2_rectangle(int x, int y, int w, int h)
 {
   if (! back2_surface) {
@@ -227,7 +221,7 @@ psp_sdl_back2_rectangle(int x, int y, int w, int h)
   }
 }
 
-void
+void 
 psp_sdl_put_char(int x, int y, int color, int bgcolor, uchar c, int drawfg, int drawbg)
 {
   int cx;
@@ -252,7 +246,7 @@ psp_sdl_put_char(int x, int y, int color, int bgcolor, uchar c, int drawfg, int 
   }
 }
 
-void
+void 
 psp_sdl_back2_put_char(int x, int y, int color, uchar c)
 {
   int cx;
@@ -294,7 +288,7 @@ psp_convert_utf8_to_iso_8859_1(unsigned char c1, unsigned char c2)
 }
 
 
-void
+void 
 psp_sdl_fill_print(int x,int y,const char *str, int color, int bgcolor)
 {
   int index;
@@ -337,9 +331,15 @@ psp_sdl_back2_print(int x,int y,const char *str, int color)
 }
 
 void
+psp_sdl_lock(void)
+{
+  SDL_LockSurface(back_surface);
+}
+
+void
 psp_sdl_load_background()
 {
-  background_surface = IMG_Load("./menu.png");
+  background_surface = IMG_Load("./background.png");
   thumb_surface = IMG_Load("./thumb.png");
 }
 
@@ -397,19 +397,16 @@ psp_sdl_display_splash()
   int index = 0;
   gp2xCtrlData c;
 
-  //int x = (320 - (strlen(ATARI_VERSION) * 8)) / 2;
-  //int y = 240 - 16;
-  int x = 24;
-  int y = 216;
-  //int col = psp_sdl_rgb(0xa0, 0xa0, 0xa0);
-  int col = psp_sdl_rgb(0x0, 0x0, 0x0);
+  int x = (320 - (strlen(COLEM_VERSION) * 8)) / 2;
+  int y = 240 - 16;
+  int col = psp_sdl_rgb(0xa0, 0xa0, 0xa0);
 
   psp_sdl_blit_splash();
-  psp_sdl_print(x, y, ATARI_VERSION, col);
+  psp_sdl_print(x, y, COLEM_VERSION, col);
   psp_sdl_flip();
 
   psp_sdl_blit_splash();
-  psp_sdl_print(x, y, ATARI_VERSION, col);
+  psp_sdl_print(x, y, COLEM_VERSION, col);
   psp_sdl_flip();
 
 
@@ -462,7 +459,7 @@ psp_sdl_save_png(SDL_Surface* my_surface, char* filename)
   FILE *fp = fopen(filename,"wb");
 
   if(!fp) return 0;
-
+  
   png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
                                                 NULL,
                                                 NULL,
@@ -507,12 +504,12 @@ psp_sdl_save_png(SDL_Surface* my_surface, char* filename)
       u16 v = p[x];
 
       *b++ = ((v & systemRedMask  ) >> systemRedShift  ) << 3; // R
-      *b++ = ((v & systemGreenMask) >> systemGreenShift) << 2; // G
+      *b++ = ((v & systemGreenMask) >> systemGreenShift) << 2; // G 
       *b++ = ((v & systemBlueMask ) >> systemBlueShift ) << 3; // B
     }
     p += my_surface->pitch / 2;
     png_write_row(png_ptr,writeBuffer);
-
+     
     b = writeBuffer;
   }
 
@@ -570,9 +567,9 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
     PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING |
     PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_BGR , NULL);
 
-  png_uint_32 width = png_get_image_width( png_ptr,  info_ptr);//info_ptr->width;
-  png_uint_32 height = png_get_image_height( png_ptr,  info_ptr);//info_ptr->height;
-  int color_type = png_get_color_type( png_ptr,  info_ptr);//info_ptr->color_type;
+  png_uint_32 width = png_get_image_width(png_ptr, info_ptr);//info_ptr->width;
+  png_uint_32 height = png_get_image_height(png_ptr, info_ptr);//info_ptr->height;
+  int color_type = png_get_color_type(png_ptr, info_ptr);//info_ptr->color_type;
 
   if ((width  > w) ||
       (height > h)) {
@@ -581,8 +578,7 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
     return 0;
   }
 
-  //png_byte **pRowTable = png_get_rowbytes( png_ptr,  info_ptr);//info_ptr->row_pointers;
-  png_byte **pRowTable = png_get_rows( png_ptr,  info_ptr);//info_ptr->row_pointers;
+  png_byte **pRowTable = png_get_rows(png_ptr, info_ptr);//info_ptr->row_pointers;
   unsigned int x, y;
   u8 r, g, b;
 
@@ -630,26 +626,25 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
 int
 psp_sdl_save_screenshot_png(char *filename)
 {
-  return psp_sdl_save_png(back_surface, filename);
+  return psp_sdl_save_png(blit_surface, filename);
 }
 
 int
 psp_sdl_save_thumb_png(SDL_Surface* my_surface, char* filename)
 {
-  psp_atari_blit_image();
+  PutImage_blit();
 
   /* First dump blit_surface to my_surface */
   int x;
   int y;
-  ushort* src_pixel = (ushort*)blit_surface->pixels;
-  ushort* dst_pixel = (ushort*)my_surface->pixels;
-  ushort* scan_src_pixel = 0;
+  u16* src_pixel = (u16*)blit_surface->pixels;
+  u16* dst_pixel = (u16*)my_surface->pixels;
 
-  for (y = 0; y < SNAP_HEIGHT; y++) {
-    scan_src_pixel = src_pixel + (ATARI_WIDTH * y * 3);
-    for (x = 0; x < SNAP_WIDTH; x++) {
-      *dst_pixel++ = scan_src_pixel[x * 3];
+  for (y = 0; y < (SNAP_HEIGHT*2); y += 2) {
+    for (x = 0; x < (SNAP_WIDTH*2); x += 2) {
+      *dst_pixel++ = src_pixel[x];
     }
+    src_pixel += (CV_WIDTH * 2);
   }
   /* Then save thumb in file */
   return psp_sdl_save_png(my_surface, filename);
@@ -657,7 +652,7 @@ psp_sdl_save_thumb_png(SDL_Surface* my_surface, char* filename)
 
 int
 psp_sdl_load_thumb_png(SDL_Surface* my_surface, char* filename)
-{
+{ 
   return psp_sdl_load_png( my_surface, filename);
 }
 
@@ -666,15 +661,15 @@ psp_sdl_save_screenshot(void)
 {
   char TmpFileName[MAX_PATH];
 
-  sprintf(TmpFileName,"%s/scr/screenshot_%d.png", ATARI.atari_home_dir, ATARI.psp_screenshot_id++);
-  if (ATARI.psp_screenshot_id >= 10) ATARI.psp_screenshot_id = 0;
+  sprintf(TmpFileName,"%s/scr/screenshot_%d.png", CV.cv_home_dir, CV.psp_screenshot_id++);
+  if (CV.psp_screenshot_id >= 10) CV.psp_screenshot_id = 0;
   psp_sdl_save_screenshot_png(TmpFileName);
 }
 
 int
 psp_sdl_init(void)
 {
-  if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_JOYSTICK) < 0) {
+  if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_AUDIO) < 0) {
      return 0;
   }
   SDL_JoystickEventState(SDL_ENABLE);
@@ -686,7 +681,7 @@ psp_sdl_init(void)
 
   psp_sdl_select_font_6x10();
 
-  //back_surface=SDL_SetVideoMode(PSP_SDL_SCREEN_WIDTH,PSP_SDL_SCREEN_HEIGHT, 16, SDL_SWSURFACE);
+  //back_surface=SDL_SetVideoMode(PSP_SDL_SCREEN_WIDTH, PSP_SDL_SCREEN_HEIGHT, 16 , SDL_SWSURFACE);
 	ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_SWSURFACE);
   back_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, PSP_SDL_SCREEN_WIDTH, PSP_SDL_SCREEN_HEIGHT, 16, 0, 0, 0, 0);
 
@@ -694,12 +689,14 @@ psp_sdl_init(void)
     return 0;
   }
 
-  blit_surface = SDL_CreateRGBSurface(SDL_SWSURFACE,
-    ATARI_WIDTH, ATARI_HEIGHT,
+
+  blit_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, 
+    CV_WIDTH, CV_HEIGHT,
     back_surface->format->BitsPerPixel,
     back_surface->format->Rmask,
     back_surface->format->Gmask,
     back_surface->format->Bmask, 0);
+
   SDL_ShowCursor(SDL_DISABLE);
 
   psp_sdl_display_splash();
@@ -710,23 +707,26 @@ psp_sdl_init(void)
 
   /* Create surface for save state */
   int Index = 0;
-  for (Index = 0; Index < ATARI_MAX_SAVE_STATE; Index++) {
-    ATARI.atari_save_state[Index].surface =
-       SDL_CreateRGBSurface(SDL_SWSURFACE,
+  for (Index = 0; Index < CV_MAX_SAVE_STATE; Index++) {
+    CV.cv_save_state[Index].surface = 
+       SDL_CreateRGBSurface(SDL_SWSURFACE, 
                             SNAP_WIDTH, SNAP_HEIGHT,
                             back_surface->format->BitsPerPixel,
                             back_surface->format->Rmask,
                             back_surface->format->Gmask,
                             back_surface->format->Bmask, 0);
   }
-  save_surface = SDL_CreateRGBSurface(SDL_SWSURFACE,
+  save_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, 
                             SNAP_WIDTH, SNAP_HEIGHT,
                             back_surface->format->BitsPerPixel,
                             back_surface->format->Rmask,
                             back_surface->format->Gmask,
                             back_surface->format->Bmask, 0);
+  psp_sdl_init_sound();
 
-  SDL_Sound_Initialise();
+  SDL_Delay(1000);        // Give sound some time to init
+  SDL_PauseAudio(1);
+
   return 1;
 }
 
@@ -735,8 +735,6 @@ psp_sdl_exit(int status)
 {
   SDL_CloseAudio();
   SDL_Quit();
-  sleep(1);
-
   exit(status);
 }
 

@@ -589,7 +589,8 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
     return 0;
   }
 
-  png_byte **pRowTable = png_get_rowbytes(png_ptr, info_ptr); //info_ptr->row_pointers;
+  //png_byte **pRowTable = png_get_rowbytes(png_ptr, info_ptr); //info_ptr->row_pointers;
+  png_byte **pRowTable = png_get_rows(png_ptr, info_ptr); //info_ptr->row_pointers;
   unsigned int x, y;
   u8 r, g, b;
 
