@@ -56,6 +56,7 @@ v20180313:
  New: Add gpsp emulator
  New: Add Sonic Robo Blast 2 game
  New: Add dingux-2600 emulator
+ New: Add dingux-atari emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
