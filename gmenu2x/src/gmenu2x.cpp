@@ -919,15 +919,15 @@ void GMenu2X::setSuspend(int enter) {
 	if(enter){	
 		sprintf(buf, "echo 0 > /proc/jz/lcd_backlight");
 		system(buf);
-		printf("enter suspend mode\n");
-		printf("current backlight: %d\n", backlightLevel);
+		//printf("enter suspend mode\n");
+		//printf("current backlight: %d\n", backlightLevel);
 		setClock(250);
 	}
 	else{
 		sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
 		system(buf);
-		printf("exit suspend mode\n");
-		printf("restore backlight: %d\n", backlightLevel);
+		//printf("exit suspend mode\n");
+		//printf("restore backlight: %d\n", backlightLevel);
 		setClock(528);
 	}
 }
@@ -951,6 +951,7 @@ void GMenu2X::main() {
   int backlightOffset;
   bool inputAction;
 	int suspendTick=0;
+	int poweroffTick=0;
 	bool quit = false;
 	int x,y, offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6, helpBoxHeight = fwType=="open2x" ? 154 : 139;
 	uint i;
@@ -1221,6 +1222,16 @@ void GMenu2X::main() {
 		inputAction = input.update(0);
     if (inputAction == 0) {
       usleep(50000);
+			if(input.isActive(POWER)){
+				poweroffTick+= 1;
+			}
+			else{
+				if(poweroffTick > 10){
+					poweroffTick = 0;
+					suspendTick = 500;
+				}
+			}
+
 			if(suspendTick <= 300){
 				suspendTick+= 1;
 			}
@@ -1228,6 +1239,7 @@ void GMenu2X::main() {
 				if(suspend == 0){
 					suspend = 1;
 					setSuspend(1);
+					poweroffTick = 0;
 				}
 			}
       continue;
@@ -1237,11 +1249,11 @@ void GMenu2X::main() {
 				suspend = 0;
 				setSuspend(0);
 				suspendTick = 0;
+				poweroffTick = 0;
       }
       continue;
     }
 		if(backlightLevel) {
-			suspendTick = 0;
 			if ( input[CONFIRM] && menu->selLink()!=NULL ) {
         setVolume(confInt["globalVolume"]);
         menu->selLink()->run();
@@ -1313,9 +1325,19 @@ void GMenu2X::main() {
 			}
     }
 		if (input[POWER]) {
-			suspend = 1;
-			setSuspend(1);
+			if(poweroffTick <= 30){
+				poweroffTick+= 1;
+			}
+			else{
+				setSuspend(1);
+				SDL_Delay(1500);
+				system("poweroff");
+			}
     }
+		else{
+			poweroffTick = 0;
+			suspendTick = 0;
+		}
 
 		if ( input[BACKLIGHT]) {
       char buf[64];
@@ -2232,10 +2254,10 @@ void GMenu2X::setInputSpeed() {
 	input.setInterval(200, INC);
 	input.setInterval(200, DEC);
 	input.setInterval(1000,CONFIRM);
-	input.setInterval(300, SECTION_PREV);
-	input.setInterval(300, SECTION_NEXT);
-	input.setInterval(300, PAGEUP);
-	input.setInterval(300, PAGEDOWN);
+	input.setInterval(150, SECTION_PREV);
+	input.setInterval(150, SECTION_NEXT);
+	input.setInterval(150, PAGEUP);
+	input.setInterval(150, PAGEDOWN);
 	input.setInterval(1000, BACKLIGHT);
 	input.setInterval(1000, POWER);
 }

@@ -61,6 +61,7 @@ v20180313:
  New: Add jzIntv emulator
  New: Add Colem emulator
  New: Add OpenBOR emulator
+ New: Poweroff device when long press power button for 5 seconds
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
@@ -79,7 +80,7 @@ v20180313:
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
  Changed: Backlight level has been changed from 0~100 to 20~100 (interval is 20 that is same as previous)
  Changed: X button has been changed from context help to speaker function (turn on/off)
- Changed: Power button will toggle suspend mode on/off
+ Changed: Power button will toggle suspend mode on/off (press for 1.5 seconds)
  Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
  Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
  Pending: xmame (speed is very slow)
