@@ -84,7 +84,7 @@ v20180313:
  Pending: xmame (speed is very slow)
  Pending: onscrioter-jh (crash sometimes)
  Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
- Workaround: SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
+ Workaround: (ReGBA emulator )SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
 
 v20180213:
  New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
