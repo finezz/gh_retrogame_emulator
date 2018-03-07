@@ -123,7 +123,7 @@ void S9xInitDisplay (int /*argc*/, char ** /*argv*/)
 				break;
 			}
 		}
-		screen = SDL_SetVideoMode(surfacewidth, /*surfaceheight*/480, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+		screen = SDL_SetVideoMode(surfacewidth, /*surfaceheight*/480, 16, SDL_HWSURFACE/*|SDL_DOUBLEBUF*/);
 	}
 
 	if (screen == NULL)
