@@ -30,6 +30,8 @@
 #include "gfxtypes.h"
 #include "gfx.h"
 
+#include "../resources/OpenBOR_Logo_320x240_png.h"
+extern const struct openbor_logo_320x240_png;
 extern int videoMode;
 
 #if GP2X || DARWIN || OPENDINGUX || WII
@@ -215,8 +217,8 @@ int video_set_mode(s_videomodes videomodes)
 	{
 		screen = SetVideoMode(videomodes.hRes*savedata.screen[videoMode][0], videomodes.vRes*savedata.screen[videoMode][0], 16, false);
 		SDL_ShowCursor(SDL_DISABLE);
-		bscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes, videomodes.vRes, 8*bytes_per_pixel, masks[bytes_per_pixel-1][0], masks[bytes_per_pixel-1][1], masks[bytes_per_pixel-1][2], masks[bytes_per_pixel-1][3]); // 24bit mask
-		bscreen2 = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes+4, videomodes.vRes+8, 16, masks[1][2], masks[1][1], masks[1][0], masks[1][3]);
+		bscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes, /*videomodes.vRes*/480, 8*bytes_per_pixel, masks[bytes_per_pixel-1][0], masks[bytes_per_pixel-1][1], masks[bytes_per_pixel-1][2], masks[bytes_per_pixel-1][3]); // 24bit mask fix for retrogame
+		bscreen2 = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes+4, /*videomodes.vRes*/480+8, 16, masks[1][2], masks[1][1], masks[1][0], masks[1][3]); // fix for retrogame
 		Init_Gfx(565, 16);
 		memset(pDeltaBuffer, 0x00, 1244160);
 		if(bscreen==NULL || bscreen2==NULL) return 0;
@@ -225,7 +227,7 @@ int video_set_mode(s_videomodes videomodes)
 	{
 		if(bytes_per_pixel>1)
 		{
-			bscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes, videomodes.vRes, 8*bytes_per_pixel, masks[bytes_per_pixel-1][0], masks[bytes_per_pixel-1][1], masks[bytes_per_pixel-1][2], masks[bytes_per_pixel-1][3]); // 24bit mask
+			bscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, videomodes.hRes, /*videomodes.vRes*/480, 8*bytes_per_pixel, masks[bytes_per_pixel-1][0], masks[bytes_per_pixel-1][1], masks[bytes_per_pixel-1][2], masks[bytes_per_pixel-1][3]); // 24bit mask fix for retrogame
 			if(!bscreen) return 0;
 		}
 		screen = SetVideoMode(videomodes.hRes, videomodes.vRes, 8*bytes_per_pixel, false);
@@ -356,22 +358,42 @@ int video_copy_screen(s_screen* src)
 	}while(--h);
 #else
 	if(src->pixelformat == 4){ // 32bit
-		printf("steward1, %d %d %d, %d %d %d\n", ds->w, ds->h, ds->pitch, src->width, src->height, src->pixelformat);
-		/*int x, y;
-		uint16_t *s = (uint16_t*)sp;
+#if 1
+		SDL_Surface *p1 = SDL_CreateRGBSurface(SDL_SWSURFACE, src->width, src->height, src->pixelformat*8, 0, 0, 0, 0);
+		memcpy(p1->pixels, src->data, src->width * src->height * src->pixelformat);
+		SDL_Surface *p2 = SDL_ConvertSurface(p1, ds->format, 0);
+		SDL_SoftStretch(p2, NULL, ds, NULL);
+		SDL_FreeSurface(p1);
+		SDL_FreeSurface(p2);
+		
+		/*
+		int x, y;
+		uint32_t tmp;
+		uint8_t *s = (uint8_t*)sp;
 		uint16_t *d = (uint16_t*)dp;
 		for(y=0; y<240; y++){
 			for(x=0; x<320; x++){
-				*d++ = *s++;
+				tmp = SDL_MapRGB(ds->format, s[0], s[1], s[2]);
+				//tmp = (((uint32_t)s[0] & 0xf8) >> 3) | (((uint32_t)s[1] & 0xfc) << 3) | (((uint32_t)s[2] & 0xf8) << 8);
+				*d++ = tmp;
+				s+= src->pixelformat;
 			}
 			d+= 320;
-		}*/
+		}
+		*/
+#else
+	SDL_RWops *rw = SDL_RWFromMem(openbor_logo_320x240_png.data, openbor_logo_320x240_png.size); 
+  SDL_Surface *png = IMG_Load_RW(rw, 1);
+	SDL_Surface *p = SDL_ConvertSurface(png, ds->format, 0);
+	SDL_SoftStretch(p, NULL, ds, NULL);
+	SDL_FreeSurface(p);
+#endif
 	}
 	else{ // 16bit
 		do{
 			memcpy(dp, sp, linew);
 			sp += slinew;
-			dp += ds->pitch;
+			dp += (ds->pitch << 1);
 		}while(--h);
 	}
 #endif
@@ -380,11 +402,11 @@ int video_copy_screen(s_screen* src)
 
 	if(bscreen)
 	{
-		printf(" bscreen ");
+		//printf(" bscreen ");
 		if(SDL_MUSTLOCK(bscreen)) SDL_UnlockSurface(bscreen);
 		if(bscreen2)
 		{
-			printf(" bscreen2 ");
+			//printf(" bscreen2 ");
 			SDL_BlitSurface(bscreen, NULL, bscreen2, &rectsrc);
 			if(SDL_MUSTLOCK(bscreen2)) SDL_LockSurface(bscreen2);
 			if(SDL_MUSTLOCK(screen)) SDL_LockSurface(screen);

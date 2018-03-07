@@ -60,6 +60,7 @@ v20180313:
  New: Add prosystem emulator
  New: Add jzIntv emulator
  New: Add Colem emulator
+ New: Add OpenBOR emulator
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme

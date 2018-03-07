@@ -52,7 +52,7 @@ s_screen* bgscreen;
 #define LOG_SCREEN_TOP 2
 #define LOG_SCREEN_END (isWide ? 26 : 23)
 
-int bpp = 16;//32;
+int bpp = 32;
 int isWide = 0;
 int isFull = 0;
 int flags;
@@ -500,6 +500,7 @@ void drawMenu()
 	int colors = 0;
 	s_screen* Image = NULL;
 
+	memset(vscreen->data, 0, vscreen->width * vscreen->height * vscreen->pixelformat);
 	putscreen(vscreen,bgscreen,0,0,NULL);
 	if(dListTotal < 1) printText((isWide ? 30 : 8), (isWide ? 33 : 24), RED, 0, 0, "No Mods In Paks Folder!");
 	for(list=0; list<dListTotal; list++)
@@ -560,6 +561,7 @@ void drawBGMPlayer()
 	int list = 0, colors = 0, shift = 0;
 
 	// Allocate Preview Box for Music Text Info.
+	memset(vscreen->data, 0, vscreen->width * vscreen->height * vscreen->pixelformat);
 	putscreen(vscreen,bgscreen,0,0,NULL);
 	putbox((isWide ? 286 : 155),(isWide ? 32 : 21),160,120,LIGHT_GRAY,vscreen,NULL);
 

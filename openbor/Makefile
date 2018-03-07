@@ -216,9 +216,9 @@ BUILDING        = 1
 CC              = mipsel-linux-gcc
 INCLUDES        = /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL/
 LIBRARIES       = 
-#ifeq ($(BUILD_OPENDINGUX), 0)
+ifeq ($(BUILD_OPENDINGUX), 0)
 BUILD_DEBUG     = 1
-#endif
+endif
 endif
 
 ifdef BUILD_DC
@@ -277,7 +277,7 @@ ifdef BUILD_WIZ
 STRIP 	        = $(WIZDEV)/$(PREFIX)strip$(EXTENSION) $(TARGET) -o $(TARGET_FINAL)
 endif
 ifdef BUILD_OPENDINGUX
-STRIP           = $(OPENDINGUX_TOOLCHAIN)/usr/bin/mipsel-linux-strip $(TARGET) -o $(TARGET_FINAL)
+STRIP           = mipsel-linux-strip $(TARGET) -o $(TARGET_FINAL)
 endif
 ifdef BUILD_WII
 STRIP           = elf2dol $< $@
@@ -646,7 +646,7 @@ ifdef BUILD_SDL
 ifeq ($(findstring DGE, $(SDKPATH)), DGE)
 LIBS           += -lSDL -lSDL_gfx -lts
 else
-LIBS           += -Wl,-rpath,$(LIBRARIES) -lSDL -lSDL_gfx
+LIBS           += -Wl,-rpath,$(LIBRARIES) -lSDL -lSDL_gfx -lSDL_image
 endif
 endif
 
