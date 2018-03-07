@@ -1,4 +1,4 @@
-DEBUG=0
+DEBUG=1
 
 ifeq ($(DEBUG),0)
   CROSS_COMPILE = mipsel-linux-
@@ -6,7 +6,7 @@ endif
 
 CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
-TARGET = jysdllua.dge
+TARGET = jysdllua
 BASEFLAGS = -g3 -D_DEBUG=0
 OBJ = charset.o jymain.o luafun.o mainmap.o piccache.o sdlfun.o
 HEADERS = config.h list.h luafun.h

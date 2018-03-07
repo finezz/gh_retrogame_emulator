@@ -75,6 +75,7 @@ v20180313:
  Fixed: czdoom issue (use chocolate-doom if you suffer from some issues)
  Fixed: Fix SDL_mixer MIDI music issue
  Fixed: Fix SDL_mixer Ogg music issue
+ Fixed: Fix JinYong screen and sound issues
  Changed: Change some emulator icons
  Changed: Update splash image ("/usr/share/splash/splash.jpg")
  Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X

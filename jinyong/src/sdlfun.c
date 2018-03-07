@@ -187,7 +187,7 @@ int InitGame(void)
 
 
     //if(g_FullScreen==0)
-        g_RealSurface=SDL_SetVideoMode(320,360, 16, SDL_SWSURFACE);
+        g_RealSurface=SDL_SetVideoMode(320,480, 16, SDL_HWSURFACE);
 	//else
 	    //g_RealSurface=SDL_SetVideoMode(320, 240, g_ScreenBpp, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN);
 
@@ -323,7 +323,9 @@ int JY_ShowSurface(int flag)
   } 
 #else
 	SDL_SoftStretch(g_Surface, NULL, g_RealSurface, NULL);
+	SDL_Flip(g_RealSurface);
 #endif
+/*
 	if(flag==1){
 		if(currentRect>0){
 			SDL_UpdateRects(g_RealSurface,currentRect,ClipRect);
@@ -331,7 +333,7 @@ int JY_ShowSurface(int flag)
 	}
 	else{
         SDL_UpdateRect(g_RealSurface,0,0,0,0);
-	}
+	}*/
 	return 0;
 }
 
@@ -1002,10 +1004,12 @@ int JY_FullScreen()
 
     SDL_BlitSurface(g_Surface,NULL,tmpsurface,NULL);
 
-	if(flag & SDL_FULLSCREEN)    //全屏，设置窗口
+	if(flag & SDL_FULLSCREEN){    //全屏，设置窗口
         g_Surface=SDL_SetVideoMode(g_Surface->w,g_Surface->h, 0, SDL_SWSURFACE);
-	else
+	}
+	else{
 	    g_Surface=SDL_SetVideoMode(g_Surface->w, g_Surface->h, g_ScreenBpp, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN);
+	}
 
 
 	SDL_BlitSurface(tmpsurface,NULL,g_Surface,NULL);
