@@ -1,7 +1,6 @@
 # vim:filetype=mips
 
 # Slaanesh 2014
-
 .set noreorder # don't reorder any instructions
 .set noat      # don't use $at
 
@@ -32,14 +31,14 @@ clut16to16_rot0_loop:
     lhu     $t1, 0($t1)	
     lhu     $t2, 0($t2)
     lhu     $t3, 0($t3)
-    #ins     $t0, $t1, 16, 16	# Merge 4 pixels into two 32-bit words
-    #ins     $t2, $t3, 16, 16
-    #sw      $t0, 0($a0)
-    #sw      $t2, 4($a0)
- sh      $t0, 0($a0)
- sh      $t1, 2($a0)
- sh      $t2, 4($a0)
- sh      $t3, 6($a0)
+    ins     $t0, $t1, 16, 16	# Merge 4 pixels into two 32-bit words
+    ins     $t2, $t3, 16, 16
+    sw      $t0, 0($a0)
+    sw      $t2, 4($a0)
+# sh      $t0, 0($a0)
+# sh      $t1, 2($a0)
+# sh      $t2, 4($a0)
+# sh      $t3, 6($a0)
     addiu   $a0, 8				# Increment dst	(4x 16-bit pixels)
     addiu   $a3, -1				# Decrement loop counter
     bnez    $a3, clut16to16_rot0_loop

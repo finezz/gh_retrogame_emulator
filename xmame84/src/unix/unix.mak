@@ -430,8 +430,7 @@ endif
 #build rules for this object because it is display dependent.
 OBJS += $(subst $(OBJ)/vidhrdw/vector.o, ,$(COREOBJS)) $(DRVLIBS)
 
-ASSEMBLER_OBJS = $(OBJ)/unix.$(DISPLAY_METHOD)/clut16to16.o \
-		 $(OBJ)/unix.$(DISPLAY_METHOD)/memcpy.o
+#ASSEMBLER_OBJS = $(OBJ)/unix.$(DISPLAY_METHOD)/clut16to16.o $(OBJ)/unix.$(DISPLAY_METHOD)/memcpy.o
 
 OSDEPEND = $(OBJDIR)/osdepend.a
 

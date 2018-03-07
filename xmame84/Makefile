@@ -144,13 +144,19 @@ CFLAGS =
 #	-DGCW0 -DENABLE_AUTOFIRE -DSPEEDHACK -DIPU_SCALER -DVISIBLE_AREA_WORKAROUND \
 
 # GCW-Zero Linux
+#CFLAGS = -pipe -O3 \
+#	-mips32 -march=mips32 -mtune=mips32 -mno-mips16 -mhard-float -mno-abicalls \
+#	-ffast-math -fsingle-precision-constant -funsafe-math-optimizations -fmerge-all-constants  \
+#	-fomit-frame-pointer -fno-builtin -fno-exceptions -fno-common -fno-pic \
+#	-fstrict-aliasing -ftree-vectorize -fweb -frename-registers -fstrength-reduce \
+#	-DGCW0 -DENABLE_AUTOFIRE -DSPEEDHACK -DIPU_SCALER -DVISIBLE_AREA_WORKAROUND \
+#	-DDIRECT_RGB565 -DSAVESTATE_LOAD -DFRONTEND
+
 CFLAGS = -pipe -O3 \
 	-mips32 -march=mips32 -mtune=mips32 -mno-mips16 -mhard-float -mno-abicalls \
 	-ffast-math -fsingle-precision-constant -funsafe-math-optimizations -fmerge-all-constants  \
 	-fomit-frame-pointer -fno-builtin -fno-exceptions -fno-common -fno-pic \
-	-fstrict-aliasing -ftree-vectorize -fweb -frename-registers -fstrength-reduce \
-	-DGCW0 -DENABLE_AUTOFIRE -DSPEEDHACK -DIPU_SCALER -DVISIBLE_AREA_WORKAROUND \
-	-DDIRECT_RGB565 -DSAVESTATE_LOAD -DFRONTEND
+	-fstrict-aliasing -ftree-vectorize -fweb -frename-registers -fstrength-reduce -DFRONTEND
 ifeq ($(PROF),GEN)
 CFLAGS += -mbranch-likely -fprofile-generate -fprofile-values -fprofile-arcs -fvpt -fprofile-dir=.
 LIBS = -lgcov

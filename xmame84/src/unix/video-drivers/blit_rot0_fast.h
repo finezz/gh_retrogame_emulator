@@ -15,20 +15,28 @@ void MY_FUNCTION (struct mame_bitmap *bitmap)
 		{
 			register SRC_PIXEL *srcX = src;
 			register DEST_PIXEL *dstX = dst;
-#if 1
+#if 0
 			clut16to16_rot0(dstX, srcX, INDIRECT, SRC_WIDTH);
 #else
 			register SRC_PIXEL *srcEnd = srcX + SRC_WIDTH;
 			while (srcX < srcEnd)
 			{
-				dstX[0] = INDIRECT[srcX[0]];
-				dstX[1] = INDIRECT[srcX[1]];
-				dstX[2] = INDIRECT[srcX[2]];
-				dstX[3] = INDIRECT[srcX[3]];
-				dstX[4] = INDIRECT[srcX[4]];
-				dstX[5] = INDIRECT[srcX[5]];
-				dstX[6] = INDIRECT[srcX[6]];
-				dstX[7] = INDIRECT[srcX[7]];
+				//dstX[0] = INDIRECT[srcX[0]];
+				//dstX[1] = INDIRECT[srcX[1]];
+				//dstX[2] = INDIRECT[srcX[2]];
+				//dstX[3] = INDIRECT[srcX[3]];
+				//dstX[4] = INDIRECT[srcX[4]];
+				//dstX[5] = INDIRECT[srcX[5]];
+				//dstX[6] = INDIRECT[srcX[6]];
+				//dstX[7] = INDIRECT[srcX[7]];
+				dstX[0] = srcX[0];
+				dstX[1] = srcX[1];
+				dstX[2] = srcX[2];
+				dstX[3] = srcX[3];
+				dstX[4] = srcX[4];
+				dstX[5] = srcX[5];
+				dstX[6] = srcX[6];
+				dstX[7] = srcX[7];
 				srcX += 8;
 				dstX += 8;
 			}
@@ -43,7 +51,7 @@ void MY_FUNCTION (struct mame_bitmap *bitmap)
 		{
 			register SRC_PIXEL *srcX = src;
 			register DEST_PIXEL *dstX = dst;
-#if 1
+#if 0
 			memcpy(dstX, srcX, (SRC_WIDTH*sizeof(SRC_PIXEL)));
 #else
 			register SRC_PIXEL *srcEnd = srcX + SRC_WIDTH;

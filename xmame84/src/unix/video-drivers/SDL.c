@@ -656,7 +656,7 @@ int sysdep_create_display(int width, int height, int depth, int using_15bpp_rgb_
 
    printf("SDL_SetVideoMode(%d,%d,%d,%u)\n", Display_width, Display_height,Display_depth, vid_mode_flag);
 
-   ScreenSurface = SDL_SetVideoMode(320, 480, 16, /*vid_mode_flag*/SDL_SWSURFACE);
+   ScreenSurface = SDL_SetVideoMode(320, 480, 16, /*vid_mode_flag*/SDL_HWSURFACE);
    //if(! (Surface = SDL_SetVideoMode(Display_width, Display_height,Display_depth, vid_mode_flag))) {
    if(! (Surface = SDL_CreateRGBSurface(SDL_SWSURFACE, Display_width, Display_height, Display_depth, 0, 0, 0, 0))) {
       fprintf (stderr, "SDL: Error: Setting video mode failed\n");
