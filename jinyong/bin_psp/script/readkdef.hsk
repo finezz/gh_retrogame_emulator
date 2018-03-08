@@ -1219,7 +1219,7 @@ function ReadTALK(id,flag)
   str=ReadTalk(id); --调用鱼大的函数
 
   if CC.TalkString=="0" then 
-    str=GenTalkString(str,24);
+    str=GenTalkString(str,12);
   else
     CC.TalkString="0";
   end

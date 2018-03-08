@@ -3052,13 +3052,13 @@ end
 function TalkEx(s,headid,flag)          --复杂版本对话
     local picw=100;       --最大头像图片宽高
 	local pich=100;
-	local talkxnum=24;         --对话一行字数 12
+	local talkxnum=12;         --对话一行字数 12
 	local talkynum=3;          --对话行数
 	local dx=2;
 	local dy=2;
     local boxpicw=picw+10;
 	local boxpich=pich+10;
-	local boxtalkw=22*CC.DefaultFont+10;  --12
+	local boxtalkw=12*CC.DefaultFont+10;  --12
 	local boxtalkh=boxpich;
 
     local talkBorder=(pich-talkynum*CC.DefaultFont)/(talkynum+1);
@@ -3089,7 +3089,7 @@ function TalkEx(s,headid,flag)          --复杂版本对话
     end
 
 	if string.find(s,"*") ==nil then
-	    s=GenTalkString(s,24);           --24
+	    s=GenTalkString(s,12);           --24
 	end
 
     if CONFIG.KeyRepeat==0 then
@@ -3114,12 +3114,12 @@ function TalkEx(s,headid,flag)          --复杂版本对话
         end
         endp=string.find(s,"*",startp);
         if endp==nil then
-            DrawString(xy[flag].talkx + 5, xy[flag].talky + 5+talkBorder + dy * (CC.DefaultFont+talkBorder),string.sub(s,startp),C_WHITE,CC.DefaultFont-2);
+            DrawString(xy[flag].talkx + 5, xy[flag].talky + 5+talkBorder + dy * (CC.DefaultFont+talkBorder),string.sub(s,startp),C_WHITE,CC.DefaultFont);
             ShowScreen();
             WaitKey();
             break;
         else
-            DrawString(xy[flag].talkx + 5, xy[flag].talky + 5+talkBorder + dy * (CC.DefaultFont+talkBorder),string.sub(s,startp,endp-1),C_WHITE,CC.DefaultFont-2);
+            DrawString(xy[flag].talkx + 5, xy[flag].talky + 5+talkBorder + dy * (CC.DefaultFont+talkBorder),string.sub(s,startp,endp-1),C_WHITE,CC.DefaultFont);
         end
         dy=dy+1;
         startp=endp+1;

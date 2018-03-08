@@ -62,6 +62,7 @@ v20180313:
  New: Add Colem emulator
  New: Add OpenBOR emulator
  New: Poweroff device when long press power button for 5 seconds
+ NEw: Add JinYong 苍龙逐日1.2
  Fixed: Fix TVOut issue
  Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  Fixed: Fix cpu icon will be shifted when change to different theme
