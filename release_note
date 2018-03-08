@@ -1,132 +1,133 @@
 v20180313:
- New: Add overclock setting for each apps/emulators/games
- New: Add snes9x4d emulator
- New: Add fba-a320 emulator
- New: Add handy emulator
- New: Add race-od emulator
- New: Add gngeo emulator
- New: Add ASCIIpOrtal game
- New: Add wallpapers (boot.jpg, magicavoxel.jpg) (thanks Leo-brasil)
- New: Add PS4(v4) theme (thanks m1024)
- New: Add zelda(v1) theme (thanks m1024)
- New: Add oldboy(v1) theme (thanks m1024)
- New: Add backlight indicator(Lv1 ~ Lv5) on status bar
- New: [Port request] Streets of Rage Remake 5.1
- New: [Feature Request] Ability to always show battery power remaining as a percentage.
- New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
- New: Add more wallpapers (thanks jutleys)
- New: Add DekUI theme (thanks jutleys)
- New: Add preview image (support jpg, png and bmp with size=128*128) when pick up rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
- New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
- New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
- New: [Port request] GP2Xpectrum (I use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
- New: Add czdoom game
- New: Add wolf3d game
- New: Add hhexen game
- New: Add hheretic game
- New: Add quake game
- New: Add eduke32 game
- New: Add sms_sdl emulator
- New: Add oswan emulator
- New: Add dingux-cap32 emulator
- New: Add uae4all emulator
- New: Add mrdrillux game
- New: Add Bermuda Syndrome game
- New: Add opentitus game (sometimes crash)
- New: Add wizznic game
- New: Add spartak-chess game
- New: Add last-mission game
- New: Add ketm game
- New: Add Just4Qix game
- New: Add Arkanoid game
- New: Add Zelda-Roth game
- New: Add Boulder game
- New: Add Pang game
- New: Add Digger game
- New: Add ProfaDeluxe game
- New: Add Noiz2sa game
- New: Add NXEngine emulator (cave story - cn)
- New: Add NXEngine emulator (cave story - tw)
- New: Add Chocolate-doom game
- New: Add FreeDroidClassic game
- New: Add vice emulator
- New: Enter suspend mode automatically if no any action for 30 seconds
- New: Add OpenMSX emulator
- New: Add NP2 emulator
- New: Add scummvm emulator
- New: Add gpsp emulator
- New: Add Sonic Robo Blast 2 game
- New: Add dingux-2600 emulator
- New: Add dingux-atari emulator
- New: Add prosystem emulator
- New: Add jzIntv emulator
- New: Add Colem emulator
- New: Add OpenBOR emulator
- New: Poweroff device when long press power button for 5 seconds
- NEw: Add JinYong 苍龙逐日1.2
- Fixed: Fix TVOut issue
- Fixed: (Temper emulator) Change menu key from SELECT to Backlight
- Fixed: Fix cpu icon will be shifted when change to different theme
- Fixed: The 2 additional themes do not display all emulator icons.
- Fixed: (MidPATH emulator) cannot save settings
- Fixed: (FBA a320 emulator) cannot show preview image
- Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
- Fixed: (ReGBA emulator) Aspect rate refine by TonyJih
- Fixed: (Fceux emulator) Original rate refine by TonyJih
- Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
- Fixed: czdoom issue (use chocolate-doom if you suffer from some issues)
- Fixed: Fix SDL_mixer MIDI music issue
- Fixed: Fix SDL_mixer Ogg music issue
- Fixed: Fix JinYong screen and sound issues
- Changed: Change some emulator icons
- Changed: Update splash image ("/usr/share/splash/splash.jpg")
- Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
- Changed: Backlight level has been changed from 0~100 to 20~100 (interval is 20 that is same as previous)
- Changed: X button has been changed from context help to speaker function (turn on/off)
- Changed: Power button will toggle suspend mode on/off (press for 1.5 seconds)
- Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
- Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
- Pending: xmame (speed is very slow)
- Pending: onscrioter-jh (crash sometimes)
- Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
- Workaround: (ReGBA emulator )SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
+ 	[test Pass] New: Add Arkanoid game (P.S. backlight key is for menu)
+ 	
+	New: Add overclock setting for each apps/emulators/games
+ 	New: Add snes9x4d emulator
+ 	New: Add fba-a320 emulator
+ 	New: Add handy emulator
+ 	New: Add race-od emulator
+ 	New: Add gngeo emulator
+ 	New: Add ASCIIpOrtal game
+ 	New: Add wallpapers (boot.jpg, magicavoxel.jpg) (thanks Leo-brasil)
+ 	New: Add PS4(v4) theme (thanks m1024)
+ 	New: Add zelda(v1) theme (thanks m1024)
+ 	New: Add oldboy(v1) theme (thanks m1024)
+ 	New: Add backlight indicator(Lv1 ~ Lv5) on status bar
+ 	New: [Port request] Streets of Rage Remake 5.1
+ 	New: [Feature Request] Ability to always show battery power remaining as a percentage.
+ 	New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
+ 	New: Add more wallpapers (thanks jutleys)
+ 	New: Add DekUI theme (thanks jutleys)
+ 	New: Add preview image (support jpg, png and bmp with size=128*128) when pick up rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
+ 	New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
+ 	New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
+ 	New: [Port request] GP2Xpectrum (I use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
+ 	New: Add czdoom game
+ 	New: Add wolf3d game
+ 	New: Add hhexen game
+ 	New: Add hheretic game
+ 	New: Add quake game
+ 	New: Add eduke32 game
+ 	New: Add sms_sdl emulator
+ 	New: Add oswan emulator
+ 	New: Add dingux-cap32 emulator
+ 	New: Add uae4all emulator
+ 	New: Add mrdrillux game
+ 	New: Add Bermuda Syndrome game
+ 	New: Add opentitus game (sometimes crash)
+ 	New: Add wizznic game
+ 	New: Add spartak-chess game
+ 	New: Add last-mission game
+ 	New: Add ketm game
+ 	New: Add Just4Qix game
+ 	New: Add Zelda-Roth game
+ 	New: Add Boulder game
+ 	New: Add Pang game
+ 	New: Add Digger game
+ 	New: Add ProfaDeluxe game
+ 	New: Add Noiz2sa game
+ 	New: Add NXEngine emulator (cave story - cn)
+ 	New: Add NXEngine emulator (cave story - tw)
+ 	New: Add Chocolate-doom game
+ 	New: Add FreeDroidClassic game
+ 	New: Add vice emulator
+ 	New: Enter suspend mode automatically if no any action for 30 seconds
+ 	New: Add OpenMSX emulator
+ 	New: Add NP2 emulator
+ 	New: Add scummvm emulator
+ 	New: Add gpsp emulator
+ 	New: Add Sonic Robo Blast 2 game
+ 	New: Add dingux-2600 emulator
+ 	New: Add dingux-atari emulator
+ 	New: Add prosystem emulator
+ 	New: Add jzIntv emulator
+ 	New: Add Colem emulator
+ 	New: Add OpenBOR emulator
+ 	New: Poweroff device when long press power button for 5 seconds
+ 	NEw: Add JinYong 苍龙逐日1.2
+ 	Fixed: Fix TVOut issue
+ 	Fixed: (Temper emulator) Change menu key from SELECT to Backlight
+ 	Fixed: Fix cpu icon will be shifted when change to different theme
+ 	Fixed: The 2 additional themes do not display all emulator icons.
+ 	Fixed: (MidPATH emulator) cannot save settings
+ 	Fixed: (FBA a320 emulator) cannot show preview image
+ 	Fixed: (PicoDrive emulator) crash when load rom from GMenu2X due to access NULL pointer
+ 	Fixed: (ReGBA emulator) Aspect rate refine by TonyJih
+ 	Fixed: (Fceux emulator) Original rate refine by TonyJih
+ 	Fixed: Link settings bug in gmenu2x:icon=skins/Default/icons/dosbox.png -> icon=skin:icons/dosbox.png (thanks m1024)
+ 	Fixed: czdoom issue (use chocolate-doom if you suffer from some issues)
+ 	Fixed: Fix SDL_mixer MIDI music issue
+ 	Fixed: Fix SDL_mixer Ogg music issue
+ 	Fixed: Fix JinYong screen and sound issues
+ 	Changed: Change some emulator icons
+ 	Changed: Update splash image ("/usr/share/splash/splash.jpg")
+ 	Changed: Update Chinese(CN), Chinese(TW) translation in GMenu2X
+ 	Changed: Backlight level has been changed from 0~100 to 20~100 (interval is 20 that is same as previous)
+ 	Changed: X button has been changed from context help to speaker function (turn on/off)
+ 	Changed: Power button will toggle suspend mode on/off (press for 1.5 seconds)
+ 	Changed: (PCSX4ALL emulator) re-compiled it with SHM flags for JIT to emit quick code and remove pcsx4all(a320) from GMenu2X
+ 	Changed: (Hugo emulator) this emulator will be removed and will not be maintained anymore.
+ 	Pending: xmame (speed is very slow)
+ 	Pending: onscrioter-jh (crash sometimes)
+ 	Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
+ 	Workaround: (ReGBA emulator )SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
 
 v20180213:
- New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
- New: Add new icon/function for "umount external sdcard" in "settings" section
- New: Lock all of key when backlight level is equal to 0
- New: Power key treat as the function of speaker on/off
- New: Please add libconfuse (its available in buildroot) to the root fs to allow dmenu to be ported
- New: Please add an opendingux splash screen when you switch on the handheld
- New: Add sdcard icon when insert external sdcard
- New: Add more Chinese language
- New: Add new wallpapers: od.png, w1.png, w2.png
- New: Request to add this amazing wallpaper
- New: When using file selector to select games no fast scroll with trigger buttons or left and right on dpad
- New: Add Commander app ported from A320 
- New: Add Rockbot game ported from Github
- New: Add MIDPath emulator ported from A320
- New: Add Temper emulator ported from GCW0
- Fixed: Device takes longer to boot up than normal once games are copied over to roms folder
- Fixed: Reboot option does not reboot device only shuts it down
- Fixed: App crash when edit/modify linkapp's paramaters in GMenu2X
- Fixed: when trying to save settings after reboot losses settings won't stick.
- Fixed: (SDLPAL game) cannot save status
- Fixed: (Hugo emulator) when trying to save settings after reboot losses settings won't stick.
- Fixed: Set volume when user press B button in gmenu2x
- Fixed: Selecting a wallpaper does not stick it resets after a reboot.
- Fixed: When editing selector directory to start where your roms are does not save on a reboot
- Fixed: Charging icon not working and does not display battery percentage (no way of telling how much battery left)
- Fixed: I have to reboot hold button b and then activate the usb option in gmenu2x for it to work.
- Fixed: gmenu2x菜单设置无法记录，重启失效, RESET功能无效，无法显示电池状态
- Fixed: Failed to save lanaguage setting in gmenu2x.conf
- Changed: Merge poweroff and reboot into same icon but choice by user
- Changed: Remove USB icon/function because it is automatical now
- Changed: Remove DiskFree icon
- Changed: Remove format icon/function
- Changed: Remove setting/icon of link volume
- Changed: Updated readme content
- Known issues: (USB) even under origial official firmware, usb function is still unstable.
+ 	New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
+ 	New: Add new icon/function for "umount external sdcard" in "settings" section
+ 	New: Lock all of key when backlight level is equal to 0
+ 	New: Power key treat as the function of speaker on/off
+ 	New: Please add libconfuse (its available in buildroot) to the root fs to allow dmenu to be ported
+ 	New: Please add an opendingux splash screen when you switch on the handheld
+ 	New: Add sdcard icon when insert external sdcard
+ 	New: Add more Chinese language
+ 	New: Add new wallpapers: od.png, w1.png, w2.png
+ 	New: Request to add this amazing wallpaper
+ 	New: When using file selector to select games no fast scroll with trigger buttons or left and right on dpad
+ 	New: Add Commander app ported from A320 
+ 	New: Add Rockbot game ported from Github
+ 	New: Add MIDPath emulator ported from A320
+ 	New: Add Temper emulator ported from GCW0
+ 	Fixed: Device takes longer to boot up than normal once games are copied over to roms folder
+ 	Fixed: Reboot option does not reboot device only shuts it down
+ 	Fixed: App crash when edit/modify linkapp's paramaters in GMenu2X
+ 	Fixed: when trying to save settings after reboot losses settings won't stick.
+ 	Fixed: (SDLPAL game) cannot save status
+ 	Fixed: (Hugo emulator) when trying to save settings after reboot losses settings won't stick.
+ 	Fixed: Set volume when user press B button in gmenu2x
+ 	Fixed: Selecting a wallpaper does not stick it resets after a reboot.
+ 	Fixed: When editing selector directory to start where your roms are does not save on a reboot
+ 	Fixed: Charging icon not working and does not display battery percentage (no way of telling how much battery left)
+ 	Fixed: I have to reboot hold button b and then activate the usb option in gmenu2x for it to work.
+ 	Fixed: gmenu2x菜单设置无法记录，重启失效, RESET功能无效，无法显示电池状态
+ 	Fixed: Failed to save lanaguage setting in gmenu2x.conf
+ 	Changed: Merge poweroff and reboot into same icon but choice by user
+ 	Changed: Remove USB icon/function because it is automatical now
+ 	Changed: Remove DiskFree icon
+ 	Changed: Remove format icon/function
+ 	Changed: Remove setting/icon of link volume
+ 	Changed: Updated readme content
+ 	Known issues: (USB) even under origial official firmware, usb function is still unstable.
 
 v20180208:
- New: Beta release
+	New: Beta release

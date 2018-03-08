@@ -70,7 +70,10 @@ int EventHandler(u32 nInGame)
 				}
 			}
 
-			if (gVar.pKeys[SDLK_ESCAPE] & gVar.pKeys[SDLK_BACKSPACE] & gVar.pKeys[SDLK_TAB]) return (1);	// Emergency exit.
+			//if (gVar.pKeys[SDLK_ESCAPE] & gVar.pKeys[SDLK_BACKSPACE] & gVar.pKeys[SDLK_TAB]) return (1);	// Emergency exit.
+			if(gVar.pKeys[51]){ // exit for retrogame
+				return (1);
+			}
 
 			// Gestion de la pause.
 			//TODO DINGUX
@@ -352,9 +355,9 @@ int main(int argc, char *argv[])
 	gVar.nScreenMode = 0; 
 	//gVar.pScreen = SDL_SetVideoMode(SCR_Width, SCR_Height, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	//gVar.pScreen = SDL_SetVideoMode(SCR_Width, SCR_Height, 16, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
-	gVar.pScreen = SDL_CreateRGBSurface(SDL_SWSURFACE, SCR_Width, SCR_Height, 8, 0, 0, 0, 0);
+	gVar.pScreen = SDL_CreateRGBSurface(SDL_HWSURFACE, SCR_Width, SCR_Height, 8, 0, 0, 0, 0);
 	ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
-	gVar.hwscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, SCR_Width, SCR_Height, 16, 0, 0, 0, 0);
+	gVar.hwscreen = SDL_CreateRGBSurface(SDL_HWSURFACE, SCR_Width, SCR_Height, 16, 0, 0, 0, 0);
 	if (gVar.pScreen == NULL)
 	{
 		fprintf(stderr, "Couldn't set video mode: %sn",SDL_GetError());
