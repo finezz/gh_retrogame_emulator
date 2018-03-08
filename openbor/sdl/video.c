@@ -186,7 +186,7 @@ SDL_Surface* SetVideoMode(int w, int h, int bpp, bool gl)
 	if(gl) return NULL;
 	else return SDL_CreateRGBSurface(0, w, h, bpp, masks[bpp/8-1][2], masks[bpp/8-1][1], masks[bpp/8-1][0], masks[bpp/8-1][3]);
 #elif defined(OPENDINGUX)
-	return SDL_SetVideoMode(w, /*h*/480, /*bpp*/16, SDL_SWSURFACE/*savedata.fullscreen?(SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_HWSURFACE|SDL_DOUBLEBUF)*/);
+	return SDL_SetVideoMode(w, /*h*/480, /*bpp*/16, SDL_HWSURFACE/*savedata.fullscreen?(SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_HWSURFACE|SDL_DOUBLEBUF)*/);
 #else
 	return SDL_SetVideoMode(w, h, bpp, savedata.fullscreen?(SDL_SWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN):(SDL_SWSURFACE|SDL_DOUBLEBUF));
 #endif
@@ -358,36 +358,39 @@ int video_copy_screen(s_screen* src)
 	}while(--h);
 #else
 	if(src->pixelformat == 4){ // 32bit
-#if 1
+		/*
 		SDL_Surface *p1 = SDL_CreateRGBSurface(SDL_SWSURFACE, src->width, src->height, src->pixelformat*8, 0, 0, 0, 0);
 		memcpy(p1->pixels, src->data, src->width * src->height * src->pixelformat);
 		SDL_Surface *p2 = SDL_ConvertSurface(p1, ds->format, 0);
 		SDL_SoftStretch(p2, NULL, ds, NULL);
 		SDL_FreeSurface(p1);
 		SDL_FreeSurface(p2);
-		
-		/*
+		*/
+
 		int x, y;
-		uint32_t tmp;
-		uint8_t *s = (uint8_t*)sp;
+		uint32_t col;
+		uint32_t *s = (uint32_t*)sp;
 		uint16_t *d = (uint16_t*)dp;
 		for(y=0; y<240; y++){
 			for(x=0; x<320; x++){
-				tmp = SDL_MapRGB(ds->format, s[0], s[1], s[2]);
-				//tmp = (((uint32_t)s[0] & 0xf8) >> 3) | (((uint32_t)s[1] & 0xfc) << 3) | (((uint32_t)s[2] & 0xf8) << 8);
-				*d++ = tmp;
-				s+= src->pixelformat;
+				col = *s++;
+				*d++ = SDL_MapRGB(ds->format, (col & 0xff0000) >> 16, (col & 0xff00) >> 8, col & 0xff);
 			}
 			d+= 320;
 		}
-		*/
-#else
-	SDL_RWops *rw = SDL_RWFromMem(openbor_logo_320x240_png.data, openbor_logo_320x240_png.size); 
-  SDL_Surface *png = IMG_Load_RW(rw, 1);
-	SDL_Surface *p = SDL_ConvertSurface(png, ds->format, 0);
-	SDL_SoftStretch(p, NULL, ds, NULL);
-	SDL_FreeSurface(p);
-#endif
+	}
+	else if(src->pixelformat == 0){ // 8bit
+		int x, y;
+		SDL_Color col;
+		uint8_t *s = (uint8_t*)src->data;
+		uint16_t *d = (uint16_t*)dp;
+		for(y=0; y<240; y++){
+			for(x=0; x<320; x++){
+				col = colors[*s++];
+				*d++ = SDL_MapRGB(ds->format, col.r, col.g, col.b);
+			}
+			d+= 320;
+		}
 	}
 	else{ // 16bit
 		do{
