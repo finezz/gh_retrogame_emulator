@@ -1,6 +1,7 @@
 v20180313:
  	[test Pass] New: Add Arkanoid game (backlight key = menu key)
 
+	New: Add meteoroid3d game
 	New: Add puzzletube game
 	New: Add apricots game
 	New: Add o2xiv app
