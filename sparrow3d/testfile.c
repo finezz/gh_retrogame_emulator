@@ -6,7 +6,7 @@
  For feedback and questions about my Files and Projects please mail me,
  Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
 */
-#include "../sparrow3d/sparrow3d.h"
+#include <sparrow3d.h>
 
 int main( int argc, char **argv )
 {
@@ -18,7 +18,7 @@ int main( int argc, char **argv )
 	spFileListPointer list;
 	spFileError error = spFileGetDirectory(&list,".",1,1);
 	printf("Files: %i\n",list->count);
-	spFileSortList(&list,SP_FILE_SORT_BY_TYPE_AND_NAME | SP_FILE_SORT_BACKWARDS);
+	//spFileSortList(&list,SP_FILE_SORT_BY_TYPE_AND_NAME | SP_FILE_SORT_BACKWARDS);
 	spFileListPointer mom = list;
 	while (mom)
 	{
@@ -37,6 +37,8 @@ int main( int argc, char **argv )
 				printf("DL %s\n",mom->name);
 				break;
     }
+    printf("   Last mod: %s",ctime((time_t*)&mom->last_mod));
+    printf("   Last acc: %s",ctime((time_t*)&mom->last_acc));
 		mom = mom->next;
 	}
 	printf("Error: %i\n",error);

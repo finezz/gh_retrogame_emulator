@@ -7,7 +7,7 @@
  Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
 */
 #include <string.h>
-#include "sparrow3d.h"
+#include <sparrow3d.h>
 
 //#define SCALE_UP
 
@@ -32,6 +32,7 @@ int crossedEyes = 0;
 
 void resize( Uint16 w, Uint16 h )
 {
+	spSelectRenderTarget(spGetWindowSurface());
 	#ifdef SCALE_UP
 		if (screen)
 			spDeleteSurface(screen);
@@ -50,7 +51,7 @@ void resize( Uint16 w, Uint16 h )
 	//Font Loading
 	if ( font )
 		spFontDelete( font );
-	font = spFontLoad( "./font/StayPuft.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
+	font = spFontLoad( "./font/Play-Bold.ttf", spFixedToInt(12 * spGetSizeFactor())+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII,              rightColor | leftColor); //whole ASCII
 	spFontAddButton( font, 'R', SP_BUTTON_START_NAME,  rightColor | leftColor, SP_ALPHA_COLOR ); //Return == START
 	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, rightColor | leftColor, SP_ALPHA_COLOR ); //Backspace == SELECT
@@ -108,33 +109,33 @@ void draw_test(void)
 			spRotateX( rotation );
 			spRotateY( rotation );
 			spRotateZ( rotation );
-			spScale(1 << SP_ACCURACY -3,1 << SP_ACCURACY -3,1 << SP_ACCURACY -3);
-			spQuadTex3D( -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, 0,
-						 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
-			spQuadTex3D( 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-						 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
+			spScale(spFloatToFixed( 0.125 ),spFloatToFixed( 0.125 ),spFloatToFixed( 0.125 ));
+			spQuadTex3D( -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, 0,
+						 spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
+			spQuadTex3D( spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, 0,
+						 -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
 			//Left / Right
-			spQuadTex3D( -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-						 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
-			spQuadTex3D( 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-						 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
+			spQuadTex3D( -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, 0,
+						 -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
+			spQuadTex3D( spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, 0,
+						 spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
 			//Up / Down
-			spQuadTex3D( 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-						 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
-			spQuadTex3D( -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, sparrow->h - 1,
-						 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-						 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, sparrow->w - 1, 0,
-						 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, sparrow->w - 1, sparrow->h - 1, color );
+			spQuadTex3D( spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, 0,
+						 -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
+			spQuadTex3D( -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), 0, sparrow->h - 1,
+						 -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), 0, 0,
+						 spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), sparrow->w - 1, 0,
+						 spFloatToFixed( 1.5f ), -spFloatToFixed( 1.5f ), spFloatToFixed( 1.5f ), sparrow->w - 1, sparrow->h - 1, color );
 			memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
 		}
 	}
@@ -143,7 +144,7 @@ void draw_test(void)
 	spSelectRenderTarget(screen);
 	char buffer[256];
 	sprintf(buffer,"FPS: %i",spGetFPS());
-	spFontDrawRight(screen->w-2,screen->h-2-font->maxheight,1, buffer, font );
+	spFontDrawRight(screen->w-2,screen->h-2-font->maxheight,0, buffer, font );
 	#ifdef SCALE_UP
 	spScale2XSmooth(screen,real_screen);
 	#endif
@@ -152,7 +153,7 @@ void draw_test(void)
 
 int calc_test(Uint32 steps)
 {
-	rotation += steps << SP_ACCURACY - 11;
+	rotation += steps * 32;
 	PspInput engineInput = spGetInput();
 	if (engineInput->button[SP_BUTTON_START])
 		return 1;
@@ -169,7 +170,7 @@ int main(int argc, char **argv)
 	else
 	{
 		leftColor  = spGetFastRGB(255,  0,  0);
-		rightColor = spGetFastRGB(  0,200,200);
+		rightColor = spGetFastRGB(  0,255,255);
 	}
 	spInitCore();
 	//Setup
@@ -181,6 +182,8 @@ int main(int argc, char **argv)
 	resize( screen->w, screen->h );
 	#endif
 	sparrow = spLoadSurface( "./data/sparrow.png" );
+	spSetLight(1);
+	spSetLightColor(0,SP_ONE*5,SP_ONE*5,SP_ONE*5);
 	spLoop(draw_test,calc_test,10,resize,NULL);
 	spDeleteSurface(sparrow);
 	#ifdef SCALE_UP

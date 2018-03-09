@@ -6,526 +6,259 @@
  For feedback and questions about my Files and Projects please mail me,
  Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
 */
-#include "sparrow3d.h"
+#include <sparrow3d.h>
 #include <SDL_image.h>
 #include <math.h>
 #include <string.h>
+#include "test_cube.h"
+#include "test_tube.h"
+#include "test_fill.h"
+#include "test_mesh.h"
+#include "test_primitives.h"
+#include "test_sprites.h"
+#include "test_gears.h"
+#include "test_yinyang.h"
+#include "test_target.h"
+#include "test_text.h"
+#include "test_mapping.h"
 SDL_Surface *screen;
-SDL_Surface *garfield;
-SDL_Surface *check;
-SDL_Surface *pepper;
-SDL_Surface *scientist;
-spModelPointer mesh;
-spModelPointer wheel[15];
-spSpritePointer sprite;
 Sint32 rotation = 0;
 spFontPointer font = NULL;
-int quality = 1;
-Uint32 fpssum = 0;
-Sint32 divisor = -5000;
-int test = 0;
-int count;
-int zStuff = 1;
-Uint16 lastKey = 0;
-char input[32] = "";
-char no_movement = 0;
-int perspective = 0;
 int pause = 0;
+int threading = 0;
+int test = 0;
+int no_movement = 0;
+char input[32] = "";
+#define TEST_COUNT 11
 
 void draw_test( void )
 {
-	spResetZBuffer();
-	if ( test == 5 )
-		spClearTarget( ( spSin( rotation * 8 ) >> SP_ACCURACY - 4 ) + 16 );
-	else
-		spClearTarget( 0 );
-	spIdentity();
-
-	count = 0;
-
-	spBindTexture( garfield );
-	spSetLight( quality );
-	spSetCulling( 1 );
-	spSetZSet( zStuff );
-	spSetZTest( zStuff );
-	int i;
-	Sint32 matrix[16];
-	Sint32 px, py, pz, w;
-	spSetLightPosition(0,7 << SP_ACCURACY - 3,7 << SP_ACCURACY - 3,7 << SP_ACCURACY - 3);
-	spSetLightColor(0,SP_ONE,SP_ONE,SP_ONE);
-	switch ( test )
-	{
-	case 6:
-		spSetAlphaTest( 0 );
-		spTranslate( 0, 0, (-8 << SP_ACCURACY));
-		spRotateX(rotation);
-		spRotateY(rotation);
-		spRotateZ(rotation);
-		
-		memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
-		spTranslate(0,2 << SP_ACCURACY,0);
-		spSetLightPosition(0,0,0,0);
-		spSetLightColor(0,0,SP_ONE,SP_ONE);
-		spProjectPoint3D( 0,0,0, &px,&py,&pz, &w, 1);
-		spEllipse3D(0,0,0,1 << SP_ACCURACY-3,1 << SP_ACCURACY-3,spGetFastRGB(0,255,255));
-		spSetAlphaTest(1);
-		spFontDrawMiddle( px,py-font->maxheight/2,pz, "light", font );
-		spSetAlphaTest(0);
-		spTranslate(0,-4 << SP_ACCURACY,0);
-		spEnableLight(1,1);
-		spSetLightPosition(1,0,0,0);
-		spSetLightColor(1,SP_ONE,SP_ONE,0);
-		spProjectPoint3D( 0,0,0, &px,&py,&pz, &w, 1);
-		spEllipse3D(0,0,0,1 << SP_ACCURACY-3,1 << SP_ACCURACY-3,spGetFastRGB(255,255,0));
-		spSetAlphaTest(1);
-		spFontDrawMiddle( px,py-font->maxheight/2,pz, "light", font );
-		spSetAlphaTest(0);
-		memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
-		
-		for (i = 0; i < 15; i++)
-		{
-			memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
-			
-			spRotateY(SP_PI*i*4/15);
-			spTranslate(0,0,-35 << SP_ACCURACY-4);
-			
-			spRotateX(SP_PI*i/15);
-			spRotateZ( (i & 1) ?rotation*4:(-rotation*4+SP_PI/11));
-			count = spMesh3D( wheel[i], 1 );
-			
-			memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
-		}
-		spEnableLight(1,0);
-		break;
-	case 5:
-		spRotozoomSurface( screen->w / 4, screen->h / 4, 0, garfield, spSin( rotation * 4 ) + ( 3 << SP_ACCURACY - 1 ) >> 2, spCos( rotation * 8 ) + ( 3 << SP_ACCURACY - 1 ) >> 2, rotation );
-		spRotozoomSurfacePart( 3 * screen->w / 4, screen->h / 4, 0, garfield, garfield->w / 4, garfield->h / 4, garfield->w / 2, garfield->w / 2, spSin( rotation * 4 ) + ( 3 << SP_ACCURACY - 1 ) >> 1, spCos( rotation * 8 ) + ( 3 << SP_ACCURACY - 1 ) >> 1, rotation );
-		sprite->rotation = 0;
-		spDrawSprite( screen->w / 5, 5 * screen->h / 8, 0, sprite );
-		sprite->zoomX = spSin( rotation * 8 ) + ( 3 << SP_ACCURACY - 1 );
-		sprite->zoomY = spCos( rotation * 6 ) + ( 3 << SP_ACCURACY - 1 );
-		spDrawSprite( 2 * screen->w / 5, 5 * screen->h / 8, 0, sprite );
-		sprite->rotation = rotation * 4;
-		spDrawSprite( 3 * screen->w / 5, 5 * screen->h / 8, 0, sprite );
-		sprite->zoomX = SP_ONE;
-		sprite->zoomY = SP_ONE;
-		spDrawSprite( 4 * screen->w / 5, 5 * screen->h / 8, 0, sprite );
-		break;
-	case 4:
-		srand( 0 );
-		for ( i = 0; i < 5; i++ )
-			spEllipseBorder( rand() % screen->w, rand() % screen->h, 0, rand() % screen->w / 4, rand() % screen->h / 4, 10, 20, rand() % 65536 );
-		for ( i = 0; i < 5; i++ )
-			spEllipse( rand() % screen->w, rand() % screen->h, 0, rand() % screen->w / 4, rand() % screen->h / 4, rand() % 65536 );
-		for ( i = 0; i < 5; i++ )
-			spRectangleBorder( rand() % screen->w, rand() % screen->h, 0,
-							   rand() % screen->w / 2, rand() % screen->h / 2, 12, 6, rand() % 65536 );
-		for ( i = 0; i < 5; i++ )
-			spRectangle( rand() % screen->w, rand() % screen->h, 0,
-						 rand() % screen->w / 2, rand() % screen->h / 2, rand() % 65536 );
-		for ( i = 0; i < 100; i++ )
-			spLine( rand() % screen->w, rand() % screen->h, 0,
-					rand() % screen->w, rand() % screen->h, 0, rand() % 65536 );
-		break;
-	case 3:
-		spSetAlphaTest( 0 );
-		spTranslate( 0, 0, (-6 << SP_ACCURACY)+spSin(rotation)*6 );
-		spRotateX( rotation );
-		spRotateY( rotation );
-		spRotateZ( rotation );
-		count = spMesh3D( mesh, 1 );
-		break;
-	case 2:
-		spSetAlphaTest( 1 );
-		spTranslate( 0, 0, ( -11<<SP_ACCURACY ) + spSin( rotation * 4 ) * 3 );
-		spRotateZ( rotation );
-		spRotateX( spSin( rotation ) >> 2 );
-		spRotateY( spCos( rotation * 2 ) >> 2 );
-		int x, y;
-		for ( x = -6; x <= 6; x++ )
-			for ( y = -6; y <= 6; y++ )
-				if ( x + y & 1 )
-				{
-					Sint32 matrix[16];
-					memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) );
-					spTranslate( x << SP_ACCURACY + 1, y << SP_ACCURACY + 1, 0 );
-					spQuad3D( -SP_ONE, SP_ONE, 0,
-							  -SP_ONE, -SP_ONE, 0,
-							  SP_ONE, -SP_ONE, 0,
-							  SP_ONE, SP_ONE, 0, 32767 );
-					//spQuadTex3D(-SP_ONE, SP_ONE, 0,SP_FONT_EXTRASPACE,SP_FONT_EXTRASPACE,
-					//            -SP_ONE,-SP_ONE, 0,1,garfield->h-SP_FONT_EXTRASPACE-1,
-					//             SP_ONE,-SP_ONE, 0,garfield->w-SP_FONT_EXTRASPACE-1,garfield->h-SP_FONT_EXTRASPACE-1,
-					//             SP_ONE, SP_ONE, 0,garfield->w-SP_FONT_EXTRASPACE-1,SP_FONT_EXTRASPACE,65535);
-					memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) );
-				}
-		for ( x = -6; x <= 6; x++ )
-			for ( y = -6; y <= 6; y++ )
-				if ( !( x + y & 1 ) )
-				{
-					Sint32 matrix[16];
-					memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) );
-					spTranslate( x << SP_ACCURACY + 1, y << SP_ACCURACY + 1, 0 );
-					spQuad3D( -SP_ONE, SP_ONE, 2 << SP_ACCURACY,
-							  -SP_ONE, -SP_ONE, 2 << SP_ACCURACY,
-							  SP_ONE, -SP_ONE, 2 << SP_ACCURACY,
-							  SP_ONE, SP_ONE, 2 << SP_ACCURACY, 65535 );
-					//top
-					//if (y<0)
-					spQuad3D( -SP_ONE, SP_ONE, 2 << SP_ACCURACY,
-							  SP_ONE, SP_ONE, 2 << SP_ACCURACY,
-							  SP_ONE, SP_ONE, 0 << SP_ACCURACY,
-							  -SP_ONE, SP_ONE, 0 << SP_ACCURACY, 65535 );
-					//bottom
-					//if (y>0)
-					spQuad3D( -SP_ONE, -SP_ONE, 0 << SP_ACCURACY,
-							  SP_ONE, -SP_ONE, 0 << SP_ACCURACY,
-							  SP_ONE, -SP_ONE, 2 << SP_ACCURACY,
-							  -SP_ONE, -SP_ONE, 2 << SP_ACCURACY, 65535 );
-					//left
-					//if (x>0)
-					spQuad3D( -SP_ONE, -SP_ONE, 2 << SP_ACCURACY,
-							  -SP_ONE, SP_ONE, 2 << SP_ACCURACY,
-							  -SP_ONE, SP_ONE, 0 << SP_ACCURACY,
-							  -SP_ONE, -SP_ONE, 0 << SP_ACCURACY, 65535 );
-					//right
-					//if (x<0)
-					spQuad3D( SP_ONE, -SP_ONE, 0 << SP_ACCURACY,
-							  SP_ONE, SP_ONE, 0 << SP_ACCURACY,
-							  SP_ONE, SP_ONE, 2 << SP_ACCURACY,
-							  SP_ONE, -SP_ONE, 2 << SP_ACCURACY, 65535 );
-					memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) );
-				}
-		break;
-	case 1:
-		spSetAlphaTest( 1 );
-		spTranslate( 0, 0, -15 << SP_ACCURACY );
-		spRotateY( rotation );
-		int a;
-		for ( a = 0; a < 16; a++ )
-		{
-			spRotateY( SP_PI / 8 );
-			Sint32 brightness = ( spCos( rotation + a * SP_PI / 8 ) >> SP_HALF_ACCURACY ) * abs( spCos( rotation + a * SP_PI / 8 ) >> SP_HALF_ACCURACY ) / 2 + ( 3 << SP_ACCURACY - 1 );
-			Uint16 color = ( ( brightness >> SP_ACCURACY - 4 ) << 11 ) + ( ( brightness >> SP_ACCURACY - 5 ) << 5 ) + ( brightness >> SP_ACCURACY - 4 );
-			for ( y = -21; y <= 21; y += 7 )
-			{
-				if ( ( y + a ) & 8 )
-					spQuadTex3D( -3 << SP_ACCURACY - 2, y + 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, SP_FONT_EXTRASPACE, SP_FONT_EXTRASPACE,
-								 -3 << SP_ACCURACY - 2, y - 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, 1, garfield->h - SP_FONT_EXTRASPACE - 1,
-								 3 << SP_ACCURACY - 2, y - 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, garfield->w - SP_FONT_EXTRASPACE - 1, garfield->h - SP_FONT_EXTRASPACE - 1,
-								 3 << SP_ACCURACY - 2, y + 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, garfield->w - SP_FONT_EXTRASPACE - 1, SP_FONT_EXTRASPACE, color );
-
-				else if ( ( y + a + 1 ) & 8 )
-					spRectangle3D( 0, y << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, SDL_GetTicks() / 128 );
-				else if ( ( y + a + 2 ) & 8 )
-					spEllipse3D( 0, y << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 2, 3 << SP_ACCURACY - 2, -SDL_GetTicks() / 128 );
-				else if ( ( y + a + 3 ) & 8 )
-					spRectangleBorder3D( 0, y << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 1<<SP_ACCURACY - 2, 1<<SP_ACCURACY - 2, SDL_GetTicks() / 64 );
-				else if ( ( y + a + 4 ) & 8 )
-					spEllipseBorder3D( 0, y << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 2, 3 << SP_ACCURACY - 2, 1<<SP_ACCURACY - 2, 1<<SP_ACCURACY - 2, -SDL_GetTicks() / 64 );
-				else if ( ( y + a + 5 ) & 8 )
-					//spBlit3D(0,y<<SP_ACCURACY-2, 9<<SP_ACCURACY-1,pepper);
-					spRotozoomSurface3D( 0, y << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, pepper, spSin( rotation * 4 ) + ( 3 << SP_ACCURACY - 1 ), spCos( rotation * 8 ) + ( 3 << SP_ACCURACY - 1 ), rotation );
-				else
-					spQuad3D( -3 << SP_ACCURACY - 2, y + 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1,
-							  -3 << SP_ACCURACY - 2, y - 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1,
-							  3 << SP_ACCURACY - 2, y - 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1,
-							  3 << SP_ACCURACY - 2, y + 3 << SP_ACCURACY - 2, 9 << SP_ACCURACY - 1, color );
-
-			}
-		}
-		break;
-	case 0:
-		spSetAlphaTest( 0 );
-		/*spSetPattern8(0b10101010,
-		              0b11011101,
-		              0b10101010,
-		              0b01010101,
-		              0b10101010,
-		              0b11011101,
-		              0b10101010,
-		              0b01010101);*/
-		spSetPattern8(170,//0b10101010, //0b doesn't work with older gcc versions
-		               85,//0b01010101,
-		              170,//0b10101010,
-		               85,//0b01010101,
-		              170,//0b10101010,
-		               85,//0b01010101,
-		              170,//0b10101010,
-		               85);//0b01010101);
-		spSetAlphaPattern4x4(127,0);
-		/*spSetPattern8(0b11111111,
-		              0b11000111,
-		              0b10111011,
-		              0b01101101,
-		              0b01010101,
-		              0b01101101,
-		              0b10111011,
-		              0b11000111);*/
-		spTranslate( spSin( rotation / 3 ), spSin( rotation / 5 ), ( -7 << SP_ACCURACY ) );
-		spRotateX( rotation );
-		spRotateY( rotation );
-		spRotateZ( rotation );
-
-		//Front / Back
-		/*Uint16 color1 = 12345 | 31727;
-		Uint16 color2 = 23456 | 31727;
-		Uint16 color3 = 34567 | 31727;
-		Uint16 color4 = 45678 | 31727;
-		Uint16 color5 = 56789 | 31727;
-		Uint16 color6 = 61234 | 31727;*/
-		Uint16 color1 = 0xFFFF;
-		Uint16 color2 = 0xFFFF;
-		Uint16 color3 = 0xFFFF;
-		Uint16 color4 = 0xFFFF;
-		Uint16 color5 = 0xFFFF;
-		Uint16 color6 = 0xFFFF;
-		spBindTexture( garfield );
-		spQuadTex3D( -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, 0,
-					 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color1 );
-		spQuadTex3D( 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-					 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color2 );
-		//Left / Right
-		spQuadTex3D( -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-					 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color3 );
-		spBindTexture( check );
-		spQuadTex3D( 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-					 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color4 );
-		//Up / Down
-		spQuadTex3D( 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-					 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color5 );
-		spQuadTex3D( -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, 0, garfield->h - 1,
-					 -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 0, 0,
-					 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, garfield->w - 1, 0,
-					 3 << SP_ACCURACY - 1, -3 << SP_ACCURACY - 1, 3 << SP_ACCURACY - 1, garfield->w - 1, garfield->h - 1, color6 );
-					 
-		spSetAlphaPattern4x4((spSin(rotation) + SP_ONE) / 512 % 512,8);
-		//Front / Back
-		spTranslate( -3 << SP_ACCURACY, 0, 0 );
-		spQuad3D( -SP_ONE, SP_ONE, SP_ONE,
-				  -SP_ONE, -SP_ONE, SP_ONE,
-				  SP_ONE, -SP_ONE, SP_ONE,
-				  SP_ONE, SP_ONE, SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		spQuad3D( SP_ONE, SP_ONE, -SP_ONE,
-				  SP_ONE, -SP_ONE, -SP_ONE,
-				  -SP_ONE, -SP_ONE, -SP_ONE,
-				  -SP_ONE, SP_ONE, -SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		//Left / Right
-		spQuad3D( -SP_ONE, SP_ONE, SP_ONE,
-				  -SP_ONE, SP_ONE, -SP_ONE,
-				  -SP_ONE, -SP_ONE, -SP_ONE,
-				  -SP_ONE, -SP_ONE, SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		spQuad3D( SP_ONE, -SP_ONE, SP_ONE,
-				  SP_ONE, -SP_ONE, -SP_ONE,
-				  SP_ONE, SP_ONE, -SP_ONE,
-				  SP_ONE, SP_ONE, SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		//Up / Down
-		spQuad3D( SP_ONE, SP_ONE, SP_ONE,
-				  SP_ONE, SP_ONE, -SP_ONE,
-				  -SP_ONE, SP_ONE, -SP_ONE,
-				  -SP_ONE, SP_ONE, SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		spQuad3D( -SP_ONE, -SP_ONE, SP_ONE,
-				  -SP_ONE, -SP_ONE, -SP_ONE,
-				  SP_ONE, -SP_ONE, -SP_ONE,
-				  SP_ONE, -SP_ONE, SP_ONE, spGetRGB((spSin(rotation*4)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation*2)+SP_ONE)>>SP_ACCURACY-7,(spSin(rotation)+SP_ONE)>>SP_ACCURACY-7) );
-		spDeactivatePattern();
-		break;
-	}
+	/* This is in fact the "end" of the last (!) drawing function. Why am I doing
+	 * this? If drawing in an extra thread is activated the drawing thread has the
+	 * time of the last calc function to finish drawing, too. ;) */
 	spSetZSet( 0 );
 	spSetZTest( 0 );
 	spSetAlphaTest( 1 );
-	//testing touchscreen
-	if (spGetInput()->touchscreen.pressed)
+	spFontDraw( 2, font-> maxheight+2, 0, "[L] Previous", font );
+	spFontDrawRight( screen->w - 2 , font-> maxheight+2, 0, "[R] next", font );
+	spFontDrawRight( screen->w - 2 , 2, 0, "[S] Exit", font );
+	if (test != 10)
 	{
-		spBlitSurface(spGetInput()->touchscreen.x,spGetInput()->touchscreen.y,0,pepper);
+		switch (spIsKeyboardPolled())
+		{
+			case 0: spFontDraw( 2, 2, 0, "[E] Enter Text", font ); break;
+			case 1: spFontDraw( 2, 2, 0, "[E] Finish Text", font ); break;
+		}
+		switch (threading)
+		{
+			case 0: spFontDrawRight( screen->w - 2, screen->h - 1*font-> maxheight, 0, "[X] No draw thread", font ); break;
+			case 1: spFontDrawRight( screen->w - 2, screen->h - 1*font-> maxheight, 0, "[X] Extra draw thread", font ); break;
+		}
+		switch (pause)
+		{
+			case 0: spFontDrawRight( screen->w - 2, screen->h - 2*font-> maxheight, 0, "[Y] Pause", font ); break;
+			case 1: spFontDrawRight( screen->w - 2, screen->h - 2*font-> maxheight, 0, "[Y] Unpause", font ); break;
+		}
 	}
-
-	spFontDraw( 0, 2, 0, "Previous [L]", font );
-	spFontDrawRight( screen->w - 2, 2, 0, "[R] next", font );
-	switch (perspective)
-	{
-		case 0: spFontDrawRight( screen->w - 2, screen->h - 3*font-> maxheight, 0, "[X] perspective off", font ); break;
-		case 1: spFontDrawRight( screen->w - 2, screen->h - 3*font-> maxheight, 0, "[X] perspective work around", font ); break;
-		case 2: spFontDrawRight( screen->w - 2, screen->h - 3*font-> maxheight, 0, "[X] perspective on", font ); break;
-	}
-	if (pause)
-		spFontDraw( 2, screen->h - 3*font-> maxheight, 0, "[B] play", font );
+	if (spIsKeyboardPolled() && spGetVirtualKeyboardState() == SP_VIRTUAL_KEYBOARD_ALWAYS)
+		spFontDrawMiddle( screen->w /2, screen->h - font-> maxheight-spGetVirtualKeyboard()->h, 0, input, font );
 	else
-		spFontDraw( 2, screen->h - 3*font-> maxheight, 0, "[B] pause", font );
+		spFontDrawMiddle( screen->w /2, screen->h - 2*font-> maxheight, 0, input, font );
+	char buffer[256];
 	switch ( test )
 	{
-	case 0:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 1:\nRotating Cube", font );
-		break;
-	case 1:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 2:\n3D Tube", font );
-		break;
-	case 2:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 3:\nFulfilling", font );
-		break;
-	case 3:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 4:\nMesh Loading", font );
-		break;
-	case 4:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 5:\nPrimitives", font );
-		break;
-	case 5:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 6:\nSprites & Rotozoom", font );
-		break;
-	case 6:
-		spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, "Test 7:\nMAKE IT STOP!", font );
-		break;
+		case 0:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_cube(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_cube(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_cube(buffer,SP_BUTTON_B), font);
+			break;
+		case 1:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_tube(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_tube(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_tube(buffer,SP_BUTTON_B), font);
+			break;
+		case 2:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_fill(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_fill(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_fill(buffer,SP_BUTTON_B), font);
+			break;
+		case 3:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_mesh(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_mesh(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_mesh(buffer,SP_BUTTON_B), font);
+			break;
+		case 4:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_primitives(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_primitives(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_primitives(buffer,SP_BUTTON_B), font);
+			break;
+		case 5:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_sprites(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_sprites(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_sprites(buffer,SP_BUTTON_B), font);
+			break;
+		case 6:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_gears(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_gears(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_gears(buffer,SP_BUTTON_B), font);
+			break;
+		case 7:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_yinyang(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_yinyang(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_yinyang(buffer,SP_BUTTON_B), font);
+			break;
+		case 8:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_target(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_target(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_target(buffer,SP_BUTTON_B), font);
+			break;
+		case 9:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_text(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_text(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_text(buffer,SP_BUTTON_B), font);
+			break;
+		case 10:
+			spFontDrawMiddle( screen->w / 2, font->maxheight + 2, 0, caption_mapping(buffer), font );
+			spFontDraw( 2, screen->h - 1*font->maxheight,0, settings_mapping(buffer,SP_BUTTON_A), font);
+			spFontDraw( 2, screen->h - 2*font->maxheight,0, settings_mapping(buffer,SP_BUTTON_B), font);
+			break;
 	}
-	if ( quality )
-		spFontDraw( 0, screen->h - font->maxheight, 0, "Light On [A]", font );
-	else
-		spFontDraw( 0, screen->h - font->maxheight, 0, "Light Off [A]", font );
-	char buffer[256];
-	if ( zStuff )
-		spFontDraw( 0, screen->h - font->maxheight * 2, 0, "Z Test/Set On [Y]", font );
-	else
-		spFontDraw( 0, screen->h - font->maxheight * 2, 0, "Z Test/Set Off [Y]", font );
 
-	sprintf( buffer, "%02i:%02i", divisor / 60000, ( divisor / 1000 ) % 60 );
-	//spFontDrawRight( screen->w - 2, screen->h - font->maxheight * 2, 0, buffer, font );
 	sprintf( buffer, "fps: %i", spGetFPS() );
 	spFontDrawMiddle( screen->w/2, 1, 0, buffer, font );
-	if (spIsKeyboardPolled())
-		spFontDrawRight( screen->w - 2, screen->h - font->maxheight * 2, 0, "[S] Finish Text", font );
-	else
-		spFontDrawRight( screen->w - 2, screen->h - font->maxheight * 2, 0, "[S] Enter Text", font );
-	spFontDrawRight( screen->w - 2, screen->h - font->maxheight, 0, "[E] Exit", font );
-	char utf8buffer[5];
-	sprintf(buffer,"Pressing \"%s\"",spFontGetUTF8FromUnicode(lastKey,utf8buffer,5));
-	if (lastKey)
-		spFontDrawMiddle( screen->w / 2, screen->h /2 - font->maxheight/2, 0, buffer, font );
-	if (input[0])
-		spFontDrawMiddle( screen->w / 2, screen->h /2 + font->maxheight/2, 0, input, font );
-
-	if (spGetInput()->analog_axis[0] < 0)
-	{
-		sprintf(buffer,"<");
-		int i;
-		for (i = 0; i < -spGetInput()->analog_axis[0]; i+=-SP_ANALOG_AXIS_MIN/5)
-			sprintf(buffer,"%s-",buffer);
-	}	
-	else
-		sprintf(buffer," ");
-	sprintf(buffer,"%s\"%i\" ",buffer,spGetInput()->analog_axis[0]);
-	if (spGetInput()->analog_axis[0] > 0)
-	{
-		int i;
-		for (i = 0; i < spGetInput()->analog_axis[0]; i+=SP_ANALOG_AXIS_MAX/5)
-			sprintf(buffer,"%s-",buffer);
-		sprintf(buffer,"%s>",buffer);
-	}	
-	spFontDraw( 2, font->maxheight, 0, buffer, font );
-
-	if (spGetInput()->analog_axis[1] < 0)
-	{
-		sprintf(buffer,"^\n");
-		int i;
-		for (i = 0; i < -spGetInput()->analog_axis[1]; i+=-SP_ANALOG_AXIS_MIN/5)
-			sprintf(buffer,"%s|\n",buffer);
-	}	
-	else
-		sprintf(buffer," ");
-	sprintf(buffer,"%s\"%i\"\n",buffer,spGetInput()->analog_axis[1]);
-	if (spGetInput()->analog_axis[1] > 0)
-	{
-		int i;
-		for (i = 0; i < spGetInput()->analog_axis[1]; i+=SP_ANALOG_AXIS_MAX/5)
-			sprintf(buffer,"%s|\n",buffer);
-		sprintf(buffer,"%sv",buffer);
-	}	
-	spFontDraw( 2, font->maxheight*2, 0, buffer, font );
-	if (spIsKeyboardPolled())
+	if (spIsKeyboardPolled() && spGetVirtualKeyboardState() == SP_VIRTUAL_KEYBOARD_ALWAYS)
 		spBlitSurface(screen->w/2,screen->h-spGetVirtualKeyboard()->h/2,0,spGetVirtualKeyboard());
 	spFlip();
+	spResetZBuffer();
+	spClearTarget( spGetRGB(64,64,64) );
+	spIdentity();
+
+	spSetLightPosition(0,spFloatToFixed( 0.875f ),spFloatToFixed( 0.875f ),spFloatToFixed( 0.875f ));
+	spSetLightColor(0,SP_ONE,SP_ONE,SP_ONE);
+	spSetZSet( 1 );
+	spSetZTest( 1 );
+	switch ( test )
+	{
+	case 10:
+		draw_mapping(rotation,font);
+		break;
+	case 9:
+		draw_text(rotation,font);
+		break;
+	case 8:
+		draw_target(rotation);
+		break;
+	case 7:
+		draw_yinyang(rotation);
+		break;
+	case 6:
+		draw_gears(rotation);
+		break;
+	case 5:
+		draw_sprites(rotation);
+		break;
+	case 4:
+		draw_primitives(rotation);
+		break;
+	case 3:
+		draw_mesh(rotation);
+		break;
+	case 2:
+		draw_fill(rotation);
+		break;
+	case 1:
+		draw_tube(rotation);
+		break;
+	case 0:
+		draw_cube(rotation);
+		break;
+	}
 }
 
 
 int calc_test( Uint32 steps )
 {
-	spUpdateSprite( sprite, steps );
+	if ( spGetInput()->button[SP_BUTTON_START] )
+		return 1;
 	int i;
-	for ( i = 0; i < steps; i++ )
-	{
-		divisor++;
-		if ( divisor > 0 )
-			fpssum += spGetFPS();
-		//if (divisor == 60000)
-		//return 1;
-	}
 	if (no_movement)
 		rotation = 20000;//SP_PI;
 	else
-		rotation += steps << SP_ACCURACY - 11;
-	
-	if ( spIsKeyboardPolled())
+		rotation += steps*32;
+
+	if ( test!=10 && spIsKeyboardPolled())
 	{
-		if ( spGetInput()->button[SP_BUTTON_START] )
+		if ( spGetInput()->button[SP_BUTTON_SELECT] )
 		{
-			spGetInput()->button[SP_BUTTON_START] = 0;
+			spGetInput()->button[SP_BUTTON_SELECT] = 0;
 			spStopKeyboardInput();
 		}
 		return 0;
 	}
-	if ( spGetInput()->button[SP_BUTTON_A] )
-	{
-		spGetInput()->button[SP_BUTTON_A] = 0;
-		quality = 1 - quality;
-	}
-	if ( spGetInput()->button[SP_BUTTON_X] )
+	if ( test!=10 && spGetInput()->button[SP_BUTTON_X] )
 	{
 		spGetInput()->button[SP_BUTTON_X] = 0;
-		perspective = (perspective+1) % 3;
-		switch (perspective)
-		{
-			case 0: spSetPerspectiveTextureMapping(0); spSetAffineTextureHack(0); break;
-			case 1: spSetAffineTextureHack(1); break;
-			case 2: spSetPerspectiveTextureMapping(1); break;
-		}
+		threading = (threading+1) % 2;
+		spDrawInExtraThread(threading);
 	}
-	if ( spGetInput()->button[SP_BUTTON_B] )
+	if ( test!=10 && spGetInput()->button[SP_BUTTON_Y] )
 	{
-		spGetInput()->button[SP_BUTTON_B] = 0;
+		spGetInput()->button[SP_BUTTON_Y] = 0;
 		pause = 1-pause;
 	}
 	if (pause)
-		rotation -= steps << SP_ACCURACY - 11;
+		rotation -= steps*32;
 
 	if ( spGetInput()->button[SP_BUTTON_R] )
 	{
 		spGetInput()->button[SP_BUTTON_R] = 0;
-		test = ( test + 1 ) % 7;
+		test = ( test + 1 ) % TEST_COUNT;
 	}
 	if ( spGetInput()->button[SP_BUTTON_L] )
 	{
 		spGetInput()->button[SP_BUTTON_L] = 0;
-		test = ( test + 6 ) % 7;
+		test = ( test + TEST_COUNT -1 ) % TEST_COUNT;
 	}
-	if ( spGetInput()->button[SP_BUTTON_Y] )
+	switch (test)
 	{
-		spGetInput()->button[SP_BUTTON_Y] = 0;
-		zStuff = 1 - zStuff;
+		case 0:
+			calc_cube();
+			break;
+		case 1:
+			calc_tube();
+			break;
+		case 2:
+			calc_fill();
+			break;
+		case 3:
+			calc_mesh();
+			break;
+		case 4:
+			calc_primitives();
+			break;
+		case 5:
+			calc_sprites(steps);
+			break;
+		case 6:
+			calc_gears();
+			break;
+		case 7:
+			calc_yinyang();
+			break;
+		case 8:
+			calc_target(steps);
+			break;
+		case 9:
+			calc_text(steps);
+			break;
+		case 10:
+			calc_mapping(steps);
+			break;
 	}
 	if ( spGetInput()->button[SP_BUTTON_SELECT] )
-		return 1;
-	if ( spGetInput()->button[SP_BUTTON_START] )
 	{
-		spGetInput()->button[SP_BUTTON_START] = 0;
-		spPollKeyboardInput(input,32,SP_BUTTON_RIGHT_MASK | SP_BUTTON_DOWN_MASK);
+		spGetInput()->button[SP_BUTTON_SELECT] = 0;
+		spPollKeyboardInput(input,32,SP_BUTTON_A_MASK | SP_BUTTON_B_MASK);
 	}
 
 	return 0;
@@ -533,6 +266,7 @@ int calc_test( Uint32 steps )
 
 void resize( Uint16 w, Uint16 h )
 {
+	spSelectRenderTarget(spGetWindowSurface());
 	//Settings up the onboard keyboard:
 	if (spGetSizeFactor() <= SP_ONE)
 		spSetVirtualKeyboard(SP_VIRTUAL_KEYBOARD_IF_NEEDED,0,h-w*48/320,w,w*48/320,spLoadSurface("./data/keyboard320.png"),spLoadSurface("./data/keyboardShift320.png"));
@@ -541,8 +275,7 @@ void resize( Uint16 w, Uint16 h )
 		spSetVirtualKeyboard(SP_VIRTUAL_KEYBOARD_IF_NEEDED,0,h-w*48/320,w,w*48/320,spLoadSurface("./data/keyboard640.png"),spLoadSurface("./data/keyboardShift640.png"));
 	else
 		spSetVirtualKeyboard(SP_VIRTUAL_KEYBOARD_IF_NEEDED,0,h-w*48/320,w,w*48/320,spLoadSurface("./data/keyboard1280.png"),spLoadSurface("./data/keyboardShift1280.png"));
-	
-	
+
 	//Setup of the new/resized window
 	spSetPerspective( 45.0, ( float )spGetWindowSurface()->w / ( float )spGetWindowSurface()->h, 1.0f, 100.0f );
 
@@ -550,17 +283,19 @@ void resize( Uint16 w, Uint16 h )
 	spFontShadeButtons(1);
 	if ( font )
 		spFontDelete( font );
-	font = spFontLoad( "./font/StayPuft.ttf", 13 * spGetSizeFactor() >> SP_ACCURACY );
+	font = spFontLoad( "./font/Play-Bold.ttf", spFixedToInt(10 * spGetSizeFactor()));
 	spFontSetShadeColor(0);
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
 	spFontAdd( font, "äüöÄÜÖßẞ", 65535 ); //German stuff (same like spFontAdd( font, SP_FONT_GROUP_GERMAN, 0 ); )
 	spFontAddBorder( font, 0 );
+	spFontSetButtonStrategy(SP_FONT_BUTTON);
 	spFontAddButton( font, 'A', SP_BUTTON_A_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'B', SP_BUTTON_B_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'X', SP_BUTTON_X_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'Y', SP_BUTTON_Y_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'L', SP_BUTTON_L_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'R', SP_BUTTON_R_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontSetButtonStrategy(SP_FONT_INTELLIGENT);
 	spFontAddButton( font, 'S', SP_BUTTON_START_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 	spFontAddButton( font, 'E', SP_BUTTON_SELECT_NAME, 65535, spGetRGB( 64, 64, 64 ) );
 }
@@ -569,65 +304,67 @@ void eventHandling(SDL_Event *event)
 {
 	if (event->type == SDL_KEYDOWN)
 	{
-		lastKey = event->key.keysym.unicode;
+		int lastKey = event->key.keysym.unicode;
 		char buffer[5];
 		printf("keydown event 0x%x = \"%s\" keysym=%i\n",lastKey,spFontGetUTF8FromUnicode(lastKey,buffer,5),event->key.keysym.sym);
 	}
-	else
-	if (event->type == SDL_KEYUP)
-		lastKey = 0;
 }
-
 
 int main( int argc, char **argv )
 {
 	if (argc > 1)
-		no_movement = 1;
+		test = atoi(argv[1]);
 	//sparrow3D Init
-	//spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
+	spSetDefaultWindowSize( 1024, 768 ); //Creates a 800x480 window at PC instead of 320x240
 	spInitCore();
 
 	//Setup
 	screen = spCreateDefaultWindow();
-	spSelectRenderTarget(screen);
-	spUsePrecalculatedNormals(1);
+	spUsePrecalculatedNormals(0);
 	resize( screen->w, screen->h );
-	//Textures loading
-	garfield = spLoadSurface( "./data/garfield.png" );
-	check = spLoadSurface( "./data/check.png" );
-	pepper = spLoadSurface( "./data/pepper.png" );
-	scientist = spLoadSurface( "./data/science_guy_frames01.png" );
-	
-	spBindTexture( garfield );
 
-	//Mesh loading
-	mesh = spMeshLoadObj( "./data/testmeshuv_tri.obj", garfield, 65535 );
-	int i;
-	for (i = 0; i < 15; i++)
-		wheel[i] = spMeshLoadObj( "./data/wheel.obj", NULL, spGetHSV(i*2*SP_PI/15,255,255));
+	char* parameter1 = NULL;
+	char* parameter2 = NULL;
+	if (argc > 2)
+		parameter1 = argv[2];
+	if (argc > 3)
+		parameter2 = argv[3];
 
-	//Sprite Creating
-	sprite = spNewSprite(NULL);
-	spNewSubSpriteTilingRow( sprite, scientist, 1, 1, 22, 46, 24, 48, 9 ,100);
-	//spNewSubSpriteWithTiling(sprite,scientist,0,0,32,48,100);
-	
+	init_cube();
+	init_tube();
+	init_fill();
+	if (test == 3)
+		init_mesh(parameter1,parameter2);
+	else
+		init_mesh(NULL,NULL);
+	init_primitives();
+	init_sprites();
+	init_gears();
+	init_yinyang();
+	init_target();
+	init_text(argc,argv,font);
+	init_mapping();
+	spSelectRenderTarget(screen);
+
 	spSetAffineTextureHack(0);
+	spSetLight(1);
 
 	//All glory the main loop
 	spLoop( draw_test, calc_test, 10, resize, eventHandling );
-	
 
-	//Winter Wrap up, Winter Wrap up 
+	//Winter Wrap up, Winter Wrap up z
 	spFontDelete( font );
-	spMeshDelete( mesh );
-	for (i = 0; i < 15; i++)
-		spMeshDelete( wheel[i] );
-	spDeleteSprite( sprite );
-	spDeleteSurface( garfield );
-	spDeleteSurface( check );
-	spDeleteSurface( pepper );
-	spDeleteSurface( scientist );
+	quit_cube();
+	quit_tube();
+	quit_fill();
+	quit_mesh();
+	quit_primitives();
+	quit_sprites();
+	quit_gears();
+	quit_yinyang();
+	quit_target();
+	quit_text();
+	quit_mapping();
 	spQuitCore();
-	printf( "Average fps: %.1f\n", ( float )fpssum / ( float )divisor );
 	return 0;
 }

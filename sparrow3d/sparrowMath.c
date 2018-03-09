@@ -1,21 +1,19 @@
-/*
- The contents of this file are subject to the Mozilla Public License
- Version 1.1 (the "License"); you may not use this file except in
- compliance with the License. You may obtain a copy of the License at
- http://www.mozilla.org/MPL/
-
- Software distributed under the License is distributed on an "AS IS"
- basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- License for the specific language governing rights and limitations
- under the License.
-
- Alternatively, the contents of this file may be used under the terms of the
- GNU Lesser General Public license (the  "LGPL License") version 2 or higher, in
- which case the provisions of LGPL License are applicable instead of those above
- 
- For feedback and questions about my Files and Projects please mail me,
- Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
-*/
+ /* This file is part of sparrow3d.
+  * Sparrow3d is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Sparrow3d is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
 #include "sparrowMath.h"
 #include <stdlib.h>
 #include <math.h>
@@ -89,9 +87,9 @@ PREFIX Sint32 spSqrt (Sint32 n)
 {
 	if (n <= 0)
 		return 0;
-	if (n <= (1 << SP_SQRT_ACCURACY)+1)
+	if (n <= (1 << SP_SQRT_ACCURACY))
 		return spSqrtvalue[n];
-#ifdef FAST_BUT_UGLY
+#ifdef BLACK_MAGIC
 	int bit_count = 30;
 	Sint32 x = 1 << bit_count;
 	while (x > n)
@@ -135,5 +133,86 @@ PREFIX Sint32 spMax(Sint32 a, Sint32 b)
 
 PREFIX Sint32 spAtof( char* buffer )
 {
-	return (Sint32)(atof(buffer)*SP_ACCURACY_FACTOR);
+	return (Sint32)(spAtoFloat(buffer)*SP_ACCURACY_FACTOR);
+}
+
+Sint32 spLastRandValue = 0;
+
+PREFIX void spSetRand( Sint32 seed )
+{
+	if (seed < 0)
+		seed*=-1;
+	spLastRandValue = seed;
+}
+
+PREFIX Sint32 spRand( void )
+{
+	//I stole the magic numbers from glibc...
+	spLastRandValue = ((1103515245*spLastRandValue + 12345) >> 1)  & 0x7fffffff;
+	return spLastRandValue;
+}
+
+#define DIGIT_CHECK(v) \
+	((v) == '0' || (v) == '1' || \
+	 (v) == '2' || (v) == '3' || \
+	 (v) == '4' || (v) == '5' || \
+	 (v) == '6' || (v) == '7' || \
+	 (v) == '8' || (v) == '9')
+
+PREFIX double spAtoFloat( char* buffer )
+{
+	int i = 0;
+	while (buffer[i] == ' ' && buffer[i] != 0)
+		i++;
+	if (buffer[i] == 0)
+		return 0.0f;
+	double result = 0.0f;
+	double sign = 1.0f;
+	Sint64 left = 0;
+	Sint64 middle = 0;
+	Sint64 divisor = 1;
+	Sint64 right = 0;
+	//sign
+	if (buffer[i] == '-')
+	{
+		sign = -1.0f;
+		i++;
+	}
+	//left part
+	while ( DIGIT_CHECK(buffer[i]) )
+	{
+		left *= 10;
+		int digit = (int)buffer[i] - (int)'0';
+		left += digit;
+		i++;
+	}
+	//middle part
+	if (buffer[i] == '.')
+	{
+		i++;
+		while ( DIGIT_CHECK(buffer[i]) )
+		{
+			middle *= 10;
+			int digit = (int)buffer[i] - (int)'0';
+			middle += digit;
+			divisor *= 10;
+			i++;
+		}
+	}
+	//right part
+	if (buffer[i] == 'e' || buffer[i] == 'E')
+	{
+		i++;
+		while ( DIGIT_CHECK(buffer[i]) )
+		{
+			right *= 10;
+			int digit = (int)buffer[i] - (int)'0';
+			right += digit;
+			i++;
+		}
+	}
+	if (right)
+		return sign*((double)left + (double)middle/(double)divisor)*pow(10.0f,(double)right);
+	else
+		return sign*((double)left + (double)middle/(double)divisor);
 }

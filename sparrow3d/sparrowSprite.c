@@ -1,22 +1,22 @@
-/*
- The contents of this file are subject to the Mozilla Public License
- Version 1.1 (the "License"); you may not use this file except in
- compliance with the License. You may obtain a copy of the License at
- http://www.mozilla.org/MPL/
+ /* This file is part of sparrow3d.
+  * Sparrow3d is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Sparrow3d is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
 
- Software distributed under the License is distributed on an "AS IS"
- basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- License for the specific language governing rights and limitations
- under the License.
-
- Alternatively, the contents of this file may be used under the terms of the
- GNU Lesser General Public license (the  "LGPL License") version 2 or higher, in
- which case the provisions of LGPL License are applicable instead of those above
- 
- For feedback and questions about my Files and Projects please mail me,
- Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
-*/
 #include "sparrowSprite.h"
+#include "sparrowPrimitives.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -77,6 +77,32 @@ PREFIX spSubSpritePointer spNewSubSpriteWithTiling( spSpritePointer sprite, SDL_
 	sub->sy = sy;
 	sub->sw = sw;
 	sub->sh = sh;
+	
+	//Calculating average pixel
+	SDL_LockSurface(surface);
+	Uint16* pixel = (Uint16*)surface->pixels;
+	int line = surface->pitch/surface->format->BytesPerPixel;
+	int x,y;
+	int r=0,g=0,b=0;
+	sub->pixelCount = 0;
+	for (x = sx; x < sx+sw; x++)
+		for (y = sy; y < sy+sh; y++)
+			if (pixel[x+y*line] != SP_ALPHA_COLOR)
+			{
+				r += spGetRawRFromColor( pixel[x+y*line] );
+				g += spGetRawGFromColor( pixel[x+y*line] );
+				b += spGetRawBFromColor( pixel[x+y*line] );
+				sub->pixelCount++;
+			}
+	if (sub->pixelCount)
+	{
+		r /= sub->pixelCount;
+		g /= sub->pixelCount;
+		b /= sub->pixelCount;
+		sub->averageColor = (r<<11) | (g<<5) | b;
+	}
+	SDL_UnlockSurface(surface);
+	
 	if (duration <= 0)
 		duration = 1;
 	sub->duration = duration;
@@ -129,6 +155,9 @@ PREFIX void spUpdateSprite( spSpritePointer sprite, Sint32 time )
 		return;
 	while ( time > sprite->wholeDuration )
 		time -= sprite->wholeDuration;
+	sprite->wholeAge += time;
+	if (sprite->wholeAge > sprite->wholeDuration)
+		sprite->wholeAge -= sprite->wholeDuration;
 	while ( time > sprite->momSub->duration - sprite->momSub->age )
 	{
 		time -= sprite->momSub->duration - sprite->momSub->age;
@@ -178,11 +207,14 @@ PREFIX void spDrawSprite3D( Sint32 x, Sint32 y, Sint32 z, spSpritePointer sprite
 }
 
 
-PREFIX spSpriteCollectionPointer spNewSpriteCollection()
+PREFIX spSpriteCollectionPointer spNewSpriteCollection( void )
 {
 	spSpriteCollectionPointer result = (spSpriteCollectionPointer)malloc(sizeof(spSpriteCollection));
 	result->firstSprite = NULL;
 	result->active = NULL;
+	sprintf(result->author,"Unknown");
+	sprintf(result->license,"Unknown");
+	result->comment[0] = 0;
 	return result;
 }
 
@@ -242,8 +274,13 @@ PREFIX void spSelectSprite(spSpriteCollectionPointer collection,char* name)
 			break;
 		sprite = sprite->next;
 	}
-	if (sprite)
+	if (sprite && sprite!=collection->active)
+	{
 		collection->active = sprite;
+		sprite->wholeAge = 0;
+		sprite->momSub = sprite->firstSub;
+		sprite->momSub->age = 0;
+	}
 }
 
 PREFIX spSpritePointer spActiveSprite(spSpriteCollectionPointer collection)
@@ -267,6 +304,12 @@ int spSpriteCollectionGetKeyword(char* name)
 		return 5;
 	if (strcmp(name,"frame") == 0)
 		return 6;
+	if (strcmp(name,"author") == 0)
+		return 7;
+	if (strcmp(name,"license") == 0)
+		return 8;
+	if (strcmp(name,"comment") == 0)
+		return 9;
 	return 0;
 }
 
@@ -416,10 +459,24 @@ PREFIX spSpriteCollectionPointer spLoadSpriteCollection(char* filename,SDL_Surfa
 					//We loaded the surface one time more, than we will it delete later, so lets decrease the ref counter:
 					spDeleteSurface( s );
 					break;
+				case 7: //"author"
+					sprintf(collection->author,"%s",value);
+					break;
+				case 8: //"license"
+					sprintf(collection->license,"%s",value);
+					break;
+				case 9: //"comment"
+					sprintf(collection->comment,"%s",value);
+					break;
 			}
 		}
 	}
 	spSelectSprite(collection,sprite_d);
 	SDL_RWclose(file);
 	return collection;
+}
+
+PREFIX Uint16 spSpriteAverageColor(spSpritePointer sprite)
+{
+	return sprite->momSub->averageColor;
 }

@@ -20,6 +20,8 @@
 #include "game.h"
 #include "lettering.h"
 #include "settings.h"
+#include "c4a.h"
+#include "music.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -176,6 +178,10 @@ Uint8 get_type_color_v(int type,int w)
 	return 64;
 }
 
+#define GET_TYPE_COLOR(type,w) spGetHSV(get_type_color_h(type,w),get_type_color_s(type,w),get_type_color_v(type,w))
+
+int last_win_type;
+
 pwinsituation search_win_situation()
 {
 	pwinsituation finalresult = NULL;
@@ -217,6 +223,7 @@ pwinsituation search_win_situation()
 					type = stone[y	][(x+1)%16].type;
 				if (type == 6)
 					type = stone[y+1][(x+1)%16].type;
+				last_win_type = type;
 				while (found)
 				{
 					found=0;
@@ -231,6 +238,7 @@ pwinsituation search_win_situation()
 							pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 							newsituation->x=(situation->x+15)%16;
 							newsituation->y=situation->y;
+							newsituation->type=stone[situation->y][(situation->x+15)%16].type;
 							newsituation->next=result;
 							result=newsituation;
 							found=1;
@@ -245,6 +253,7 @@ pwinsituation search_win_situation()
 							pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 							newsituation->x=(situation->x+1)%16;
 							newsituation->y=situation->y;
+							newsituation->type=stone[situation->y][(situation->x+1)%16].type;
 							newsituation->next=result;
 							result=newsituation;
 							found=1;
@@ -261,6 +270,7 @@ pwinsituation search_win_situation()
 								pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 								newsituation->x=situation->x;
 								newsituation->y=situation->y-1;
+								newsituation->type=stone[situation->y-1][situation->x].type;
 								newsituation->next=result;
 								result=newsituation;
 								found=1;
@@ -278,6 +288,7 @@ pwinsituation search_win_situation()
 								pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 								newsituation->x=situation->x;
 								newsituation->y=situation->y+1;
+								newsituation->type=stone[situation->y+1][situation->x].type;
 								newsituation->next=result;
 								result=newsituation;
 								found=1;
@@ -292,6 +303,7 @@ pwinsituation search_win_situation()
 							pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 							newsituation->x=(situation->x+8)%16;
 							newsituation->y=situation->y;
+							newsituation->type=stone[situation->y][(situation->x+8)%16].type;
 							newsituation->next=result;
 							result=newsituation;
 							found=1;
@@ -315,6 +327,7 @@ pwinsituation search_win_situation()
 								newsituation->x=(situation->x+15)%16;
 								newsituation->y=situation->y;
 								newsituation->next=result;
+								newsituation->type=stone[situation->y][(situation->x+15)%16].type;
 								result=newsituation;
 								found=1;
 								noticed[situation->y][(situation->x+15)%16]=1;
@@ -326,6 +339,7 @@ pwinsituation search_win_situation()
 								pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 								newsituation->x=(situation->x+1)%16;
 								newsituation->y=situation->y;
+								newsituation->type=stone[situation->y][(situation->x+1)%16].type;
 								newsituation->next=result;
 								result=newsituation;
 								found=1;
@@ -340,6 +354,7 @@ pwinsituation search_win_situation()
 									pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 									newsituation->x=situation->x;
 									newsituation->y=situation->y-1;
+									newsituation->type=stone[situation->y-1][situation->x].type;
 									newsituation->next=result;
 									result=newsituation;
 									found=1;
@@ -355,6 +370,7 @@ pwinsituation search_win_situation()
 									pwinsituation newsituation=(pwinsituation)malloc(sizeof(twinsituation));
 									newsituation->x=situation->x;
 									newsituation->y=situation->y+1;
+									newsituation->type=stone[situation->y+1][situation->x].type;
 									newsituation->next=result;
 									result=newsituation;
 									found=1;
@@ -485,6 +501,7 @@ void prepare_game_objects(char complete)
 		remove_win_situations();
 		init_light();
 		delete_all_lettering();
+		delete_all_bordering();
 	}
 	else
 	{
@@ -623,7 +640,7 @@ void make_win_situations_invalid()
 	while ((situation=search_win_situation())!=NULL)
 	{
 		memset(type_found,0,12);
-		type_found[6]=1;
+		//type_found[6]=1;
 		char count = 0;
 		found = 1;
 		pwinsituation temp=situation;
@@ -633,6 +650,7 @@ void make_win_situations_invalid()
 			if (stone[temp->y][temp->x].type>=0 && type_found[stone[temp->y][temp->x].type] == 0)
 			{
 				printf("__%i__\n",stone[temp->y][temp->x].type);
+				add_bordering(situation,GET_TYPE_COLOR(stone[temp->y][temp->x].type,w));
 				count++;
 				type_found[stone[temp->y][temp->x].type] = 1;
 			}
@@ -662,7 +680,7 @@ void make_win_situations_invalid()
 										 0,2*SP_PI+SP_PI/2-(temp->x*SP_PI>>3),0);
 			}
 			i++;
-			printf("%i:%i\n",temp->x,temp->y);
+			printf("%i:%i with type %i\n",temp->x,temp->y,temp->type);
 			temp=temp->next; 
 		}
 			if (i>0)
@@ -690,7 +708,7 @@ void make_win_situations_invalid()
 			delete_win_situation(situation);
 			if (count>1)
 			{
-				add_lettering("+15 %%",small_font);
+				add_lettering("+15 %",small_font);
 				add_lettering(spGetTranslationFromCaption(translation,"Combo!"),middle_font);
 				new_points = new_points * 115/100;
 			}
@@ -784,8 +802,24 @@ void draw_particle2(int posx,int posy,Sint32 r,int time,SDL_Surface* particle)
 int last_rotate = 0;
 int choose_one = 0; //1 A, 2 B, 3 X, 4 Y
 
-void draw_stone(int type,int h,int s,int v,int a,Sint32 posx_zero,int w)
+void draw_stone(int type,int h,int s,int v,int a,Sint32 posx_zero,int w, int special)
 {
+	if (special)
+	{
+		Uint16 input = spGetHSV(h,s,v);
+		Uint16 color = spGetHSV(0,0,255-96+(3*spSin((-posx_zero>>SP_HALF_ACCURACY+2)*(SP_PI>>SP_HALF_ACCURACY+1)-((a+8)*SP_PI>>3))>>(SP_ACCURACY-5)));
+		Uint16 output = ((input * color >> 16) & 63488)
+									+ (((input & 2047) * (color & 2047) >> 11) & 2016)
+									+ ((input & 31) * (color & 31) >> 5);
+		spQuad3D(0,+SP_ONE/2,0,
+						 0,-SP_ONE/2,0,
+						 0,-SP_ONE/8,-SP_ONE*5,
+						 0,+SP_ONE/8,-SP_ONE*5,output);
+		spQuad3D(+SP_ONE/2,0,0,
+						 -SP_ONE/2,0,0,
+						 -SP_ONE/8,0,-SP_ONE*5,
+						 +SP_ONE/8,0,-SP_ONE*5,output);
+	}
 	if (settings_get_stone_quality() == 2)
 	{
 		spBindTexture(stone_texture[type]);
@@ -915,20 +949,27 @@ void draw_game(void)
 	spSetZSet(0);
 	int left_side = 1;
 	//for (meta_a=16-(posx[0]>>SP_ACCURACY)+15;meta_a>=16-(posx[0]>>SP_ACCURACY);meta_a--)
-	meta_a=16-(posx[0]>>SP_ACCURACY)+12; //back
+	meta_a=16-(posx[0]+SP_ONE/2>>SP_ACCURACY)+12; //back
 	int left_a = meta_a;
 	int right_a = meta_a;
 	int i;
 	for (i = 0; i < 16; i++)
 	{
 		a = meta_a & 15;
-		for (y=-6;y<=6;y+=2)
+		int loop_y;
+		for (loop_y = 0; loop_y < 7; loop_y++)
+		//for (y=-6;y<=6;y+=2)
 		{
-			if (stone[(y>>1)+3][a].type<0)
-				continue;
-			stone[(y>>1)+3][a].h = get_type_color_h(stone[(y>>1)+3][a].type,w);
-			stone[(y>>1)+3][a].s = get_type_color_s(stone[(y>>1)+3][a].type,w);
-			stone[(y>>1)+3][a].v = get_type_color_v(stone[(y>>1)+3][a].type,w);
+			switch (loop_y)
+			{
+				case 0: y = -6; break;
+				case 1: y = +6; break;
+				case 2: y = -4; break;
+				case 3: y = +4; break;
+				case 4: y = -2; break;
+				case 5: y = +2; break;
+				case 6: y =  0; break;
+			}
 			memcpy(matrix,modellViewMatrix,sizeof(Sint32)*16);
 			pchange change=is_in_change(a,3+y/2);
 			Sint32 px=spCos(a*SP_PI>>3)*5;
@@ -963,17 +1004,51 @@ void draw_game(void)
 				py=new_y;
 				pz=(spSin((new_a>>SP_HALF_ACCURACY+1)*(SP_PI>>SP_HALF_ACCURACY+2))>>SP_HALF_ACCURACY)*((1<<SP_ACCURACY)-sign*(spSin(change->progress*SP_PI/CHANGE_TIME)/5)>>SP_HALF_ACCURACY)*5;
 			}
-			if (stone[(y>>1)+3][a].falling)
-			{
-				py-=(2*(FALL_TIME-stone[(y>>1)+3][a].falling)<<SP_ACCURACY)/FALL_TIME;
-			}
-			
 			spTranslate(px,py,pz);
 			spRotate(0,1<<SP_ACCURACY,0,2*SP_PI+SP_PI/2-(a*SP_PI>>3));
+			if (settings_get_borders())
+			{
+				spSetAlphaTest(0);
+				pbordering bordering = get_first_bordering();
+				while (bordering)
+				{
+					spSetBlending(bordering->alpha);
+					int Y = (y>>1)+3;
+					if (bordering->vertical_line[Y][a] >= 0)
+						spQuad3D( SP_ONE-SP_ONE/8,+SP_ONE,0,
+											SP_ONE+SP_ONE/8,+SP_ONE,0,
+											SP_ONE+SP_ONE/8,-SP_ONE,0,
+											SP_ONE-SP_ONE/8,-SP_ONE,0,bordering->vertical_line[(y>>1)+3][a]);
+					if (bordering->horizental_line[Y][a] >= 0)
+						spQuad3D(-SP_ONE,-SP_ONE+SP_ONE/8,0,
+										 +SP_ONE,-SP_ONE+SP_ONE/8,0,
+										 +SP_ONE,-SP_ONE-SP_ONE/8,0,
+										 -SP_ONE,-SP_ONE-SP_ONE/8,0,bordering->horizental_line[(y>>1)+3][a]);
+					if (Y == 6)
+					{
+						if (bordering->horizental_line[7][a] >= 0)
+							spQuad3D(-SP_ONE, SP_ONE+SP_ONE/8,0,
+											 +SP_ONE, SP_ONE+SP_ONE/8,0,
+											 +SP_ONE, SP_ONE-SP_ONE/8,0,
+											 -SP_ONE, SP_ONE-SP_ONE/8,0,bordering->horizental_line[7][a]);					
+					}
+					bordering = bordering->next;
+				}
+				spSetBlending(SP_ONE);
+				spSetAlphaTest(1);
+			}
+			if (stone[(y>>1)+3][a].falling)
+				spTranslate(0,-(2*(FALL_TIME-stone[(y>>1)+3][a].falling)<<SP_ACCURACY)/FALL_TIME,0);
+			if (stone[(y>>1)+3][a].type<0)
+			{
+				memcpy(modellViewMatrix,matrix,sizeof(Sint32)*16);
+				continue;
+			}
+			stone[(y>>1)+3][a].h = get_type_color_h(stone[(y>>1)+3][a].type,w);
+			stone[(y>>1)+3][a].s = get_type_color_s(stone[(y>>1)+3][a].type,w);
+			stone[(y>>1)+3][a].v = get_type_color_v(stone[(y>>1)+3][a].type,w);
 			int s=stone[(y>>1)+3][a].s;
 
-			if (stone[(y>>1)+3][a].type==stone[(y>>1)+3][(a+8)%16].type)
-				spRotate(0,0,1<<SP_ACCURACY,spSin(w*64)/2);
 				//spRotate(0,0,1<<SP_ACCURACY,SP_PI/4);
 
 			int v=stone[(y>>1)+3][a].v;//-64+(2*spSin((-posx[0]>>SP_HALF_ACCURACY+2)*(SP_PI>>SP_HALF_ACCURACY+1)-((a+8)*SP_PI>>3))>>(SP_ACCURACY-5));
@@ -992,7 +1067,13 @@ void draw_game(void)
 				s=0;
 			if (s>255)
 				s=255;
-			draw_stone(stone[(y>>1)+3][a].type,stone[(y>>1)+3][a].h,s,v,a,posx[0],w);
+			int special = 0;
+			if (stone[(y>>1)+3][a].type==stone[(y>>1)+3][(a+8)%16].type)
+			{
+				spRotate(0,0,1<<SP_ACCURACY,spSin(w*64)/2);
+				special = 1;
+			}
+			draw_stone(stone[(y>>1)+3][a].type,stone[(y>>1)+3][a].h,s,v,a,posx[0],w,special);
 			memcpy(modellViewMatrix,matrix,sizeof(Sint32)*16);
 		}
 		if (left_side)
@@ -1476,6 +1557,7 @@ void draw_game(void)
 	
 
 	draw_music();
+	draw_c4a();
 		
 	spFlip();
 }
@@ -1484,6 +1566,8 @@ int control_timeout;
 
 int calc_game(Uint32 steps)
 {
+	calc_music(steps);
+	calc_c4a(steps);
 	PspInput engineInput = spGetInput();
 	if (insert_name)
 	{
@@ -1541,7 +1625,6 @@ int calc_game(Uint32 steps)
 	
 	if (pause)
 		return 0;
-	calc_music(steps);
 	if (countdown == 4000)
 	{
 		if (engineInput->button[SP_BUTTON_B] || engineInput->button[SP_BUTTON_A] ||
@@ -1588,14 +1671,18 @@ int calc_game(Uint32 steps)
 						insert_name = 2;
 					if (points > get_highscore(0,settings_get_color(),0))
 						insert_name = 1;
+					if (insert_name)
+						init_one_score_commit(0,points);
 					break;
 				case 1:
-					if (realTime > get_highscore(1,settings_get_color(),2))
+					if (realTime/100 > get_highscore(1,settings_get_color(),2))
 						insert_name = 3;
-					if (realTime > get_highscore(1,settings_get_color(),1))
+					if (realTime/100 > get_highscore(1,settings_get_color(),1))
 						insert_name = 2;
-					if (realTime > get_highscore(1,settings_get_color(),0))
+					if (realTime/100 > get_highscore(1,settings_get_color(),0))
 						insert_name = 1;
+					if (insert_name)
+						init_one_score_commit(1,realTime/100);
 					break;
 				case 2:
 					if (realTime/100 < get_highscore(2,settings_get_color(),2))
@@ -1604,6 +1691,8 @@ int calc_game(Uint32 steps)
 						insert_name = 2;
 					if (realTime/100 < get_highscore(2,settings_get_color(),0))
 						insert_name = 1;
+					if (insert_name)
+						init_one_score_commit(2,realTime/100);
 				break;
 			}
 			if (insert_name == 0)
@@ -1997,13 +2086,13 @@ int calc_game(Uint32 steps)
 				engineInput->button[SP_BUTTON_UP] = 0;
 				int x = (20-(posx[0]>>SP_ACCURACY)) & 15;
 				int y = 3+(posy[0]>>SP_ACCURACY+1);
-				if (y<7 && !choose_one && stone[y+1][x].new == 0 && stone[y+1][x].falling == 0 && stone[y+1][x].type >= 0)
+				if (y<6 && !choose_one && stone[y+1][x].new == 0 && stone[y+1][x].falling == 0 && stone[y+1][x].type >= 0)
 					choose_one = 4;
 				else
 				if (choose_one == 4)
 					choose_one = 0;
 				else
-				if (y<7 && stone[y+1][x].new == 0 && stone[y+1][x].falling == 0 && stone[y+1][x].type >= 0)
+				if (y<6 && stone[y+1][x].new == 0 && stone[y+1][x].falling == 0 && stone[y+1][x].type >= 0)
 				{
 					play_switch();
 					switch (choose_one)
@@ -2113,6 +2202,7 @@ int calc_game(Uint32 steps)
 	}
 	
 	calc_lettering(steps);
+	calc_bordering(steps);
 		
 	w =(w+(steps*16))%(2*SP_PI);
 	if (engineInput->button[SP_BUTTON_SELECT])

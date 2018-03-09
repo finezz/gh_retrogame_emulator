@@ -1,21 +1,20 @@
-/*
- The contents of this file are subject to the Mozilla Public License
- Version 1.1 (the "License"); you may not use this file except in
- compliance with the License. You may obtain a copy of the License at
- http://www.mozilla.org/MPL/
+ /* This file is part of sparrow3d.
+  * Sparrow3d is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Sparrow3d is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
 
- Software distributed under the License is distributed on an "AS IS"
- basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- License for the specific language governing rights and limitations
- under the License.
-
- Alternatively, the contents of this file may be used under the rms
- GNU Lesser General Public license (the  "LGPL License") version 2 or higher, in
- which case the provisions of LGPL License are applicable instead of those above
- 
- For feedback and questions about my Files and Projects please mail me,
- Alexander Matthes (Ziz) , zizsdl_at_googlemail.com
-*/
 #include "sparrowMesh.h"
 #include "sparrowMath.h"
 #include <math.h>
@@ -42,6 +41,8 @@ typedef struct spMeshTempStruct
 	Uint32 point;
 	Uint32 uv;
 	Uint32 nr;
+	Uint32 face[2];
+	Uint32 face_count;
 	spMeshTempPointer next;
 } spMeshTemp;
 
@@ -72,22 +73,27 @@ static Uint32 meshGetNumber( spMeshTempPointer* first, Uint32 point, Uint32 uv )
 	return mom->nr;
 }
 
-static Uint32 meshGetNumberEdge( spMeshTempPointer* first, Uint32 point, Uint32 uv )
+static Uint32 meshGetNumberEdge( spMeshTempPointer* first, Uint32 point, Uint32 uv, int face )
 {
 	spMeshTempPointer mom = *first;
 	Uint32 nr = -1;
 	while ( mom != NULL )
 	{
 		if ( ( mom->point == point && mom->uv == uv ) ||
-				( mom->point == uv && mom->uv == point ) )
-
-			return mom->nr; //found!
+		     ( mom->point == uv && mom->uv == point ) )
+		{ //found
+			mom->face[mom->face_count] = face;
+			mom->face_count++;
+			return mom->nr;
+		}
 		mom = mom->next;
 	}
 	//not forund:
 	mom = ( spMeshTempPointer )malloc( sizeof( spMeshTemp ) );
 	mom->point = point;
 	mom->uv = uv;
+	mom->face[0] = face;
+	mom->face_count = 1;
 	if ( *first )
 	{
 		mom->nr = ( *first )->nr + 1;
@@ -111,7 +117,8 @@ static void meshParseVertex( char* buffer, spPointPointer point, int max )
 	while ( left < max && buffer[left] != ' ' )
 		left++;
 	//now buffer[left] is the ' ' after 'v' before the first number
-	left++;
+	while ( left < max && buffer[left] == ' ' )
+		left++;
 	int right = left + 1;
 	while ( right < max && buffer[right] != ' ' )
 		right++;
@@ -125,7 +132,8 @@ static void meshParseVertex( char* buffer, spPointPointer point, int max )
 	left = right;
 	while ( left < max && buffer[left] != ' ' )
 		left++;
-	left++;
+	while ( left < max && buffer[left] == ' ' )
+		left++;
 	right = left + 1;
 	while ( right < max && buffer[right] != ' ' )
 		right++;
@@ -138,7 +146,8 @@ static void meshParseVertex( char* buffer, spPointPointer point, int max )
 	left = right;
 	while ( left < max && buffer[left] != ' ' )
 		left++;
-	left++;
+	while ( left < max && buffer[left] == ' ' )
+		left++;
 	right = left + 1;
 	while ( right < max && buffer[right] > ' ' )
 		right++;
@@ -146,6 +155,7 @@ static void meshParseVertex( char* buffer, spPointPointer point, int max )
 	buffer[right] = 0;
 	point->z = spAtof(&( buffer[left] ));
 	buffer[right] = oldc;
+	//printf("Parsed %i %i %i\n",point->x,point->y,point->z);
 }
 
 static void meshParseUV( char* buffer, spTexPointPointer point, int max, int texw, int texh )
@@ -157,14 +167,15 @@ static void meshParseUV( char* buffer, spTexPointPointer point, int max, int tex
 	while ( left < max && buffer[left] != ' ' )
 		left++;
 	//now buffer[left] is the ' ' after 't' before the first number
-	left++;
+	while ( left < max && buffer[left] == ' ' )
+		left++;
 	int right = left + 1;
 	while ( right < max && buffer[right] != ' ' )
 		right++;
 	//now buffer[right] is the ' ' after the number
 	char oldc = buffer[right];
 	buffer[right] = 0;
-	float number = atof( &( buffer[left] ) );
+	float number = spAtoFloat( &( buffer[left] ) );
 	point->u = ( int )( number * ( float )texw );
 	buffer[right] = oldc;
 
@@ -172,13 +183,14 @@ static void meshParseUV( char* buffer, spTexPointPointer point, int max, int tex
 	left = right;
 	while ( left < max && buffer[left] != ' ' )
 		left++;
-	left++;
+	while ( left < max && buffer[left] == ' ' )
+		left++;
 	right = left + 1;
 	while ( right < max && buffer[right] != ' ' )
 		right++;
 	oldc = buffer[right];
 	buffer[right] = 0;
-	number = atof( &( buffer[left] ) );
+	number = spAtoFloat( &( buffer[left] ) );
 	point->v = texh - 1 - ( int )( number * ( float )( texh - 1 ) );
 	buffer[right] = oldc;
 }
@@ -193,7 +205,8 @@ static int meshParseFace( char* buffer, int* face, int max ) //3 triangle, 4 qua
 	//now buffer[left] is the ' ' after 'f' before the first number
 	while ( 1 )
 	{
-		left++;
+		while ( left < max && buffer[left] == ' ' )
+			left++;
 		int right = left + 1;
 		while ( right < max && buffer[right] != '/' )
 			right++;
@@ -454,38 +467,38 @@ PREFIX spModelPointer spMeshLoadObj( char* name, SDL_Surface* texture, Uint16 co
 	int i;
 	for ( i = 0; i < triCount; i++ )
 	{
-		triangles[i].edge[0] = meshGetNumberEdge( &tempPointer, triangles[i].point[0], triangles[i].point[1] );
-		triangles[i].edge[1] = meshGetNumberEdge( &tempPointer, triangles[i].point[1], triangles[i].point[2] );
-		triangles[i].edge[2] = meshGetNumberEdge( &tempPointer, triangles[i].point[2], triangles[i].point[0] );
+		triangles[i].edge[0] = meshGetNumberEdge( &tempPointer, triangles[i].point[0], triangles[i].point[1], i );
+		triangles[i].edge[1] = meshGetNumberEdge( &tempPointer, triangles[i].point[1], triangles[i].point[2], i );
+		triangles[i].edge[2] = meshGetNumberEdge( &tempPointer, triangles[i].point[2], triangles[i].point[0], i );
 		meshCalcNormal(triangles[i].normal, points[triangles[i].point[0]].x, points[triangles[i].point[0]].y, points[triangles[i].point[0]].z,
 		                                    points[triangles[i].point[1]].x, points[triangles[i].point[1]].y, points[triangles[i].point[1]].z,
 		                                    points[triangles[i].point[2]].x, points[triangles[i].point[2]].y, points[triangles[i].point[2]].z);
 	}
 	for ( i = 0; i < triTexCount; i++ )
 	{
-		texTriangles[i].edge[0] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[0], texTriangles[i].point[1] );
-		texTriangles[i].edge[1] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[1], texTriangles[i].point[2] );
-		texTriangles[i].edge[2] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[2], texTriangles[i].point[0] );
+		texTriangles[i].edge[0] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[0], texTriangles[i].point[1], i );
+		texTriangles[i].edge[1] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[1], texTriangles[i].point[2], i );
+		texTriangles[i].edge[2] = meshGetNumberEdge( &texTempPointer, texTriangles[i].point[2], texTriangles[i].point[0], i );
 		meshCalcNormal(texTriangles[i].normal, texPoints[texTriangles[i].point[0]].x, texPoints[texTriangles[i].point[0]].y, texPoints[texTriangles[i].point[0]].z,
 		                                       texPoints[texTriangles[i].point[1]].x, texPoints[texTriangles[i].point[1]].y, texPoints[texTriangles[i].point[1]].z,
 		                                       texPoints[texTriangles[i].point[2]].x, texPoints[texTriangles[i].point[2]].y, texPoints[texTriangles[i].point[2]].z);
 	}
 	for ( i = 0; i < quadCount; i++ )
 	{
-		quads[i].edge[0] = meshGetNumberEdge( &tempPointer, quads[i].point[0], quads[i].point[1] );
-		quads[i].edge[1] = meshGetNumberEdge( &tempPointer, quads[i].point[1], quads[i].point[2] );
-		quads[i].edge[2] = meshGetNumberEdge( &tempPointer, quads[i].point[2], quads[i].point[3] );
-		quads[i].edge[3] = meshGetNumberEdge( &tempPointer, quads[i].point[3], quads[i].point[0] );
+		quads[i].edge[0] = meshGetNumberEdge( &tempPointer, quads[i].point[0], quads[i].point[1], i );
+		quads[i].edge[1] = meshGetNumberEdge( &tempPointer, quads[i].point[1], quads[i].point[2], i );
+		quads[i].edge[2] = meshGetNumberEdge( &tempPointer, quads[i].point[2], quads[i].point[3], i );
+		quads[i].edge[3] = meshGetNumberEdge( &tempPointer, quads[i].point[3], quads[i].point[0], i );
 		meshCalcNormal(quads[i].normal, points[quads[i].point[0]].x, points[quads[i].point[0]].y, points[quads[i].point[0]].z,
 		                                points[quads[i].point[1]].x, points[quads[i].point[1]].y, points[quads[i].point[1]].z,
 		                                points[quads[i].point[2]].x, points[quads[i].point[2]].y, points[quads[i].point[2]].z);
 	}
 	for ( i = 0; i < quadTexCount; i++ )
 	{
-		texQuads[i].edge[0] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[0], texQuads[i].point[1] );
-		texQuads[i].edge[1] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[1], texQuads[i].point[2] );
-		texQuads[i].edge[2] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[2], texQuads[i].point[3] );
-		texQuads[i].edge[3] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[3], texQuads[i].point[0] );
+		texQuads[i].edge[0] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[0], texQuads[i].point[1], i );
+		texQuads[i].edge[1] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[1], texQuads[i].point[2], i );
+		texQuads[i].edge[2] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[2], texQuads[i].point[3], i );
+		texQuads[i].edge[3] = meshGetNumberEdge( &texTempPointer, texQuads[i].point[3], texQuads[i].point[0], i );
 		meshCalcNormal(texQuads[i].normal, texPoints[texQuads[i].point[0]].x, texPoints[texQuads[i].point[0]].y, texPoints[texQuads[i].point[0]].z,
 		                                   texPoints[texQuads[i].point[1]].x, texPoints[texQuads[i].point[1]].y, texPoints[texQuads[i].point[1]].z,
 		                                   texPoints[texQuads[i].point[2]].x, texPoints[texQuads[i].point[2]].y, texPoints[texQuads[i].point[2]].z);
@@ -501,6 +514,10 @@ PREFIX spModelPointer spMeshLoadObj( char* name, SDL_Surface* texture, Uint16 co
 	{
 		edges[tempPointer->nr].point[0] = tempPointer->point;
 		edges[tempPointer->nr].point[1] = tempPointer->uv;
+		edges[tempPointer->nr].face[0] = tempPointer->face[0];
+		edges[tempPointer->nr].face[1] = tempPointer->face[1];
+		edges[tempPointer->nr].face_count = tempPointer->face_count;
+		edges[tempPointer->nr].status = 0;
 		spMeshTempPointer next = tempPointer->next;
 		free( tempPointer );
 		tempPointer = next;
@@ -518,6 +535,10 @@ PREFIX spModelPointer spMeshLoadObj( char* name, SDL_Surface* texture, Uint16 co
 	{
 		texEdges[texTempPointer->nr].point[0] = texTempPointer->point;
 		texEdges[texTempPointer->nr].point[1] = texTempPointer->uv;
+		texEdges[texTempPointer->nr].status = 0;
+		texEdges[texTempPointer->nr].face[0] = texTempPointer->face[0];
+		texEdges[texTempPointer->nr].face[1] = texTempPointer->face[1];
+		texEdges[texTempPointer->nr].face_count = texTempPointer->face_count;
 		spMeshTempPointer next = texTempPointer->next;
 		free( texTempPointer );
 		texTempPointer = next;
