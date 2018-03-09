@@ -101,8 +101,7 @@ void VID_Init (unsigned char *palette) {
 	int handle = -1;
 
 	TTF_Init();
-	//gTTFFont = TTF_OpenFont("q_sys/gfx/dpquake.ttf", 14);
-	gTTFFont = TTF_OpenFont("/mnt/game/gmenu2x/skins/Default/font.ttf", 16);
+	gTTFFont = TTF_OpenFont("q_sys/gfx/dpquake.ttf", 14);
 
   // Load the SDL library
   if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0){

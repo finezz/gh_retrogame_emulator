@@ -1,2 +1,2 @@
 #!/bin/sh
-/mnt/game/bard/bard -font /mnt/game/bard/font.ttf -font_size 14 -text $1
+/mnt/int_sd/apps/bard/bard -font /mnt/int_sd/apps/bard/font.ttf -font_size 14 -text $1

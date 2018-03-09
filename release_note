@@ -1,6 +1,15 @@
 v20180313:
- 	[test Pass] New: Add Arkanoid game (P.S. backlight key is for menu)
- 	
+ 	[test Pass] New: Add Arkanoid game (backlight key = menu key)
+
+	New: Add apricots game
+	New: Add o2xiv app
+	New: Add Spout game
+	New: Add Chroma game
+	New: Add meritous game
+	New: Add stransball2 game
+	New: Add TripleTrapled game
+	New: Add HomingFever game
+	New: Add Shifty-Pills game
 	New: Add overclock setting for each apps/emulators/games
  	New: Add snes9x4d emulator
  	New: Add fba-a320 emulator
@@ -64,7 +73,8 @@ v20180313:
  	New: Add Colem emulator
  	New: Add OpenBOR emulator
  	New: Poweroff device when long press power button for 5 seconds
- 	NEw: Add JinYong 苍龙逐日1.2
+ 	New: Add JinYong 苍龙逐日1.2
+	New: Add Ganbare-Natsuki-San game
  	Fixed: Fix TVOut issue
  	Fixed: (Temper emulator) Change menu key from SELECT to Backlight
  	Fixed: Fix cpu icon will be shifted when change to different theme

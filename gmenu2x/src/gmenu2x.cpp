@@ -311,7 +311,7 @@ GMenu2X::GMenu2X() {
 	}
 #elif defined(TARGET_RETROGAME)
 	SDL_ShowCursor(0);
-	s->ScreenSurface = SDL_SetVideoMode(320, 480, confInt["videoBpp"], SDL_HWSURFACE|SDL_DOUBLEBUF);
+	s->ScreenSurface = SDL_SetVideoMode(320, 480, confInt["videoBpp"], SDL_HWSURFACE/*|SDL_DOUBLEBUF*/);
 	s->raw = SDL_CreateRGBSurface(SDL_SWSURFACE, resX, resY, 16, 0, 0, 0, 0);
 #else
 	s->raw = SDL_SetVideoMode(resX, resY, confInt["videoBpp"], SDL_HWSURFACE|SDL_DOUBLEBUF);
@@ -913,21 +913,29 @@ void setBacklight(int val) {
   system(buf);
 }
 
-void GMenu2X::setSuspend(int enter) {
+void GMenu2X::setSuspend(int enter, int show_msg) {
 	char buf[64];
 
-	if(enter){	
+	if(enter){
+		if(show_msg){
+			s->box(10, 80, 300, 62, skinConfColors[COLOR_MESSAGE_BOX_BG]);
+			s->rectangle( 12, 82, 296, 58, skinConfColors[COLOR_MESSAGE_BOX_BORDER] );
+			s->write( font, tr["Suspend ..."], 125, 100 );
+			s->flip();
+			s->flip();
+			SDL_Delay(1000);
+		}
 		sprintf(buf, "echo 0 > /proc/jz/lcd_backlight");
 		system(buf);
-		//printf("enter suspend mode\n");
-		//printf("current backlight: %d\n", backlightLevel);
+		printf("enter suspend mode\n");
+		printf("current backlight: %d\n", backlightLevel);
 		setClock(250);
 	}
 	else{
 		sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
 		system(buf);
-		//printf("exit suspend mode\n");
-		//printf("restore backlight: %d\n", backlightLevel);
+		printf("exit from suspend mode\n");
+		printf("restore backlight: %d\n", backlightLevel);
 		setClock(528);
 	}
 }
@@ -1226,7 +1234,7 @@ void GMenu2X::main() {
 				poweroffTick+= 1;
 			}
 			else{
-				if(poweroffTick > 10){
+				if(poweroffTick > 5){
 					poweroffTick = 0;
 					suspendTick = 500;
 				}
@@ -1238,7 +1246,7 @@ void GMenu2X::main() {
 			else{
 				if(suspend == 0){
 					suspend = 1;
-					setSuspend(1);
+					setSuspend(1, 1);
 					poweroffTick = 0;
 				}
 			}
@@ -1247,7 +1255,7 @@ void GMenu2X::main() {
     if(suspend){
       if ( input[POWER]) {
 				suspend = 0;
-				setSuspend(0);
+				setSuspend(0, 0);
 				suspendTick = 0;
 				poweroffTick = 0;
       }
@@ -1329,7 +1337,13 @@ void GMenu2X::main() {
 				poweroffTick+= 1;
 			}
 			else{
-				setSuspend(1);
+				s->box(10, 80, 300, 62, skinConfColors[COLOR_MESSAGE_BOX_BG]);
+				s->rectangle( 12, 82, 296, 58, skinConfColors[COLOR_MESSAGE_BOX_BORDER] );
+				s->write( font, tr["Poweroff ..."], 125, 100 );
+				s->flip();
+				s->flip();
+				SDL_Delay(1000);
+				setSuspend(1, 0);
 				SDL_Delay(1500);
 				system("poweroff");
 			}
@@ -2258,8 +2272,8 @@ void GMenu2X::setInputSpeed() {
 	input.setInterval(150, SECTION_NEXT);
 	input.setInterval(150, PAGEUP);
 	input.setInterval(150, PAGEDOWN);
-	input.setInterval(1000, BACKLIGHT);
-	input.setInterval(1000, POWER);
+	input.setInterval(500, BACKLIGHT);
+	input.setInterval(500, POWER);
 }
 
 void GMenu2X::applyRamTimings() {
@@ -2316,12 +2330,13 @@ void GMenu2X::setClock(unsigned mhz) {
 		PWRMODE |= 0x8000;
 		for (int i = 0; (PWRMODE & 0x8000) && i < 0x100000; i++);
 #endif
-	}
 #if defined(TARGET_RETROGAME)
-	#define CPPCR     (0x10 >> 2)
-  unsigned long m = mhz / 6;
-	memregs[CPPCR] = (m << 24) | 0x090520;
+		#define CPPCR     (0x10 >> 2)
+		unsigned long m = mhz / 6;
+		memregs[CPPCR] = (m << 24) | 0x090520;
+		printf("set cpu clock: %d\n", mhz);
 #endif
+	}
 }
 
 void GMenu2X::setGamma(int gamma) {

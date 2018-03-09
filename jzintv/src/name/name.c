@@ -28,7 +28,7 @@ if (!resetflag) {
 	    strcpy(overlay, name_list[i].name);
 	    strcat(pngextension, ".png");
 //	    strcat(pathtopng, "./overlays/");
-	    strcat(pathtopng, "/mnt/game/.jzintellivision/overlays/");
+	    strcat(pathtopng, "/mnt/int_sd/.jzintellivision/overlays/");
 	    strcat(overlay, pngextension);
 	    strcat(pathtopng, overlay);
 	    strcpy(overlay, pathtopng);

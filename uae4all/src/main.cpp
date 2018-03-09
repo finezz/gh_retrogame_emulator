@@ -144,7 +144,7 @@ void default_prefs ()
     strcpy (romfile, "kick.rom");
 #endif
 
-	strcpy (romfile, "/mnt/game/uae4all/kick.rom");
+	strcpy (romfile, "/mnt/int_sd/emus/uae4all/kick.rom");
     prefs_chipmem_size=0x00100000;
 }
 

@@ -10,6 +10,6 @@
 #umount /mnt/midpath/ > /dev/null 2>&1
 #rm /media/data/apps/midpath*.opk
 #echo "Complete !"
-
-cd /mnt/game/midpath/bin
+dir=`dirname $0`
+cd $dir
 ./midlet-launcher.sh -jar $1

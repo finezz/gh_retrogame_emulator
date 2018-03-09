@@ -247,7 +247,7 @@ LOCAL int legacy_read_bincfg(const char *bin_fn, const char *cfg_fn,
 char *cf;
 cf=strrchr(cfg_fn,'/');
 char *cf2;
-cf2="/mnt/game/.jzintellivision/configfiles";
+cf2="/mnt/int_sd/.jzintellivision/configfiles";
 char *cf_final=NULL;
 cf_final = CALLOC(char, 150);
 int i=0;
@@ -393,7 +393,7 @@ char *legacy_bincfg
 #ifdef GCWZERO //save filename for later if config file not present
     strcpy(romfilename, fname);
     FILE *file;
-    file=fopen("/mnt/game/.jzintellivision/.filename","w");
+    file=fopen("/mnt/int_sd/.jzintellivision/.filename","w");
     fputs(romfilename, file);
     fclose(file);
 #endif
@@ -565,7 +565,7 @@ finaloutput[i]='\0';
 #ifdef GCWZERO //save filename for later if config file not present
     strcpy(romfilename, finaloutput);
     FILE *file;
-    file=fopen("/mnt/game/.jzintellivision/.filename","w");
+    file=fopen("/mnt/int_sd/.jzintellivision/.filename","w");
     fputs(romfilename, file);
     fclose(file);
 #endif

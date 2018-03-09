@@ -3,7 +3,7 @@
 export TIMIDITY_CFG=/etc/timidity.cfg
 
 # Modify the next line to change the JVM
-JAVA_CMD=/mnt/game/midpath/phoneme_cdc/bin/cvm
+JAVA_CMD=/mnt/int_sd/emus/midpath/phoneme_cdc/bin/cvm
 
 if [ ! $MIDPATH_HOME ]; then
   MIDPATH_HOME=$(pwd)/..

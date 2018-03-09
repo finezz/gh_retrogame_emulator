@@ -1,3 +1,4 @@
 #!/bin/sh
-cd /mnt/game/cap32/
+dir=`dirname $0`
+cd $dir
 ./dingux-cap32

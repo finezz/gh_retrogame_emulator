@@ -234,7 +234,7 @@ void load_preview(unsigned int numero)
 
 	for(int i = 0; i < 2; i++) {
 		//sprintf((char*)g_string, "%s/%s.%s", szAppPreviewPath, ROMLIST(zip, numero), ext[i]);
-		sprintf((char*)g_string, "/mnt/game/.fba/previews/%s.%s", ROMLIST(zip, numero), ext[i]);
+		sprintf((char*)g_string, "/mnt/int_sd/.fba_a320/previews/%s.%s", ROMLIST(zip, numero), ext[i]);
 
 		// check first current rom
 		if((fp = fopen(g_string, "r")) != NULL) {

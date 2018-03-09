@@ -326,7 +326,7 @@ void init_text(int splash)
 #ifdef HOME_DIR
 			int config_dir_len = strlen(config_dir);
 #endif
-      strcpy(romfile, "/mnt/game/uae4all/kick.com");
+      strcpy(romfile, "/mnt/int_sd/emus/uae4all/kick.com");
 			if (!uae4all_init_rom(romfile))
 				break;
 #ifdef DREAMCAST

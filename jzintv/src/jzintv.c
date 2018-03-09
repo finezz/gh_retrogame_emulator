@@ -286,10 +286,10 @@ int main(int argc, char *argv[])
 //mkdir("/media/home/.jzintellivision/overlays",S_IRWXU);
 //mkdir("/media/home/.jzintellivision/configfiles",S_IRWXU);
 
-mkdir("/mnt/game/.jzintellivision",S_IRWXU);
-mkdir("/mnt/game/.jzintellivision/bios",S_IRWXU);
-mkdir("/mnt/game/.jzintellivision/overlays",S_IRWXU);
-mkdir("/mnt/game/.jzintellivision/configfiles",S_IRWXU);
+mkdir("/mnt/int_sd/.jzintellivision",S_IRWXU);
+mkdir("/mnt/int_sd/.jzintellivision/bios",S_IRWXU);
+mkdir("/mnt/int_sd/.jzintellivision/overlays",S_IRWXU);
+mkdir("/mnt/int_sd/.jzintellivision/configfiles",S_IRWXU);
 #endif
 
     /* -------------------------------------------------------------------- */
@@ -520,7 +520,7 @@ jzp_printf("cpu.now = %-8d  stic.now = %-8d diff = %-8d step = %-8d\n", (int)int
 		jzp_printf("Looking for gcw0 .config file...\n");
 		foundconfig=1;
 		FILE *configuration;
-		configuration=fopen("/mnt/game/.jzintellivision/.configuration","r");
+		configuration=fopen("/mnt/int_sd/.jzintellivision/.configuration","r");
 		if (!configuration) {
 			jzp_printf("None found, for now lets use default settings\n");
 			menu_sound=configurationsettings[0];
@@ -625,7 +625,7 @@ jzp_printf("cpu.now = %-8d  stic.now = %-8d diff = %-8d step = %-8d\n", (int)int
 				menu_sound,menu_customoverlays,menu_transparency,menu_overlayposition); 
 //now save new configuration
 			FILE *configuration;
-			configuration=fopen("/mnt/game/.jzintellivision/.configuration","w");
+			configuration=fopen("/mnt/int_sd/.jzintellivision/.configuration","w");
 			fprintf(configuration, "%d%d%d%d", menu_sound, menu_customoverlays, menu_transparency, menu_overlayposition);
 			fclose(configuration);
 			}

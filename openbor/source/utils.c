@@ -101,11 +101,11 @@
 //#define COPY_ROOT_PATH(buf, name) strncpy(buf, "/usr/local/home/.OpenBOR/", 25); strncat(buf, name, strlen(name)); strncat(buf, "/", 1);
 //#define COPY_PAKS_PATH(buf, name) strncpy(buf, "/usr/local/share/OpenBOR/Paks/", 30); strncat(buf, name, strlen(name));
 
-#define CHECK_LOGFILE(type)  type ? fileExists("/mnt/game/.OpenBOR/Logs/OpenBorLog.txt") : fileExists("/mnt/game/.OpenBOR/Logs/ScriptLog.txt")
-#define OPEN_LOGFILE(type)   type ? fopen("/mnt/game/.OpenBOR/Logs/OpenBorLog.txt", "wt") : fopen("/mnt/game/.OpenBOR/Logs/ScriptLog.txt", "wt")
-#define APPEND_LOGFILE(type) type ? fopen("/mnt/game/.OpenBOR/Logs/OpenBorLog.txt", "at") : fopen("/mnt/game/.OpenBOR/Logs/ScriptLog.txt", "at")
-#define READ_LOGFILE(type)   type ? fopen("/mnt/game/.OpenBOR/Logs/OpenBorLog.txt", "rt") : fopen("/mnt/game/.OpenBOR/Logs/ScriptLog.txt", "rt")
-#define COPY_ROOT_PATH(buf, name) strncpy(buf, "/mnt/game/.OpenBOR/", 25); strncat(buf, name, strlen(name)); strncat(buf, "/", 1);
+#define CHECK_LOGFILE(type)  type ? fileExists("/mnt/int_sd/.OpenBOR/Logs/OpenBorLog.txt") : fileExists("/mnt/int_sd/.OpenBOR/Logs/ScriptLog.txt")
+#define OPEN_LOGFILE(type)   type ? fopen("/mnt/int_sd/.OpenBOR/Logs/OpenBorLog.txt", "wt") : fopen("/mnt/int_sd/.OpenBOR/Logs/ScriptLog.txt", "wt")
+#define APPEND_LOGFILE(type) type ? fopen("/mnt/int_sd/.OpenBOR/Logs/OpenBorLog.txt", "at") : fopen("/mnt/int_sd/.OpenBOR/Logs/ScriptLog.txt", "at")
+#define READ_LOGFILE(type)   type ? fopen("/mnt/int_sd/.OpenBOR/Logs/OpenBorLog.txt", "rt") : fopen("/mnt/int_sd/.OpenBOR/Logs/ScriptLog.txt", "rt")
+#define COPY_ROOT_PATH(buf, name) strncpy(buf, "/mnt/int_sd/.OpenBOR/", 25); strncat(buf, name, strlen(name)); strncat(buf, "/", 1);
 #define COPY_PAKS_PATH(buf, name) strncpy(buf, "Paks/", 30); strncat(buf, name, strlen(name));
 #else
 #define CHECK_LOGFILE(type)  type ? fileExists("./Logs/OpenBorLog.txt") : fileExists("./Logs/ScriptLog.txt")

@@ -36,9 +36,9 @@ char rootDir[128] = {"/mnt/sdcard/OpenBOR"};
 //char logsDir[128] = {"/usr/local/home/.OpenBOR/Logs"};
 //char screenShotsDir[128] = {"/usr/local/home/.OpenBOR/ScreenShots"};
 char paksDir[128] = {"Paks"};
-char savesDir[128] = {"/mnt/game/.OpenBOR/Saves"};
-char logsDir[128] = {"/mnt/game/.OpenBOR/Logs"};
-char screenShotsDir[128] = {"/mnt/game/.OpenBOR/ScreenShots"};
+char savesDir[128] = {"/mnt/int_sd/.OpenBOR/Saves"};
+char logsDir[128] = {"/mnt/int_sd/.OpenBOR/Logs"};
+char screenShotsDir[128] = {"/mnt/int_sd/.OpenBOR/ScreenShots"};
 #else
 char paksDir[128] = {"Paks"};
 char savesDir[128] = {"Saves"};
