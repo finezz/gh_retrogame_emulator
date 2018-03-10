@@ -1,5 +1,5 @@
 all:
-	mipsel-linux-gcc main.c sha1.c -o cfw_upgrade -lSDL_image -lSDL -lSDL_ttf -I/home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL
-	#gcc main.c sha1.c -g -o cfw_upgrade -lSDL_image -lSDL -lSDL_ttf -I/usr/include/SDL
+	#mipsel-linux-gcc main.cpp sha1.cpp -o cfw_1.2 -lstdc++ -lSDL_image -lSDL -lSDL_ttf -I/home/steward/Github/gh_retrogame_toolchain/mipsel-linux-gcc/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL
+	gcc main.cpp sha1.cpp -g -o cfw_1.2 -lstdc++ -lSDL_image -lSDL -lSDL_ttf -I/usr/include/SDL
 clean:
-	rm -rf upgrade
+	rm -rf cfw_1.2
