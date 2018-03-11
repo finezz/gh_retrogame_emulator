@@ -1,21 +1,36 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <string>
+#include <unistd.h>
 #include <iostream>
 #include <vector>
+#include <sys/types.h>
+#include <dirent.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "bg.h"
 #include "od.h"
+#include "mv.h"
+#include "sys.h"
 #include "font.h"
 
-extern uint8_t rw_bg_array[99477];
+extern uint8_t rw_mv_array[4476];
 extern uint8_t rw_od_array[6483];
+extern uint8_t rw_bg_array[99477];
+extern uint8_t rw_sys_array[4297];
 extern uint8_t rw_font_array[367112];
 
-#define FONT_SIZE 16
+#define CFW_VERSION 		"CFW v1.1 (v20180313)"
+#define MOUNT_POINT			"/mnt/tmp/"
+#define CREATE_TMP			"mkdir -p " MOUNT_POINT
+#define REMOVE_TMP			"rm -rf " MOUNT_POINT
+#define MOUNT_PACKAGE		"mount cfw_1.2_package.ext3 " MOUNT_POINT
+#define UMOUNT_PACKAGE	"umount " MOUNT_POINT
+#define VERSION_PATH		MOUNT_POINT "version"
+#define GAME_FOLDER			"/mnt/game/"
+#define ROM_FOLDER			"/mnt/int_sd/"
 
 enum install_type {
 	YES, NO
@@ -32,6 +47,8 @@ SDL_Surface *display;
 SDL_Surface *screen;
 SDL_Surface *bg;
 SDL_Surface *od;
+SDL_Surface *mv;
+SDL_Surface *sys;
 TTF_Font *font;
 std::vector<struct package_item> package_list;
 
@@ -73,12 +90,26 @@ void clear_screen(void)
 	update_screen();
 }
 
-void draw_target_icon(char *filename)
+void draw_install_icon(const char *filename)
 {
 	SDL_Rect rt;
 
-	rt.x = 218;
-	rt.y = 37;
+	rt.x = 130;
+	rt.y = 45;
+	printf("icon: %s\n", filename);
+	SDL_Surface *p = IMG_Load(filename);
+  SDL_BlitSurface(p, NULL, screen, &rt);
+	SDL_FreeSurface(p);
+	update_screen();
+}
+
+void draw_target_icon(const char *filename)
+{
+	SDL_Rect rt;
+
+	rt.x = 232;
+	rt.y = 27;
+	printf("icon: %s\n", filename);
 	SDL_Surface *p = IMG_Load(filename);
   SDL_BlitSurface(p, NULL, screen, &rt);
 	SDL_FreeSurface(p);
@@ -94,13 +125,13 @@ void draw_skeleton(void)
 	clear_screen();
 	rt.x = 32;
 	rt.y = 30;
-	msg = TTF_RenderText_Solid(font, "A: Select/Unselect", col);
+	msg = TTF_RenderText_Solid(font, "A: Select/Unselect it", col);
 	SDL_BlitSurface(msg, NULL, screen, &rt);
 	SDL_FreeSurface(msg);
 
 	rt.x = 32;
 	rt.y = 50;
-	msg = TTF_RenderText_Solid(font, "B: Select all/Unselect all", col);
+	msg = TTF_RenderText_Solid(font, "B: Select/Unselect all", col);
 	SDL_BlitSurface(msg, NULL, screen, &rt);
 	SDL_FreeSurface(msg);
 
@@ -118,11 +149,11 @@ void draw_skeleton(void)
 	
 	rt.x = 29;
 	rt.y = 110;
-	rt.w = 267;
+	rt.w = 203;
 	rt.h = 5;
   SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, 0xff, 0xff, 0x00));
 	
-	rt.x = 200;
+	rt.x = 227;
 	rt.y = 27;
 	rt.w = 5;
 	rt.h = 85;
@@ -132,13 +163,23 @@ void draw_skeleton(void)
 
 void draw_logo(void)
 {
+	SDL_Rect rt;
+	SDL_Surface *msg;
+	SDL_Color col = {0xff, 0xff, 0x00};
 	SDL_BlitSurface(od, NULL, screen, NULL);
 	SDL_BlitSurface(bg, NULL, screen, NULL);
+	
+	rt.x = 80;
+	rt.y = 180;
+	msg = TTF_RenderText_Solid(font, CFW_VERSION, col);
+	SDL_BlitSurface(msg, NULL, screen, &rt);
+	SDL_FreeSurface(msg);
 	update_screen();
 }
 
 void draw_package_list(void)
 {
+	char buf[64];
 	int i, len, size=package_list.size();
 	SDL_Rect rt;
 	SDL_Surface *msg;
@@ -146,41 +187,277 @@ void draw_package_list(void)
 	SDL_Color sel_col={0x00, 0x00, 0x80};
 	SDL_Color unsel_col={0x00, 0x00, 0x00};
 	SDL_Color text_col={0xff, 0xff, 0xff};
+
+	if(size == 0){
+		return;
+	}
 	
 	len = (start_list + 4) > size ? size : start_list + 4;
 	for(i=start_list; i<len; i++){
 		rt.x = 29;
-		rt.y = 120 + (i*21);
+		rt.y = 120 + ((i - start_list) * 21);
 		rt.w = 267;
 		rt.h = 21;
 		cur_col = ((i == selected_list) ? sel_col : unsel_col);
 		SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, cur_col.r, cur_col.g, cur_col.b));
 
 		rt.x = 32;
-		rt.y = 123 + (i*21);
+		rt.y = 123 + ((i - start_list) * 21);
 		rt.w = 15;
 		rt.h = 15;
 		SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, text_col.r, text_col.g, text_col.b));
-		if(package_list.at(i).install == NO){
-			rt.x = 34;
-			rt.y = 125 + (i*21);
-			rt.w = 11;
-			rt.h = 11;
-			SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, cur_col.r, cur_col.g, cur_col.b));
+		rt.x = 34;
+		rt.y = 125 + ((i - start_list) * 21);
+		rt.w = 11;
+		rt.h = 11;
+		SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, cur_col.r, cur_col.g, cur_col.b));
+		if(package_list.at(i).install == YES){
+			rt.x = 36;
+			rt.y = 127 + ((i - start_list) * 21);
+			rt.w = 7;
+			rt.h = 7;
+			SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, text_col.r, text_col.g, text_col.b));
 		}
 		
 		rt.x = 52;
-		rt.y = 120 + (i*21);
+		rt.y = 120 + ((i - start_list) * 21);
 		msg = TTF_RenderText_Solid(font, package_list.at(i).path.c_str(), text_col);
 		SDL_BlitSurface(msg, NULL, screen, &rt);
 		SDL_FreeSurface(msg);
+
+		if(i == selected_list){
+			std::string path = MOUNT_POINT + package_list.at(i).path + "/icon.png";
+			draw_target_icon(path.c_str());
+		}
 	}
+
+	rt.x = 232;
+	rt.y = 94;
+	rt.w = 62;
+	rt.h = 24;
+	SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, unsel_col.r, unsel_col.g, unsel_col.b));
+	len = 0;
+	for(i=0; i<size; i++){
+		if(package_list.at(i).install == YES){
+			len+= 1;
+		}
+	}
+	rt.x = 235;
+	rt.y = 97;
+	sprintf(buf, "%03d/%03d", len, size);
+	msg = TTF_RenderText_Solid(font, buf, text_col);
+	SDL_BlitSurface(msg, NULL, screen, &rt);
+	SDL_FreeSurface(msg);
 	update_screen();
+}
+
+void show_msgbox(int x, int y, const char *buf)
+{
+	SDL_Rect rt;
+	SDL_Surface *msg;
+	SDL_Color col={0xff, 0xff, 0xff};
+	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0x00, 0x00, 0x80));
+	
+	rt.x = x;
+	rt.y = y;
+	msg = TTF_RenderText_Solid(font, buf, col);
+	SDL_BlitSurface(msg, NULL, screen, &rt);
+	SDL_FreeSurface(msg);
+	update_screen();
+}
+
+int mount_package(void)
+{
+	system(CREATE_TMP);
+	system(MOUNT_PACKAGE);
+
+	char buf[64]={0};
+	int fd = open(VERSION_PATH, O_RDONLY);
+	if(fd > 0){
+		read(fd, buf, 64);
+		close(fd);
+	}
+	else{
+		printf("failed to open: %s\n", VERSION_PATH);
+		return -1;
+	}
+
+	printf("Ver: %s\n", buf);
+	if(memcmp(buf, CFW_VERSION, sizeof(CFW_VERSION)-1) == 0){
+		return 0;
+	}
+	return -1;
+}
+
+void umount_package(void)
+{
+	system(UMOUNT_PACKAGE);
+	system(REMOVE_TMP);
+}
+
+int list_dir(void)
+{
+	int n;
+	package_item item;
+	struct dirent **namelist;
+
+  n = scandir(MOUNT_POINT, &namelist, NULL, alphasort);
+  if(n < 0){
+  	printf("failed to opendir " MOUNT_POINT "\n");
+		return -1;
+	}
+	
+	while(n--){
+		if((strcmp(namelist[n]->d_name, "version") == 0) ||
+			(strcmp(namelist[n]->d_name, "lost+found") == 0) ||
+			(strcmp(namelist[n]->d_name, ".") == 0) ||
+			(strcmp(namelist[n]->d_name, "..") == 0))
+		{
+		}
+		else{
+			item.path = namelist[n]->d_name;
+			item.install = YES;
+			package_list.push_back(item);
+		}
+		free(namelist[n]);
+	 }
+	 free(namelist);
+  return 0;
+}
+
+int migrate_folder(void)
+{
+	int n;
+	char buf[128];
+	SDL_Rect rt;
+	SDL_Surface *msg;
+	SDL_Color col = {0xff, 0xff, 0xff};
+	struct dirent **namelist;
+
+  n = scandir(GAME_FOLDER, &namelist, NULL, alphasort);
+  if(n < 0){
+  	printf("failed to opendir " GAME_FOLDER "\n");
+		return -1;
+	}
+	
+	while(n--){
+		if((strcmp(namelist[n]->d_name, "gmenu2x") == 0) ||
+			(strcmp(namelist[n]->d_name, "lost+found") == 0) ||
+			(strcmp(namelist[n]->d_name, ".") == 0) ||
+			(strcmp(namelist[n]->d_name, "..") == 0))
+		{
+		}
+		else{
+			clear_screen();
+			rt.x = 130;
+			rt.y = 45;
+			SDL_BlitSurface(mv, NULL, screen, &rt);
+
+			rt.x = 110;
+			rt.y = 140;
+			sprintf(buf, "Move folder:");
+			msg = TTF_RenderText_Solid(font, buf, col);
+			SDL_BlitSurface(msg, NULL, screen, &rt);
+			SDL_FreeSurface(msg);
+			
+			rt.x = 110;
+			rt.y = 160;
+			sprintf(buf, ">> %s%s", GAME_FOLDER, namelist[n]->d_name);
+			msg = TTF_RenderText_Solid(font, buf, col);
+			SDL_BlitSurface(msg, NULL, screen, &rt);
+			SDL_FreeSurface(msg);
+			update_screen();
+
+			sprintf(buf, "mv %s%s %s", GAME_FOLDER, namelist[n]->d_name, ROM_FOLDER);
+			system(buf);
+		}
+		free(namelist[n]);
+	 }
+	 free(namelist);
+  return 0;
+}
+
+void install_package(void)
+{
+	char buf[128];
+	SDL_Rect rt;
+	SDL_Surface *msg;
+	SDL_Color col={0xff, 0xff, 0xff};
+	int i, cnt=0, all=0, size=package_list.size();
+
+	migrate_folder();
+	for(i=0; i<size; i++){
+		if(package_list.at(i).install == YES){
+			all+= 1;
+		}
+	}
+	for(i=0; i<size; i++){
+		if(package_list.at(i).install == YES){
+			clear_screen();
+
+			rt.x = 110;
+			rt.y = 140;
+			sprintf(buf, "Install %03d/%03d:", i+1, all);
+			msg = TTF_RenderText_Solid(font, buf, col);
+			SDL_BlitSurface(msg, NULL, screen, &rt);
+			SDL_FreeSurface(msg);
+		
+			rt.x = 110;
+			rt.y = 160;
+			std::string str = ">> " + package_list.at(i).path;
+			msg = TTF_RenderText_Solid(font, str.c_str(), col);
+			SDL_BlitSurface(msg, NULL, screen, &rt);
+			SDL_FreeSurface(msg);
+			
+			std::string path = MOUNT_POINT + package_list.at(i).path + "/icon.png";
+			draw_install_icon(path.c_str());
+	
+			sprintf(buf, "cp -a %s%s/* /mnt/", MOUNT_POINT, package_list.at(i).path.c_str());
+			printf("cmd: %s\n", buf);
+			system(buf);
+			SDL_Delay(1000);
+		}
+	}
+
+	clear_screen();
+	rt.x = 130;
+	rt.y = 45;
+	SDL_BlitSurface(sys, NULL, screen, &rt);
+	rt.x = 90;
+	rt.y = 140;
+	msg = TTF_RenderText_Solid(font, "Upgrade GMenu2X...", col);
+	SDL_BlitSurface(msg, NULL, screen, &rt);
+	SDL_FreeSurface(msg);
+	update_screen();
+		
+	// copy -a gmenu2x
+	sprintf(buf, "cp -a %sgmenu2x/* %sgmenu2x/*", MOUNT_POINT, GAME_FOLDER);
+	printf("copy gmenu2x: %s\n", buf);
+	system(buf);
+
+	clear_screen();
+	rt.x = 130;
+	rt.y = 45;
+	SDL_BlitSurface(sys, NULL, screen, &rt);
+	rt.x = 90;
+	rt.y = 140;
+	msg = TTF_RenderText_Solid(font, "Upgrade System...", col);
+	SDL_BlitSurface(msg, NULL, screen, &rt);
+	SDL_FreeSurface(msg);
+	update_screen();
+		
+	// tar xvf rootfs.tar.gz
+	sprintf(buf, "cd /;tar xvf %srootfs.tar.gz", MOUNT_POINT);
+	printf("tar rootfs.tar.gz: %s\n", buf);
+	system(buf);
+
+	show_msgbox(130, 110, "Enjoy !");
+	SDL_Delay(1500);
 }
 
 int main(int argc, char* argv[])
 {
-	int exit=0;
+	int exit=0, ret;
 	SDL_Event event;
 
   if(SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -200,7 +477,7 @@ int main(int argc, char* argv[])
     return -1;
   }
 	SDL_RWops *rw_font = SDL_RWFromMem(rw_font_array, sizeof(rw_font_array));
-  font = TTF_OpenFontRW(rw_font, 1, FONT_SIZE);
+  font = TTF_OpenFontRW(rw_font, 1, 16);
 	TTF_SetFontHinting(font, TTF_HINTING_MONO);
 	TTF_SetFontOutline(font, 0);
 
@@ -210,38 +487,45 @@ int main(int argc, char* argv[])
 	SDL_RWops *rw_od = SDL_RWFromMem(rw_od_array, sizeof(rw_od_array));
 	od = IMG_Load_RW(rw_od, 1);
 
+	SDL_RWops *rw_mv = SDL_RWFromMem(rw_mv_array, sizeof(rw_mv_array));
+	mv = IMG_Load_RW(rw_mv, 1);
+
+	SDL_RWops *rw_sys = SDL_RWFromMem(rw_sys_array, sizeof(rw_sys_array));
+	sys = IMG_Load_RW(rw_sys, 1);
+
 	package_list.reserve(1024);
+	show_msgbox(60, 110, "Mount upgrade package ...");
+	ret = mount_package();
+	SDL_Delay(1000);
+	if(ret == -1){
+		show_msgbox(50, 110, "Corrupted upgrade package !");
+		SDL_Delay(3000);
+		goto finally;
+	}
+
+	show_msgbox(60, 110, "Check upgrade package...");
+	ret = list_dir();
+	SDL_Delay(1000);
+	if(ret == -1){
+		show_msgbox(50, 110, "Corrupted upgrade package !");
+		SDL_Delay(3000);
+		goto finally;
+	}
 
 	draw_logo();
 	SDL_Delay(1500);
 	draw_skeleton();
-
-	package_item item;
-	item.path = "test1";
-	item.install = NO;
-	package_list.push_back(item);
-	
-	item.path = "test2";
-	item.install = YES;
-	package_list.push_back(item);
-	
-	item.path = "test3";
-	item.install = NO;
-	package_list.push_back(item);
-	
-	item.path = "test4";
-	item.install = YES;
-	package_list.push_back(item);
-	
-	item.path = "test5";
-	item.install = YES;
-	package_list.push_back(item);
-	
 	draw_package_list();	
 	while(!exit){
+		SDL_Delay(100);
     while(SDL_PollEvent(&event)){
       if(event.type == SDL_KEYDOWN){
         if(event.key.keysym.sym == SDLK_ESCAPE){
+          exit = 1;
+					break;
+        }
+        else if(event.key.keysym.sym == SDLK_RETURN){
+					install_package();
           exit = 1;
 					break;
         }
@@ -257,14 +541,53 @@ int main(int argc, char* argv[])
 						package_list.at(i).install = type;
 					}
 				}
+        else if(event.key.keysym.sym == SDLK_TAB){
+					if((selected_list - 3) > 0){
+						selected_list-= 3;
+						if(selected_list < start_list){
+							start_list-= 3;
+						}
+					}
+					else{
+						selected_list = 0;
+						start_list = 0;
+					}
+				}
         else if(event.key.keysym.sym == SDLK_UP){
 					if(selected_list > 0){
 						selected_list-= 1;
+						if(selected_list < start_list){
+							start_list-= 1;
+						}
+					}
+				}
+        else if(event.key.keysym.sym == SDLK_BACKSPACE){
+					int size = package_list.size();
+
+					if(size > 0){
+						if((selected_list + 3) < size){
+							selected_list+= 3;
+							if(selected_list >= (start_list + 4)){
+								start_list+= 3;
+							}
+						}
+						else{
+							selected_list = size - 1;
+							start_list = size - 4;
+							if(start_list < 0){
+								start_list = 0;
+							}
+						}
 					}
 				}
         else if(event.key.keysym.sym == SDLK_DOWN){
-					if(selected_list < package_list.size()){
+					int size = package_list.size();
+
+					if((size > 0) && ((selected_list + 1) < size)){
 						selected_list+= 1;
+						if(selected_list >= (start_list + 4)){
+							start_list+= 1;
+						}
 					}
 				}
 				draw_package_list();
@@ -272,6 +595,8 @@ int main(int argc, char* argv[])
     }
 	}
 
+finally:
+	umount_package();
   SDL_Quit();
 	printf("task done !\n");
   return 0;    

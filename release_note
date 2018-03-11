@@ -105,6 +105,10 @@ v20180313(CFW v1.1):
  	Pending: onscrioter-jh (crash sometimes)
  	Pending: JZ4760 IPU implementation in user mode for supporting hardware scale
  	Workaround: (ReGBA emulator )SDL_SetVideoMode with SDL_DOUBLEBUF causes glitch in SDL_Flip (Thanks TonyJin)
+	Info:
+		SHA1 of cfw_1.2: xxxx
+		SHA1 of cfw_1.2_package.ext3: xxxx
+		SHA1 of cfw_1.2_full_sdcard.img: xxxx
 
 v20180213(CFW v1.0):
  	New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
