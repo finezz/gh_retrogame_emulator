@@ -537,7 +537,7 @@ void game (gamedata &g){
 	    }
 	    else if(GameState == STATE_GAME)
 	    {
-		    if (keys[SDLK_ESCAPE] == SDL_PRESSED){
+		    if ((keys[SDLK_ESCAPE] == SDL_PRESSED) || (keys[51] == SDL_PRESSED)){
 			keys[SDLK_ESCAPE] = SDL_RELEASED;
 			GameState = STATE_MENU;
 			CurrentMenu = MenuMain;

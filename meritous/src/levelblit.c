@@ -1404,6 +1404,7 @@ void HandleEvents()
 					case SDLK_RETURN:
 						enter_pressed = 1;
 						break;
+					case 51:
 					case SDLK_ESCAPE:
 						if (map_enabled) {
 							map_enabled = 0;

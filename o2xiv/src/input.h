@@ -75,7 +75,7 @@
 #define GP2X_KB_A      SDLK_LCTRL
 #define GP2X_KB_B      SDLK_LALT
 #define GP2X_KB_SELECT SDLK_ESCAPE
-#define GP2X_KB_START  SDLK_RETURN
+#define GP2X_KB_START  /*SDLK_RETURN*/51
 
 #endif
 

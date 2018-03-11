@@ -54,5 +54,6 @@ int main(int argc, char *argv[])
 	storeConfig();
 	deinit();
 
+	SDL_Quit();
 	return 0;
 }

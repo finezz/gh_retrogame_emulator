@@ -780,6 +780,9 @@ int keyread(void){
 					SDL_SaveBMP(screen,buf);
 				}
 
+				if(*key==51){
+					return 1;
+				}
 				if(*key==27){//ESC
 					return 1;
 				}

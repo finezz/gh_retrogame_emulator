@@ -1,54 +1,59 @@
 v20180313(CFW v1.1):
- 	[test Pass] New: Add Arkanoid game (backlight key = menu key)
+	[Pass] New: Add app: O2xIV (backlight = menu)
+	[Pass] New: Add app: Glutexto (backlight = menu)
 
-	New: Add glutexto app
-	New: Add SnowMan game
-	New: Add meteoroid3d game
-	New: Add puzzletube game
-	New: Add apricots game
-	New: Add o2xiv app
-	New: Add Spout game
-	New: Add Chroma game
-	New: Add meritous game
-	New: Add stransball2 game
-	New: Add TripleTrapled game
-	New: Add HomingFever game
-	New: Add Shifty-Pills game
-	New: Add overclock setting for each apps/emulators/games
+	[Pass] New: Add game: Spout (backlight = menu)
+ 	[Pass] New: Add game: CZDoom (backlight = menu) 
+	[Pass] New: Add game: Chroma (backlight = menu)
+ 	[Pass] New: Add game: HHexen (backlight = menu)
+	[Pass] New: Add game: EDuke32 (backlight = menu)
+ 	[Pass] New: Add game: Wizznic (backlight = menu)
+	[Pass] New: Add game: Snowman (backlight = menu)
+ 	[Pass] New: Add game: HHeretic (backlight = menu)
+	[Pass] New: Add game: Apricots (backlight = menu)
+ 	[Pass] New: Add game: Arkanoid (backlight = menu)
+	[Pass] New: Add game: Meritous (backlight = menu)
+ 	[Pass] New: Add game: OpenTitus (SELECT = exit)
+	[Pass] New: Add game: Puzzletube (SELECT = menu)
+ 	[Pass] New: Add game: ASCIIpOrtal (backlight = menu)
+	[Pass] New: Add game: Meteoroid3D (backlight = menu)
+ 	[Pass] New: Add game: Mr. Driller (backlight = exit)
+	[Pass] New: Add game: Homing Fever (backlight = menu)
+	[Pass] New: Add game: Shifty Pills (backlight = menu)
+ 	[Pass] New: Add game: Wolfenstein 3D (backlight = menu)
+	[Pass] New: Add game: Triple Trapled (backlight = menu)
+	[Pass] New: Add game: Super Transball 2 (backlight = menu)
+
+ 	[Pass] New: Add DekUI theme (Thanks jutleys)
+ 	[Pass] New: Add PS4(v4) theme (Thanks m1024)
+ 	[Pass] New: Add zelda(v1) theme (Thanks m1024)
+ 	[Pass] New: Add oldboy(v1) theme (Thanks m1024)
+ 	[Pass] New: Add many wallpapers (Thanks jutleys)
+ 	[Pass] New: Add backlight indicator(Lv1 ~ Lv5) on status bar
+	[Pass] New: Add overclock setting for each apps/emulators/games
+ 	[Pass] New: Add wallpapers: boot.jpg, magicavoxel.jpg (Thanks Leo-brasil)
+ 	[Pass] New: Add preview image (support jpg, png and bmp with size=128*128) when pick up rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
+ 	[Pass] New: [Port request] Streets of Rage Remake 5.1
+ 	[Pass] New: [Port request] GP2Xpectrum (use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
+ 	[Pass] New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
+ 	[Pass] New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
+ 	[Pass] New: [Feature Request] Ability to always show battery power remaining as a percentage.
+ 	[Pass] New: Enter suspend mode automatically if no any action for 30 seconds
+ 	[Pass] New: In suspend mode(press power button for 1.5 seconds), CPU clock will be down to 250MHz and set to 528MHz when back to GMenu2X desktop.
+ 	[Pass] New: Poweroff device when long press power button for 5 seconds
+
  	New: Add snes9x4d emulator
  	New: Add fba-a320 emulator
  	New: Add handy emulator
  	New: Add race-od emulator
  	New: Add gngeo emulator
- 	New: Add ASCIIpOrtal game
- 	New: Add wallpapers (boot.jpg, magicavoxel.jpg) (thanks Leo-brasil)
- 	New: Add PS4(v4) theme (thanks m1024)
- 	New: Add zelda(v1) theme (thanks m1024)
- 	New: Add oldboy(v1) theme (thanks m1024)
- 	New: Add backlight indicator(Lv1 ~ Lv5) on status bar
- 	New: [Port request] Streets of Rage Remake 5.1
- 	New: [Feature Request] Ability to always show battery power remaining as a percentage.
- 	New: In suspend mode, CPU clock will be down to 250MHz in order to save battery life and set to 628MHz when back to GMenu2X desktop.
- 	New: Add more wallpapers (thanks jutleys)
- 	New: Add DekUI theme (thanks jutleys)
- 	New: Add preview image (support jpg, png and bmp with size=128*128) when pick up rom from file list (ex: xxx.nes, previews/xxx.nes.jpg)
- 	New: (MULTIMEDIA APPS FOR RS-97) GMU Music Player v0.9.1 (Power: Lock, Backlight: Unlock)
- 	New: (MULTIMEDIA APPS FOR RS-97) Bard v0.10.0 (Comic book viewer)
- 	New: [Port request] GP2Xpectrum (I use Speccy emulator for RetroGame because GP2Xpecturm is ARM-based emulator)
- 	New: Add czdoom game
- 	New: Add wolf3d game
- 	New: Add hhexen game
- 	New: Add hheretic game
  	New: Add quake game
- 	New: Add eduke32 game
  	New: Add sms_sdl emulator
  	New: Add oswan emulator
  	New: Add dingux-cap32 emulator
  	New: Add uae4all emulator
- 	New: Add mrdrillux game
  	New: Add Bermuda Syndrome game
- 	New: Add opentitus game (sometimes crash)
- 	New: Add wizznic game
+
  	New: Add spartak-chess game
  	New: Add last-mission game
  	New: Add ketm game
@@ -64,7 +69,6 @@ v20180313(CFW v1.1):
  	New: Add Chocolate-doom game
  	New: Add FreeDroidClassic game
  	New: Add vice emulator
- 	New: Enter suspend mode automatically if no any action for 30 seconds
  	New: Add OpenMSX emulator
  	New: Add NP2 emulator
  	New: Add scummvm emulator
@@ -76,7 +80,6 @@ v20180313(CFW v1.1):
  	New: Add jzIntv emulator
  	New: Add Colem emulator
  	New: Add OpenBOR emulator
- 	New: Poweroff device when long press power button for 5 seconds
  	New: Add JinYong 苍龙逐日1.2
 	New: Add Ganbare-Natsuki-San game
  	Fixed: Fix TVOut issue

@@ -101,6 +101,7 @@ static int I_TranslateKey(SDL_keysym* key)
   case SDLK_DOWN: rc = KEYD_DOWNARROW;  break;
   case SDLK_UP:   rc = KEYD_UPARROW;  break;
   case SDLK_ESCAPE: rc = KEYD_ESCAPE; break;
+  case 51: rc = KEYD_ENTER;  break;
   case SDLK_RETURN: rc = KEYD_ENTER;  break;
   case SDLK_TAB:  rc = KEYD_TAB;    break;
   case SDLK_F1:   rc = KEYD_F1;   break;

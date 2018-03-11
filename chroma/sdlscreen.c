@@ -94,9 +94,7 @@ void screen_size(int width, int height, int fullscreen)
     screen_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 16, 0,0,0,0);
 
     SDL_WM_SetCaption("chroma", NULL);
-
-    SDL_ShowCursor(fullscreen ? SDL_DISABLE : SDL_ENABLE);
-    SDL_ShowCursor(SDL_ENABLE);
+    SDL_ShowCursor(0);
 
     screen_width = width;
     screen_height = height;
@@ -187,11 +185,11 @@ void screen_plotimage(SDL_Surface *psurface, int x, int y)
 }
 
 void screen_cursor(int cursor)
-{
+{/*
     if(!screen_fullscreen)
     {
 	SDL_ShowCursor(SDL_ENABLE);
 	return;
     }
-    SDL_ShowCursor(cursor ? SDL_ENABLE : SDL_DISABLE);
+    SDL_ShowCursor(cursor ? SDL_ENABLE : SDL_DISABLE);*/
 }

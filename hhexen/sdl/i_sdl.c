@@ -438,6 +438,9 @@ void I_GetEvent(SDL_Event *Event)
 	switch (Event->type)
 	{
 	case SDL_KEYDOWN:
+		if(Event->key.keysym.sym == 51){
+			Event->key.keysym.sym = SDLK_ESCAPE;
+		}
 		mod = SDL_GetModState ();
 		if (mod & (KMOD_RCTRL|KMOD_LCTRL))
 		{
@@ -470,6 +473,9 @@ void I_GetEvent(SDL_Event *Event)
 		break;
 
 	case SDL_KEYUP:
+		if(Event->key.keysym.sym == 51){
+			Event->key.keysym.sym = SDLK_ESCAPE;
+		}
 		event.type = ev_keyup;
 		event.data1 = xlatekey(&Event->key.keysym);
 		H2_PostEvent(&event);

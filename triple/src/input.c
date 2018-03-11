@@ -17,9 +17,15 @@ void input()
 			break;
 			case SDL_KEYDOWN:			// Button press
 				keys[event.key.keysym.sym] = 1;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 1;
+				}
 			break;
 			case SDL_KEYUP:				// Button release
 				keys[event.key.keysym.sym] = 0;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 0;
+				}
 			break;
 			case SDL_JOYAXISMOTION:			// Analog joystick movement
 				switch(event.jaxis.axis)

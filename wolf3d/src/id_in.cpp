@@ -254,6 +254,9 @@ static void processEvent(SDL_Event *event)
             }
 
             LastScan = event->key.keysym.sym;
+						if(LastScan == 51){
+							LastScan = SDLK_ESCAPE;
+						}
             SDLMod mod = SDL_GetModState();
             if(Keyboard[sc_Alt])
             {
@@ -303,6 +306,9 @@ static void processEvent(SDL_Event *event)
         case SDL_KEYUP:
         {
             int key = event->key.keysym.sym;
+						if(key == 51){
+							key = SDLK_ESCAPE;
+						}
             if(key == SDLK_KP_ENTER) key = SDLK_RETURN;
             else if(key == SDLK_RSHIFT) key = SDLK_LSHIFT;
             else if(key == SDLK_RALT) key = SDLK_LALT;

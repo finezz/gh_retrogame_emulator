@@ -3025,7 +3025,7 @@ void display_options_keys()
 			{
 			    case SDL_KEYDOWN:
 				key = event.key.keysym.sym;
-				if(key == SDLK_q || key == SDLK_ESCAPE)
+				if(key == SDLK_q || key == SDLK_ESCAPE || key == 51)
 				    subok = 1;
 				else if(!display_keyfixed(key))
 				{
@@ -3622,6 +3622,7 @@ void display_options_load()
     actions[SDLK_RETURN] = ACTION_SWAP;
     actions[SDLK_q] = ACTION_QUIT;
     actions[SDLK_ESCAPE] = ACTION_QUIT;
+    actions[51] = ACTION_QUIT;
 
     actions_mouse[ACTIONS_GAME][1] = ACTION_MOUSE_DRAG_OR_CLICK;
     actions_mouse[ACTIONS_GAME][2] = ACTION_SWAP;

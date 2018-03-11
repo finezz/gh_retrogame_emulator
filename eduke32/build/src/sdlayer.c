@@ -502,6 +502,7 @@ int32_t initinput(void)
 		case SDLK_RETURN:
 			Bstrncpy((char *)key_names[ keytranslation[i] ], "Start", sizeof(key_names[i])-1);
 			break;
+		case 51:
 		case SDLK_ESCAPE:
 			Bstrncpy((char *)key_names[ keytranslation[i] ], "Select", sizeof(key_names[i])-1);
 			break;
@@ -1123,7 +1124,7 @@ int32_t setvideomode(int32_t x, int32_t y, int32_t c, int32_t fs)
     {
         initprintf("Setting video mode %dx%d (%d-bpp %s)\n", x,y,16, ((fs&1) ? "fullscreen" : "windowed"));
         //sdl_surface = SDL_SetVideoMode(x, y, 8, SDL_HWSURFACE | SDL_DOUBLEBUF | ((fs&1)?SDL_FULLSCREEN:0));
-        ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE | SDL_DOUBLEBUF | ((fs&1)?SDL_FULLSCREEN:0));
+        ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE | /*SDL_DOUBLEBUF | */((fs&1)?SDL_FULLSCREEN:0));
         sdl_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, x, y, 8, 0, 0, 0, 0);
         if (!sdl_surface)
         {
@@ -1967,7 +1968,7 @@ static int32_t buildkeytranslationtable(void)
     MAP(SDLK_0,		0xb);
     MAP(SDLK_1,		0x2);
     MAP(SDLK_2,		0x3);
-    MAP(SDLK_3,		0x4);
+    MAP(SDLK_3,		/*0x4*/1);
     MAP(SDLK_4,		0x5);
     MAP(SDLK_5,		0x6);
     MAP(SDLK_6,		0x7);

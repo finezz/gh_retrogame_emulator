@@ -122,7 +122,7 @@ int pcePadGet() {
 		SDLK_UP,		SDLK_DOWN,		SDLK_LEFT,		SDLK_RIGHT,
 #ifdef OPENDINGUX
 		SDLK_LCTRL,			SDLK_LALT,			SDLK_LCTRL,			SDLK_LALT,
-		SDLK_ESCAPE,			SDLK_RETURN,			SDLK_RETURN
+		SDLK_ESCAPE,			SDLK_RETURN,			SDLK_RETURN, 51
 #else		
 		SDLK_a,			SDLK_b,			SDLK_a,			SDLK_b,
 		SDLK_x,			SDLK_y,			SDLK_y
@@ -136,7 +136,7 @@ int pcePadGet() {
 		PAD_UP,			PAD_DN,			PAD_LF,			PAD_RI,
 		PAD_UP,			PAD_DN,			PAD_LF,			PAD_RI,
 		PAD_A,			PAD_B,			PAD_A,			PAD_B,
-		PAD_C,			PAD_D,			PAD_D,
+		PAD_C,			PAD_D,			PAD_D,      PAD_D,
 		-1
 	};
 

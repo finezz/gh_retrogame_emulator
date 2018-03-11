@@ -18,10 +18,16 @@ void input()
 
 			case SDL_KEYDOWN:
 				keys[event.key.keysym.sym] = 1;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 1;
+				}
 			break;
 
 			case SDL_KEYUP:
 				keys[event.key.keysym.sym] = 0;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 0;
+				}
 			break;
 
 			default:

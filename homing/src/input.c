@@ -22,9 +22,15 @@ void input()
 			break;
 			case SDL_KEYDOWN:			/* Key press. */
 				keys[event.key.keysym.sym] = 1;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 1;
+				}
 			break;
 			case SDL_KEYUP:				/* Key release. */
 				keys[event.key.keysym.sym] = 0;
+				if(event.key.keysym.sym == 51){
+					keys[SDLK_ESCAPE] = 0;
+				}
 			break;
 			case SDL_JOYHATMOTION:			/* Joystick hat movement. */
 				keys[SDLK_UP] = event.jhat.value & SDL_HAT_UP;

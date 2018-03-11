@@ -614,7 +614,7 @@ int TRANSBALL::cycle(unsigned char *keyboard)
 		break;
 	} /* switch */ 
 
-	if (keyboard[SDLK_ESCAPE]) {
+	if ((keyboard[SDLK_ESCAPE]) || (keyboard[51])){
 		return 3;
 	} /* if */ 
 

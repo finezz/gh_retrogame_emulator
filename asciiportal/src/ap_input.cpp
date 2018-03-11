@@ -149,7 +149,7 @@ int processevent () { // Convert keys down to PDC key commands. Introduces prior
 
     if ( hasevent ) {
       hasevent = 0;
-      //      printf("%d\n", event.type);
+      //printf("%d\n", event.type);
       switch (event.type) {
       case SDL_QUIT:
         exit(1);
@@ -226,8 +226,11 @@ int processevent () { // Convert keys down to PDC key commands. Introduces prior
         case SDLK_LSHIFT: key = 'x'; break; // Y key (left)
         case SDLK_TAB: key = 'x'; break; // Left Shoulder
         case SDLK_BACKSPACE: key = 'z'; break; // Right Shoulder
-        case SDLK_RETURN: key = KEY_F(1); break; // Start button
-        case SDLK_ESCAPE: key = KEY_F(2); break; // Y key (left)
+        //case SDLK_RETURN: key = KEY_F(1); break; // Start button
+        case 51: key = KEY_F(1); break; // Start button
+        case SDLK_ESCAPE:
+					key = KEY_F(2); 
+					break; // Y key (left)
 #endif
         default: break;
         }
