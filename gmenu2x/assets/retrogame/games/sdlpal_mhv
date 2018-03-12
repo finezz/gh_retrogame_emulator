@@ -1,6 +1,7 @@
-title=PAL
-description=PAL(MHV) game
-icon=skins/Default/icons/sdlpal_mhv.png
-exec=/mnt/game/sdlpal_mhv/sdlpal.dge
+title=SDLPAL
+description=SDLPAL MHV Game
+icon=skin:icons/sdlpal_mhv.png
+exec=/mnt/int_sd/games/sdlpal_mhv/run.dge
+clock=600
 volume=1
 wrapper=true
