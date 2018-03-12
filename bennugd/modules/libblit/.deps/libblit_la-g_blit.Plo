@@ -40,7 +40,7 @@ libblit_la-g_blit.lo: g_blit.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/wchar.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdarg.h \
- /home/steward/Downloads/bennugd/modules/../core/include/fmath.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/fmath.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/math.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/huge_val.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/huge_valf.h \
@@ -49,12 +49,12 @@ libblit_la-g_blit.lo: g_blit.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/nan.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/mathdef.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/mathcalls.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  libblit.h ../libgrbase/libgrbase.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  ../libgrbase/g_pal.h ../libgrbase/g_bitmap.h ../libgrbase/g_clear.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  ../libgrbase/g_region.h ../libgrbase/g_grlib.h ../libgrbase/g_blendop.h \
  ../libgrbase/g_conversion.h g_blit.h g_pixel.h
 
@@ -140,7 +140,7 @@ libblit_la-g_blit.lo: g_blit.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdarg.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/fmath.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/fmath.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/math.h:
 
@@ -158,7 +158,7 @@ libblit_la-g_blit.lo: g_blit.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/mathcalls.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 libblit.h:
 
@@ -174,7 +174,7 @@ libblit.h:
 
 ../libgrbase/g_clear.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 ../libgrbase/g_region.h:
 

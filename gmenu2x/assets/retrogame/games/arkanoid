@@ -1,0 +1,7 @@
+title=Arkanoid
+description=Arkanoid game ported from A320
+icon=skin:icons/arkanoid.png
+exec=/mnt/int_sd/games/arkanoid/arkanoid.dge
+clock=600
+volume=1
+wrapper=true

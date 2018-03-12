@@ -6,23 +6,23 @@
 #include <errno.h>
 #include "burner.h"
 
-char szAppHomePath[MAX_PATH] = "./.fba";			// ~/.fba
-char szAppSavePath[MAX_PATH] = "./.fba/saves";		// ~/.fba/saves
-char szAppConfigPath[MAX_PATH] = "./.fba/configs";	// ~/.fba/configs
-char szAppHiscorePath[MAX_PATH] = "./.fba/hiscore";	// ~/.fba/highscore // for burn/hiscore.cpp
-char szAppSamplesPath[MAX_PATH] = "./.fba/samples";	// ~/.fba/samples // for burn/snd/samples.cpp
-char szAppPreviewPath[MAX_PATH] = "./.fba/previews";	// ~/.fba/previews
+char szAppHomePath[MAX_PATH] = "./.fba_a320";			// ~/.fba
+char szAppSavePath[MAX_PATH] = "./.fba_a320/saves";		// ~/.fba/saves
+char szAppConfigPath[MAX_PATH] = "./.fba_a320/configs";	// ~/.fba/configs
+char szAppHiscorePath[MAX_PATH] = "./.fba_a320/hiscore";	// ~/.fba/highscore // for burn/hiscore.cpp
+char szAppSamplesPath[MAX_PATH] = "./.fba_a320/samples";	// ~/.fba/samples // for burn/snd/samples.cpp
+char szAppPreviewPath[MAX_PATH] = "./.fba_a320/previews";	// ~/.fba/previews
 char szAppRomPaths[DIRS_MAX][MAX_PATH] = {{"./"}, {"roms/"}, };
 
 void BurnPathsInit()
 {
 #ifndef WIN32
 	char *home = getenv("HOME");
-	if(home) sprintf(szAppHomePath, "%s/.fba", home);
+	if(home) sprintf(szAppHomePath, "%s/.fba_a320", home);
 	mkdir(szAppHomePath, 0777);
 	if(!errno) {
 		getcwd(szAppHomePath, MAX_PATH);
-		strcat(szAppHomePath, "./.fba");
+		strcat(szAppHomePath, "./.fba_a320");
 		mkdir(szAppHomePath, 0777);
 	}
 
@@ -39,7 +39,7 @@ void BurnPathsInit()
 	mkdir(szAppSamplesPath, 0777);
 #else
 	getcwd(szAppHomePath, MAX_PATH);
-	strcat(szAppHomePath, "./.fba");
+	strcat(szAppHomePath, "./.fba_a320");
 	mkdir(szAppHomePath);
 
 	sprintf(szAppSavePath, "%s/saves", szAppHomePath);

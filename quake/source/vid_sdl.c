@@ -141,7 +141,7 @@ void VID_Init (unsigned char *palette) {
 		TXT_Printf(gTTFFont, hwscreen, 21, 128, black, "Launch Quake");
 		TXT_Printf(gTTFFont, hwscreen, 20, 127, white, "Launch Quake");
 #else
-		TXT_Printf(gTTFFont, hwscreen, 0, 2, red, "=== Quake Menu ===");
+		TXT_Printf(gTTFFont, hwscreen, 0, 2, white, "=== Quake Menu ===");
 		TXT_Printf(gTTFFont, hwscreen, 20, 30, white, "CPU Overclocking:");
 		TXT_Printf(gTTFFont, hwscreen, 20, 79, white, "Modification:");
 		TXT_Printf(gTTFFont, hwscreen, 20, 127, white, "Launch Quake");
@@ -163,13 +163,13 @@ void VID_Init (unsigned char *palette) {
 		}
 #else
 		if (r2_cpu == 0) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 54, red, "- 336 MHz");
+			TXT_Printf(gTTFFont, hwscreen, 28, 54, white, "- 336 MHz");
 		} else if (r2_cpu == 1) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 54, red, "- 364 MHz");
+			TXT_Printf(gTTFFont, hwscreen, 28, 54, white, "- 364 MHz");
 		} else if (r2_cpu == 2) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 54, red, "- 392 MHz");
+			TXT_Printf(gTTFFont, hwscreen, 28, 54, white, "- 392 MHz");
 		} else if (r2_cpu == 3) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 54, red, "- 420 MHz");
+			TXT_Printf(gTTFFont, hwscreen, 28, 54, white, "- 420 MHz");
 		}
 #endif
 
@@ -187,11 +187,11 @@ void VID_Init (unsigned char *palette) {
 		}
 #else
 		if (r2_mod == 0) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 102, red, "- Quake (Default)");
+			TXT_Printf(gTTFFont, hwscreen, 28, 102, white, "- Quake (Default)");
 		} else if (r2_mod == 1) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 102, red, "- Scourge of Armagon");
+			TXT_Printf(gTTFFont, hwscreen, 28, 102, white, "- Scourge of Armagon");
 		} else if (r2_mod == 2) {
-			TXT_Printf(gTTFFont, hwscreen, 28, 102, red, "- Dissolution of Eternity");
+			TXT_Printf(gTTFFont, hwscreen, 28, 102, white, "- Dissolution of Eternity");
 		}
 #endif
 
@@ -209,11 +209,11 @@ void VID_Init (unsigned char *palette) {
 		}
 #else
 		if(option == 0) {
-			TXT_Printf(gTTFFont, hwscreen, 10, 30, red, ">");
+			TXT_Printf(gTTFFont, hwscreen, 10, 30, white, ">");
 		} else if(option == 1) {
-			TXT_Printf(gTTFFont, hwscreen, 10, 78, red, ">");
+			TXT_Printf(gTTFFont, hwscreen, 10, 78, white, ">");
 		} else if(option == 2) {
-			TXT_Printf(gTTFFont, hwscreen, 10, 126, red, ">");
+			TXT_Printf(gTTFFont, hwscreen, 10, 126, white, ">");
 		}
 #endif
 		SDL_Event event;

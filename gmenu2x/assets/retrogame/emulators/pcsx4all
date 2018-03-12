@@ -1,7 +1,7 @@
-title=pcsx4all
-description=PCSX4ALL emulator ported from GCW0
-icon=skins/Default/icons/pcsx4all.png
-exec=/mnt/game/pcsx4all/pcsx4all
+title=PCSX4ALL
+description=PS1 Emulator
+icon=skin:icons/pcsx4all.png
+exec=/mnt/int_sd/emus/pcsx4all/pcsx4all
 volume=1
 selectorbrowser=true
 selectordir=/mnt/

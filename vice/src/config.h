@@ -107,7 +107,7 @@
 #define HAVE_ALLOCA_H 1
 
 /* Define to 1 if you have the <alsa/asoundlib.h> header file. */
-#define HAVE_ALSA_ASOUNDLIB_H 1
+/* #undef HAVE_ALSA_ASOUNDLIB_H */
 
 /* Define to 1 if you have the <aros/_timeval.h> header file. */
 /* #undef HAVE_AROS__TIMEVAL_H */
@@ -511,7 +511,7 @@
 #define HAVE_SIGNAL_H 1
 
 /* Use more accurate buffer fill reporting */
-#define HAVE_SND_PCM_AVAIL /**/
+/* #undef HAVE_SND_PCM_AVAIL */
 
 /* Define to 1 if you have the `snprintf' function. */
 #define HAVE_SNPRINTF 1
@@ -813,7 +813,7 @@
 /* #undef USE_AIX_AUDIO */
 
 /* Enable alsa support. */
-#define USE_ALSA /**/
+/* #undef USE_ALSA */
 
 /* Enable aRts support. */
 /* #undef USE_ARTS */

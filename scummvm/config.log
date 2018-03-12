@@ -1,4 +1,4 @@
-Configure run on Mon Mar 5 11:08:38 CST 2018
+Configure run on Mon Mar 12 11:37:44 CST 2018
 testing compiler: mipsel-linux-g++
 
 int main(void) {
@@ -22,7 +22,7 @@ return code: 1
 int main(void) { return 0; }
 
 mipsel-linux-g++    -g -msoft-float -mips32 ./scummvm-conf.cpp -o ./scummvm-conf -lm
-/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccCLyl9H.o uses -msoft-float
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccOg6lm0.o uses -msoft-float
 return code: 0
 
 
@@ -30,7 +30,7 @@ return code: 0
 int main(void) { vorbis_info_init(0); return 0; }
 
 mipsel-linux-g++    -g -msoft-float -mips32 ./scummvm-conf.cpp -o ./scummvm-conf -lvorbisidec
-/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/cchHKQsN.o uses -msoft-float
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccTQRTW5.o uses -msoft-float
 return code: 0
 
 
@@ -56,8 +56,9 @@ return code: 1
 int main(void) { return (!(SND_LIB_MAJOR==0 && SND_LIB_MINOR==9)); }
 
 mipsel-linux-g++    -g -msoft-float -mips32 ./scummvm-conf.cpp -o ./scummvm-conf -lasound
-/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccCEaswV.o uses -msoft-float
-return code: 0
+./scummvm-conf.cpp:1:28: fatal error: alsa/asoundlib.h: No such file or directory
+compilation terminated.
+return code: 1
 
 
 #include <string.h>
@@ -65,7 +66,7 @@ return code: 0
 int main(void) { return strcmp(ZLIB_VERSION, zlibVersion()); }
 
 mipsel-linux-g++    -g -msoft-float -mips32 ./scummvm-conf.cpp -o ./scummvm-conf -lz
-/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccGQ0qb5.o uses -msoft-float
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccIQPA8f.o uses -msoft-float
 return code: 0
 
 
@@ -82,6 +83,6 @@ return code: 1
 int main(void) { setlocale(LC_ALL, ""); return 0; }
 
 mipsel-linux-g++    -g -msoft-float -mips32 ./scummvm-conf.cpp -o ./scummvm-conf -g -msoft-float -mips32
-/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccvBxmDc.o uses -msoft-float
+/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/../../../../mipsel-buildroot-linux-uclibc/bin/ld: Warning: ./scummvm-conf uses -mhard-float (set by /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/lib/crt1.o), /tmp/ccrIDxVq.o uses -msoft-float
 return code: 0
 

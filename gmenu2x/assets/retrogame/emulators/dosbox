@@ -1,8 +1,7 @@
-title=dosbox
-description=DOSBox emulator ported from GCW0
-icon=skins/Default/icons/dosbox.png
-exec=/mnt/game/dosbox/dosbox
+title=DOSBOX
+description=DOS Emulator
+icon=skin:icons/dosbox.png
+exec=/mnt/int_sd/emus/dosbox/dosbox
+clock=600
 volume=1
-selectorbrowser=true
-selectordir=/mnt/
 wrapper=true

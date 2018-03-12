@@ -1,8 +1,0 @@
-title=race
-description=Neo Geo Pocket emulator ported from A320
-icon=skins/Default/icons/race.png
-exec=/mnt/game/race/race-od.dge
-volume=1
-selectorbrowser=true
-selectordir=/mnt/
-wrapper=true

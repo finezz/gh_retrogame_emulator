@@ -16,7 +16,7 @@ SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
 CXXDEFS = -DGP2X -DRES320X240 -DNOOPENGL -DHAVE_SOUND -DUSEMIKMOD -I../libmikmod-3.1.21.1/include/
 CXXFLAGS = $(CXXDEFS) -Wall -O2 -std=gnu++03 $(SDL_CFLAGS)
-CXXLIBS = -s -lz -lSDL -lSDL_mixer -lSDL_gfx -lSDL_image ../libmikmod-3.1.21.1/.libs/libmikmod.a
+CXXLIBS = -s -lz -lSDL -lSDL_mixer -lSDL_gfx -lSDL_image -lmikmod
 
 ifdef GCW0
     CXXFLAGS += -mips32

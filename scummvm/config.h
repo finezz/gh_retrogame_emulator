@@ -19,7 +19,7 @@
 #define USE_VORBIS
 #undef USE_FLAC
 #undef USE_MAD
-#define USE_ALSA
+#undef USE_ALSA
 #undef USE_SEQ_MIDI
 #define USE_ZLIB
 #undef USE_MPEG2

@@ -50,7 +50,7 @@ libmod_map_la-file_png.lo: file_png.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  ../libgrbase/g_pal.h ../libgrbase/g_bitmap.h ../libgrbase/g_clear.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  ../libgrbase/g_region.h ../libgrbase/g_grlib.h ../libgrbase/g_blendop.h \
  ../libgrbase/g_conversion.h ../libvideo/libvideo.h ../libvideo/g_video.h \
  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
@@ -80,10 +80,10 @@ libmod_map_la-file_png.lo: file_png.c \
  /usr/include/SDL/SDL_version.h ../libvideo/g_regions.h \
  ../libgrbase/g_region.h ../libblit/libblit.h ../libblit/g_blit.h \
  ../libblit/g_pixel.h ../libfont/libfont.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zconf.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/unistd.h \
@@ -201,7 +201,7 @@ mod_map.h:
 
 ../libgrbase/g_clear.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 ../libgrbase/g_region.h:
 
@@ -301,13 +301,13 @@ mod_map.h:
 
 ../libfont/libfont.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h:
 

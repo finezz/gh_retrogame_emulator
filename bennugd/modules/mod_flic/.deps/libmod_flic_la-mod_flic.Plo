@@ -34,22 +34,22 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sys/sysmacros.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/pthreadtypes.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgddl.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
- /home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance.h \
- /home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h \
- /home/steward/Downloads/bennugd/modules/../core/include/dlvaracc.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dlvaracc.h \
  ../libgrbase/libgrbase.h ../libgrbase/g_pal.h ../libgrbase/g_bitmap.h \
  ../libgrbase/g_clear.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  ../libgrbase/g_region.h ../libgrbase/g_grlib.h ../libgrbase/g_blendop.h \
  ../libgrbase/g_conversion.h ../libblit/libblit.h ../libblit/g_blit.h \
  ../libblit/g_pixel.h ../librender/librender.h ../librender/g_fade.h \
@@ -87,8 +87,8 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
  ../librender/scaler.h ../librender/scaler_scale2x.h \
  ../librender/scaler_hq2x.h ../librender/scaler_scanline.h \
  ../librender/scaler_normal.h mod_flic.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zconf.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include-fixed/limits.h \
@@ -106,7 +106,7 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/environments.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/confname.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/getopt.h \
- /home/steward/Downloads/bennugd/modules/../core/include/xstrings.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h \
  /usr/include/SDL/SDL_types.h mod_flic_exports.h
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/string.h:
@@ -179,9 +179,9 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgddl.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h:
 
@@ -189,21 +189,21 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/dlvaracc.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dlvaracc.h:
 
 ../libgrbase/libgrbase.h:
 
@@ -213,7 +213,7 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
 
 ../libgrbase/g_clear.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 ../libgrbase/g_region.h:
 
@@ -339,9 +339,9 @@ libmod_flic_la-mod_flic.lo: mod_flic.c \
 
 mod_flic.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h:
 
@@ -377,7 +377,7 @@ mod_flic.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/getopt.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/xstrings.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h:
 
 /usr/include/SDL/SDL_types.h:
 

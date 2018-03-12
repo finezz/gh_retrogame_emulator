@@ -1,7 +1,7 @@
-title=midpath
-description=JavaME emulator ported from A320
-icon=skins/Default/icons/midpath.png
-exec=/mnt/game/midpath/bin/midlet-launcher.sh
+title=MIDPath
+description=JavaME Emulator
+icon=skin:icons/midpath.png
+exec=/mnt/int_sd/emus/midpath/bin/midlet-launcher.sh
 volume=1
 selectorbrowser=true
 selectordir=/mnt/

@@ -32,20 +32,20 @@ libmod_file_la-mod_file.lo: mod_file.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sys/sysmacros.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/string.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgddl.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
- /home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance.h \
- /home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zconf.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include-fixed/limits.h \
@@ -62,12 +62,12 @@ libmod_file_la-mod_file.lo: mod_file.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/environments.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/confname.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/getopt.h \
- /home/steward/Downloads/bennugd/modules/../core/include/xstrings.h \
- /home/steward/Downloads/bennugd/modules/../core/include/dcb.h \
- /home/steward/Downloads/bennugd/modules/../core/include/typedef.h \
- /home/steward/Downloads/bennugd/modules/../core/include/varspace_file.h \
- /home/steward/Downloads/bennugd/modules/../core/include/dcb.h \
- /home/steward/Downloads/bennugd/modules/../core/include/files.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dcb.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/varspace_file.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dcb.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h \
  mod_file_exports.h
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdio.h:
@@ -136,33 +136,33 @@ libmod_file_la-mod_file.lo: mod_file.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/string.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgddl.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files_st.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/zlib.h:
 
@@ -196,16 +196,16 @@ libmod_file_la-mod_file.lo: mod_file.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/getopt.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/xstrings.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/xstrings.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/dcb.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dcb.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/typedef.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/varspace_file.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/varspace_file.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/dcb.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/dcb.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/files.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/files.h:
 
 mod_file_exports.h:
