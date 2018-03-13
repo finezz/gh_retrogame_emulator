@@ -31,7 +31,7 @@ surface(NULL),
 overlay(NULL),
 startFlags(SDL_HWSURFACE | SDL_DOUBLEBUF | (startFull ? SDL_FULLSCREEN : 0)),
 scale(scale),
-scaler(0),
+scaler(1),
 yuv(yuv)
 {}
 

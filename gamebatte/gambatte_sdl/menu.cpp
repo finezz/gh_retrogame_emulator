@@ -108,6 +108,7 @@ void main_menu(gambatte::GB *gambatte, BlitterWrapper *blitter) {
 
 static void callback_quit(menu_t *caller_menu) {
     caller_menu->quit = 1;
+	SDL_Quit();
     exit(0);
 }
 

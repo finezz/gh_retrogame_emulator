@@ -26,7 +26,7 @@ extern uint8_t rw_font_array[367112];
 #define MOUNT_POINT			"/mnt/tmp/"
 #define CREATE_TMP			"mkdir -p " MOUNT_POINT
 #define REMOVE_TMP			"rm -rf " MOUNT_POINT
-#define MOUNT_PACKAGE		"mount cfw_1.2_package.ext3 " MOUNT_POINT
+#define MOUNT_PACKAGE		"mount /mnt/int_sd/cfw_1.2_package.ext3 " MOUNT_POINT
 #define UMOUNT_PACKAGE	"umount " MOUNT_POINT
 #define VERSION_PATH		MOUNT_POINT "version"
 #define GAME_FOLDER			"/mnt/game/"
@@ -96,6 +96,11 @@ void draw_install_icon(const char *filename)
 
 	rt.x = 130;
 	rt.y = 45;
+	rt.w = 64;
+	rt.h = 64;
+  SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+	rt.x = 130;
+	rt.y = 45;
 	printf("icon: %s\n", filename);
 	SDL_Surface *p = IMG_Load(filename);
   SDL_BlitSurface(p, NULL, screen, &rt);
@@ -107,6 +112,11 @@ void draw_target_icon(const char *filename)
 {
 	SDL_Rect rt;
 
+	rt.x = 232;
+	rt.y = 27;
+	rt.w = 64;
+	rt.h = 64;
+  SDL_FillRect(screen, &rt, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
 	rt.x = 232;
 	rt.y = 27;
 	printf("icon: %s\n", filename);
@@ -268,6 +278,7 @@ void show_msgbox(int x, int y, const char *buf)
 
 int mount_package(void)
 {
+	system("mount -o remount,rw / /");
 	system(CREATE_TMP);
 	system(MOUNT_PACKAGE);
 
@@ -309,6 +320,8 @@ int list_dir(void)
 	
 	while(n--){
 		if((strcmp(namelist[n]->d_name, "version") == 0) ||
+			(strcmp(namelist[n]->d_name, "gmenu2x") == 0) ||
+			(strcmp(namelist[n]->d_name, "rootfs.tar.gz") == 0) ||
 			(strcmp(namelist[n]->d_name, "lost+found") == 0) ||
 			(strcmp(namelist[n]->d_name, ".") == 0) ||
 			(strcmp(namelist[n]->d_name, "..") == 0))
@@ -394,10 +407,11 @@ void install_package(void)
 	for(i=0; i<size; i++){
 		if(package_list.at(i).install == YES){
 			clear_screen();
-
+			
+			cnt+= 1;
 			rt.x = 110;
 			rt.y = 140;
-			sprintf(buf, "Install %03d/%03d:", i+1, all);
+			sprintf(buf, "Install %03d/%03d:", cnt, all);
 			msg = TTF_RenderText_Solid(font, buf, col);
 			SDL_BlitSurface(msg, NULL, screen, &rt);
 			SDL_FreeSurface(msg);
@@ -415,6 +429,7 @@ void install_package(void)
 			sprintf(buf, "cp -a %s%s/* /mnt/", MOUNT_POINT, package_list.at(i).path.c_str());
 			printf("cmd: %s\n", buf);
 			system(buf);
+			set_progress((cnt * 100) / all);
 			SDL_Delay(1000);
 		}
 	}
@@ -429,9 +444,23 @@ void install_package(void)
 	SDL_BlitSurface(msg, NULL, screen, &rt);
 	SDL_FreeSurface(msg);
 	update_screen();
+	
+	// remove exits files
+	sprintf(buf, "rm %sgmenu2x/sections/emulators/fba*", MOUNT_POINT);
+	printf("remove file: %s\n", buf);
+	system(buf);
+	sprintf(buf, "rm %sgmenu2x/sections/emulators/pcsx*", MOUNT_POINT);
+	printf("remove file: %s\n", buf);
+	system(buf);
+	sprintf(buf, "rm %sgmenu2x/sections/games/sdlpal*", MOUNT_POINT);
+	printf("remove file: %s\n", buf);
+	system(buf);
+	sprintf(buf, "rm %sgmenu2x/sections/games/jinyong*", MOUNT_POINT);
+	printf("remove file: %s\n", buf);
+	system(buf);
 		
 	// copy -a gmenu2x
-	sprintf(buf, "cp -a %sgmenu2x/* %sgmenu2x/*", MOUNT_POINT, GAME_FOLDER);
+	sprintf(buf, "cp -a %sgmenu2x/* %sgmenu2x/", MOUNT_POINT, GAME_FOLDER);
 	printf("copy gmenu2x: %s\n", buf);
 	system(buf);
 
@@ -450,6 +479,11 @@ void install_package(void)
 	sprintf(buf, "cd /;tar xvf %srootfs.tar.gz", MOUNT_POINT);
 	printf("tar rootfs.tar.gz: %s\n", buf);
 	system(buf);
+	
+	// remove icon.png
+	sprintf(buf, "rm /mnt/icon.png");
+	printf("remove icon: %s\n", buf);
+	system(buf);
 
 	show_msgbox(130, 110, "Enjoy !");
 	SDL_Delay(1500);
@@ -466,7 +500,7 @@ int main(int argc, char* argv[])
   }
   SDL_ShowCursor(0);
  
-  display = SDL_SetVideoMode(320, 240, 16, SDL_HWSURFACE);
+  display = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
   screen = SDL_CreateRGBSurface(SDL_HWSURFACE, 320, 240, 16, 0, 0, 0, 0);
   if(screen == NULL){
     printf("%s, failed to SDL_SetVideMode\n", __func__);
@@ -597,6 +631,7 @@ int main(int argc, char* argv[])
 
 finally:
 	umount_package();
+	system("reboot");
   SDL_Quit();
 	printf("task done !\n");
   return 0;    
