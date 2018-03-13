@@ -1,4 +1,4 @@
-v20180313(CFW v1.1):
+v20180313(CFW v1.2):
   New: Add app: O2xIV (backlight = menu)
   New: Add app: Glutexto (backlight = menu)
   New: (MULTIMEDIA APPS FOR RS-97) Bard Comic viewer v0.10.0 (SELECT = exit)
@@ -114,7 +114,7 @@ v20180313(CFW v1.1):
     c49dd3840e54c812d38037c6e5b72f6067ad7cb1  cfw_1.2_package.ext3
     4d95ee0fcd6172bca3bf3565b945d64eb9a9aa64  retrogame_cfw_v1.2_20180313_full.img
 
-v20180213(CFW v1.0):
+v20180213(CFW v1.1):
    New: Aotumatically mount/umount external sdcard on/from "/mnt/ext_sd" when inserted/removed
    New: Add new icon/function for "umount external sdcard" in "settings" section
    New: Lock all of key when backlight level is equal to 0
