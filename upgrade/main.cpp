@@ -282,6 +282,7 @@ int mount_package(void)
 	system(CREATE_TMP);
 	system(MOUNT_PACKAGE);
 
+	/*
 	char buf[64]={0};
 	int fd = open(VERSION_PATH, O_RDONLY);
 	if(fd > 0){
@@ -298,6 +299,8 @@ int mount_package(void)
 		return 0;
 	}
 	return -1;
+	*/
+	return 0;
 }
 
 void umount_package(void)

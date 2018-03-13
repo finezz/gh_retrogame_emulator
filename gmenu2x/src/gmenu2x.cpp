@@ -929,7 +929,7 @@ void GMenu2X::setSuspend(int enter, int show_msg) {
 		system(buf);
 		printf("enter suspend mode\n");
 		printf("current backlight: %d\n", backlightLevel);
-		setClock(250);
+		//setClock(250);
 	}
 	else{
 		sprintf(buf, "echo %d > /proc/jz/lcd_backlight", backlightLevel);
@@ -1253,7 +1253,7 @@ void GMenu2X::main() {
       continue;
     }
     if(suspend){
-      if ( input[POWER]) {
+      if (input[POWER]){
 				suspend = 0;
 				setSuspend(0, 0);
 				suspendTick = 0;
