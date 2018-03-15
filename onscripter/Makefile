@@ -1,4 +1,4 @@
-DEBUG=1
+DEBUG=0
 
 ifeq ($(DEBUG),0)
   LIBS = -lSDL_ttf -lSDL_image -lSDL_mixer -lSDL -lfreetype -ljpeg -lpng -lz -lbz2 -lvorbisidec -lmikmod

@@ -1114,7 +1114,7 @@ void GMenu2X::main() {
     }
 		sc.skinRes(batteryIcon)->blit( s, resX-((19 * 1) + battMsgWidth), bottomBarIconY );
 
-    if ((tickNow - tickMMC) >= 1000) {
+    if((suspend == 0) && ((tickNow - tickMMC) >= 1000)){
       tickMMC = tickNow;
       curMMCStatus = getMMCStatus();
       if (preMMCStatus != curMMCStatus) {
@@ -1144,7 +1144,7 @@ void GMenu2X::main() {
     sc.skinRes("imgs/brightness.png")->blit(s, backlightOffset-30, bottomBarIconY);
     s->write(font, backlightMsg, backlightOffset-10, bottomBarTextY, HAlignLeft, VAlignMiddle);
 
-    if ((tickNow - tickUSB) >= 1000) {
+    if((suspend == 0) && ((tickNow - tickUSB) >= 1000)){
       tickUSB = tickNow;
       curUDCStatus = getUDCStatus();
       if (preUDCStatus != curUDCStatus) {
@@ -1162,7 +1162,7 @@ void GMenu2X::main() {
         else if(curUDCStatus == UDC_CONNECT) {
           MessageBox mb(this, tr["Which action do you want ?"], "icons/usb.png");
           mb.setButton(CONFIRM, tr["USBDISK"]);
-          mb.setButton(CANCEL,  tr["Chrage only"]);
+          mb.setButton(CANCEL,  tr["Charge only"]);
           if (mb.exec() == CONFIRM) {
             needUSBUmount = 1;
             system("/usr/bin/usb_conn_int_sd.sh");

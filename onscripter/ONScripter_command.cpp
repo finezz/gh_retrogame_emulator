@@ -2727,7 +2727,8 @@ int ONScripter::dwaveCommand()
         const char *buf = script_h.readStr();
         int fmt = SOUND_CHUNK;
         if (play_mode == WAVE_PRELOAD) fmt |= SOUND_PRELOAD;
-        playSound(buf, fmt, loop_flag, ch);
+				// fix by steward
+        //playSound(buf, fmt, loop_flag, ch);
     }
         
     return RET_CONTINUE;
