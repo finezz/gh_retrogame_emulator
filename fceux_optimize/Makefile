@@ -241,7 +241,7 @@ TARGET = fceux
 
 all: $(TARGET)
 	mipsel-linux-strip bin/$(TARGET)
-	sh make_opk.sh
+	#sh make_opk.sh
 
 $(TARGET): $(OBJS)
 	@mkdir -p bin/

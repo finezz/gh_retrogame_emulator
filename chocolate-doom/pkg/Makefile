@@ -127,7 +127,7 @@ AUTOMAKE = ${SHELL} /home/steward/Github/gh_retrogame_emulator/chocolate-doom/au
 AWK = gawk
 CC = mipsel-linux-gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -O2 -g -Wall -Wdeclaration-after-statement -Wredundant-decls  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+CFLAGS = -O2 -g -Wall -Wdeclaration-after-statement -Wredundant-decls  -I/home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 CPP = mipsel-linux-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

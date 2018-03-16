@@ -20,6 +20,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <unistd.h>
+#include <sys/statvfs.h>
+#include <errno.h>
+#include <sys/fcntl.h>
 
 #include "ONScripter.h"
 #include <new>
@@ -111,7 +115,8 @@ extern SDL_TimerID timer_bgmfade_id;
 extern "C" Uint32 SDLCALL bgmfadeCallback( Uint32 interval, void *param );
 
 #define TMP_MUSIC_FILE "tmp.mus"
-
+// basically, I don't know why "delete[]" will crash in this moment, so, static might help to fix this issue.
+unsigned char pre_allocated_music_buffer[30 * 1024 * 1024]={0};
 int ONScripter::playSound(const char *filename, int format, bool loop_flag, int channel)
 {
     if ( !audio_open_flag ) return SOUND_NONE;
@@ -119,24 +124,32 @@ int ONScripter::playSound(const char *filename, int format, bool loop_flag, int 
     long length = script_h.cBR->getFileLength( filename );
     if (length == 0) return SOUND_NONE;
 
-    unsigned char *buffer;
-
+    unsigned char *buffer = pre_allocated_music_buffer;
     if (format & SOUND_MUSIC && 
         length == music_buffer_length &&
         music_buffer ){
-        buffer = music_buffer;
+        //buffer = (unsigned char*)music_buffer;
     }
     else{
-        buffer = new(std::nothrow) unsigned char[length];
+        /*
+				buffer = new(std::nothrow) unsigned char[length];
         if (buffer == NULL){
             fprintf( stderr, "failed to load [%s] because file size [%lu] is too large.\n", filename, length);
             return SOUND_NONE;
         }
+				*/
         script_h.cBR->getFile( filename, buffer );
     }
-    
+
+    if((format & SOUND_MUSIC) || (format & SOUND_CHUNK)){
+			int fd = open(TMP_MUSIC_FILE, O_CREAT | O_WRONLY);
+			write(fd, buffer, length);
+			close(fd);
+		}
+	
     if (format & SOUND_MUSIC){
-        music_info = Mix_LoadMUS_RW( SDL_RWFromMem( buffer, length ) );
+        //music_info = Mix_LoadMUS_RW( SDL_RWFromMem( buffer, length ) );
+        music_info = Mix_LoadMUS(TMP_MUSIC_FILE);
         Mix_VolumeMusic( music_volume );
         Mix_HookMusicFinished( musicFinishCallback );
         if ( Mix_PlayMusic( music_info, (music_play_loop_flag&&music_loopback_offset==0.0)?-1:0 ) == 0 ){
@@ -147,9 +160,11 @@ int ONScripter::playSound(const char *filename, int format, bool loop_flag, int 
     }
     
     if (format & SOUND_CHUNK){
-        Mix_Chunk *chunk = Mix_LoadWAV_RW(SDL_RWFromMem(buffer, length), 1);
+        //Mix_Chunk *chunk = Mix_LoadWAV_RW(SDL_RWFromMem(buffer, length), 1);
+        Mix_Chunk *chunk = Mix_LoadWAV(TMP_MUSIC_FILE);
+				printf("steward, chunk 0x%x\n", chunk);
         if (playWave(chunk, format, loop_flag, channel) == 0){
-            delete[] buffer;
+	          //delete[] buffer;
             return SOUND_CHUNK;
         }
     }
@@ -157,7 +172,7 @@ int ONScripter::playSound(const char *filename, int format, bool loop_flag, int 
     /* check WMA */
     if ( buffer[0] == 0x30 && buffer[1] == 0x26 &&
          buffer[2] == 0xb2 && buffer[3] == 0x75 ){
-        delete[] buffer;
+        //delete[] buffer;
         return SOUND_OTHER;
     }
 
@@ -171,14 +186,12 @@ int ONScripter::playSound(const char *filename, int format, bool loop_flag, int 
             fclose( fp );
             ext_music_play_once_flag = !loop_flag;
             if (playMIDI(loop_flag) == 0){
-                delete[] buffer;
+               	//delete[] buffer;
                 return SOUND_MIDI;
             }
         }
     }
-
-    delete[] buffer;
-    
+   	//delete[] buffer;
     return SOUND_OTHER;
 }
 

@@ -40,26 +40,31 @@
 
 static size_t sdl_read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
+		printf("steward, %s %d %d\n", __func__, size, nmemb);
     return SDL_RWread((SDL_RWops*)datasource, ptr, size, nmemb);
 }
 
 static int sdl_seek_func(void *datasource, ogg_int64_t offset, int whence)
 {
+		printf("steward, %s %d\n", __func__, offset);
     return SDL_RWseek((SDL_RWops*)datasource, (int)offset, whence);
 }
 
 static int sdl_close_func_freesrc(void *datasource)
 {
+	printf("steward, %s\n", __func__);
     return SDL_RWclose((SDL_RWops*)datasource);
 }
 
 static int sdl_close_func_nofreesrc(void *datasource)
 {
+		printf("steward, %s\n", __func__);
     return SDL_RWseek((SDL_RWops*)datasource, 0, RW_SEEK_SET);
 }
 
 static long sdl_tell_func(void *datasource)
 {
+		printf("steward, %s\n", __func__);
     return SDL_RWtell((SDL_RWops*)datasource);
 }
 

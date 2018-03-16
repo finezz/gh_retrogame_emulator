@@ -22,19 +22,19 @@ SHELL	= /bin/bash
 CC      = mipsel-linux-gcc
 CXX     = g++
 CFLAGS  = -g -O2 
-EXTRA_CFLAGS =  -D_GNU_SOURCE=1 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -fvisibility=hidden -DHAVE_FORK -DCMD_MUSIC -DWAV_MUSIC -DMOD_MUSIC  -DMOD_DYNAMIC=\"libmikmod.so.3\" -DMID_MUSIC -DUSE_TIMIDITY_MIDI -I$(srcdir)/timidity -DOGG_MUSIC -DOGG_USE_TREMOR -DOGG_DYNAMIC=\"libvorbisidec.so.1\" -DHAVE_SIGNAL_H -DHAVE_SETBUF
+EXTRA_CFLAGS =  -D_GNU_SOURCE=1 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -fvisibility=hidden -DHAVE_FORK -DCMD_MUSIC -DWAV_MUSIC -DMOD_MUSIC  -DMOD_DYNAMIC=\"libmikmod.so.3\" -DMID_MUSIC -DUSE_TIMIDITY_MIDI -I$(srcdir)/timidity -DOGG_MUSIC -DOGG_DYNAMIC=\"libvorbisfile.so.3\" -DHAVE_SIGNAL_H -DHAVE_SETBUF -DMP3_MUSIC -I/usr/include/smpeg -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 LDFLAGS = 
-EXTRA_LDFLAGS =  -lSDL -lm
+EXTRA_LDFLAGS =  -lSDL ../smpeg/.libs/libsmpeg.so -lm
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 INSTALL = /usr/bin/install -c
 AR	= mipsel-linux-ar
 RANLIB	= mipsel-linux-ranlib
-WINDRES	= windres
+WINDRES	= 
 SDL_CFLAGS = -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL
-SDL_LIBS = -lSDL
+SDL_LIBS = -lSDL ../smpeg/.libs/libsmpeg.so
 
 TARGET  = libSDL_mixer.la
-OBJECTS = $(objects)/effect_position.lo $(objects)/effect_stereoreverse.lo $(objects)/effects_internal.lo $(objects)/load_aiff.lo $(objects)/load_voc.lo $(objects)/mixer.lo $(objects)/music.lo $(objects)/music_cmd.lo $(objects)/wavestream.lo $(objects)/dynamic_mod.lo $(objects)/music_mod.lo $(objects)/common.lo $(objects)/ctrlmode.lo $(objects)/filter.lo $(objects)/instrum.lo $(objects)/mix.lo $(objects)/output.lo $(objects)/playmidi.lo $(objects)/readmidi.lo $(objects)/resample.lo $(objects)/sdl_a.lo $(objects)/sdl_c.lo $(objects)/tables.lo $(objects)/timidity.lo $(objects)/dynamic_ogg.lo $(objects)/load_ogg.lo $(objects)/music_ogg.lo 
+OBJECTS = $(objects)/effect_position.lo $(objects)/effect_stereoreverse.lo $(objects)/effects_internal.lo $(objects)/load_aiff.lo $(objects)/load_voc.lo $(objects)/mixer.lo $(objects)/music.lo $(objects)/music_cmd.lo $(objects)/wavestream.lo $(objects)/dynamic_mod.lo $(objects)/music_mod.lo $(objects)/common.lo $(objects)/ctrlmode.lo $(objects)/filter.lo $(objects)/instrum.lo $(objects)/mix.lo $(objects)/output.lo $(objects)/playmidi.lo $(objects)/readmidi.lo $(objects)/resample.lo $(objects)/sdl_a.lo $(objects)/sdl_c.lo $(objects)/tables.lo $(objects)/timidity.lo $(objects)/dynamic_ogg.lo $(objects)/load_ogg.lo $(objects)/music_ogg.lo $(objects)/dynamic_mp3.lo 
 VERSION_OBJECTS = 
 PLAYWAVE_OBJECTS = $(objects)/playwave.lo
 PLAYMUS_OBJECTS = $(objects)/playmus.lo
@@ -188,6 +188,8 @@ $(objects)/dynamic_ogg.lo: ./dynamic_ogg.c
 $(objects)/load_ogg.lo: ./load_ogg.c
 	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
 $(objects)/music_ogg.lo: ./music_ogg.c
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
+$(objects)/dynamic_mp3.lo: ./dynamic_mp3.c
 	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
 
 

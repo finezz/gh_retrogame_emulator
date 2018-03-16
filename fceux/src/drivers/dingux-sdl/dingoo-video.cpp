@@ -352,7 +352,6 @@ void BlitScreen(uint8 *XBuf) {
 
 				dest += (screen->w * s_srendline) + (screen->w - 280) / 2 + ((screen->h - 466) / 2) * screen->w;
 				//dest += (screen->w * s_srendline) + (screen->w - 280) / 2 + ((screen->h - 240) / 2) * screen->w;
-
 				// semi fullscreen no blur
 				for (y = s_tlines; y; y--) {
 					for (x = 240; x; x -= 6) {
@@ -372,9 +371,8 @@ void BlitScreen(uint8 *XBuf) {
           dest += 320;
 				}
     }
-#endif
-		}
 	} else { // native res
+#if 0
 		//int pinc = (320 - NWIDTH) >> 1;
 		int32 pinc = (screen->w - NWIDTH) >> 1;
 
@@ -405,6 +403,46 @@ void BlitScreen(uint8 *XBuf) {
 			}
 			dest += pinc;
 		}
+#else
+	  //int pinc = (320 - NWIDTH) >> 1;
+    int32 pinc = (screen->w - NWIDTH) >> 1;
+    //SDL_Rect dstrect;
+
+    // center windows
+    //dstrect.x = (screen->w - 256) / 2;
+    //dstrect.y = (screen->h - 224) / 2;
+
+    // doesn't work in rzx-50 dingux
+    //SDL_BlitSurface(nes_screen, 0, screen, &dstrect);
+
+    register uint32 *dest = (uint32 *) screen->pixels;
+
+    // XXX soules - not entirely sure why this is being done yet
+    pBuf += (s_srendline * 256) + NOFFSET;
+    //dest += (s_rendline * 320) + pinc >> 1;
+       
+    //TonyJih@CTC for RS97 screen
+    //dest += (screen->w/2 * s_srendline) + pinc / 2 + ((screen->h - 240) / 4) * screen->w;
+    dest += (screen->w/2 * s_srendline) + pinc / 2 + ((screen->h - 466) / 4) * screen->w;
+
+    for (y = s_tlines; y; y--, pBuf += 256 - NWIDTH) {
+      for (x = NWIDTH >> 3; x; x--) {
+        __builtin_prefetch(dest + 4, 1); 
+        *(dest + 160) = palettetranslate[*(uint16 *) pBuf];
+        *dest++ = palettetranslate[*(uint16 *) pBuf];
+        *(dest + 160) = palettetranslate[*(uint16 *) (pBuf + 2)];
+        *dest++ = palettetranslate[*(uint16 *) (pBuf + 2)];
+        *(dest + 160) = palettetranslate[*(uint16 *) (pBuf + 4)];
+        *dest++ = palettetranslate[*(uint16 *) (pBuf + 4)];
+        *(dest + 160) = palettetranslate[*(uint16 *) (pBuf + 6)];
+        *dest++ = palettetranslate[*(uint16 *) (pBuf + 6)];
+        pBuf += 8;
+      }   
+      dest += pinc;
+      //TonyJih@CTC for RS97 screen
+      dest += 160;
+    } 
+#endif
 	}
 
 	if (SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);

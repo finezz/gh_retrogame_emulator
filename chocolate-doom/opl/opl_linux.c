@@ -16,7 +16,7 @@
 //
 
 #include "config.h"
-
+#define NO_SYSIO
 #ifdef HAVE_IOPERM
 
 #include <stdio.h>

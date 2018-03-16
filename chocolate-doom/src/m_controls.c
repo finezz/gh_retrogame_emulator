@@ -314,8 +314,8 @@ void M_BindCommonDefaults(void)
 	key_use = ' ';
 	key_strafe = KEY_RALT;
 	key_speed = KEY_XBUTTON;
-	key_prevweapon = KEY_TAB;
-	key_nextweapon = KEY_BACKSPACE;
+	//key_prevweapon = KEY_TAB;
+	//key_nextweapon = KEY_BACKSPACE;
 
 	key_map_toggle = KEY_ESCAPE;
 	key_menu_activate  = KEY_ENTER;

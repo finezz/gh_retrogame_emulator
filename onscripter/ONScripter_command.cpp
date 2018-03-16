@@ -20,7 +20,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+#include <unistd.h>
+#include <sys/statvfs.h>
+#include <errno.h>
+#include <sys/fcntl.h>
 #include "ONScripter.h"
 #include "version.h"
 
@@ -2727,8 +2730,7 @@ int ONScripter::dwaveCommand()
         const char *buf = script_h.readStr();
         int fmt = SOUND_CHUNK;
         if (play_mode == WAVE_PRELOAD) fmt |= SOUND_PRELOAD;
-				// fix by steward
-        //playSound(buf, fmt, loop_flag, ch);
+        playSound(buf, fmt, loop_flag, ch);
     }
         
     return RET_CONTINUE;

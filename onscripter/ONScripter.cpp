@@ -912,8 +912,9 @@ int ONScripter::parseLine( )
                 if (!strcmp( uf->command, cmd )){
                     if (uf->lua_flag){
 #ifdef USE_LUA
-                        if (lua_handler.callFunction(false, cmd))
+                        if (lua_handler.callFunction(false, cmd)){
                             errorAndExit( lua_handler.error_str );
+												}
 #endif
                     }
                     else{
@@ -939,17 +940,17 @@ int ONScripter::parseLine( )
         }
     }
 
-    if ( cmd[0] == 0x0a )
-        return RET_CONTINUE | RET_EOL;
-    else if ( cmd[0] == 'v' && cmd[1] >= '0' && cmd[1] <= '9' )
+    if ( cmd[0] == 0x0a ){
+       return RET_CONTINUE | RET_EOL;
+		}
+    else if ( cmd[0] == 'v' && cmd[1] >= '0' && cmd[1] <= '9' ){
         return vCommand();
-    else if ( cmd[0] == 'd' && cmd[1] == 'v' && cmd[2] >= '0' && cmd[2] <= '9' )
+		}
+    else if ( cmd[0] == 'd' && cmd[1] == 'v' && cmd[2] >= '0' && cmd[2] <= '9' ){
         return dvCommand();
-
+		}
     fprintf( stderr, " command [%s] is not supported yet!!\n", cmd );
-
     script_h.skipToken();
-
     return RET_CONTINUE;
 }
 
