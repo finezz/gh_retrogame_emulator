@@ -100,6 +100,7 @@ void handy_sdl_audio_callback(void *userdata, Uint8 *stream, int len)
 
     SDL_LockMutex(sound_mutex);
 
+#if 1
     // expand to pseudo-stereo because rzx50/a380 dingux doesn't support mono
     if( ( (int)gAudioBufferPointer >= (len/2)) && (gAudioBufferPointer != 0) && (!gSystemHalt) ) {
         while(length) {
@@ -111,6 +112,18 @@ void handy_sdl_audio_callback(void *userdata, Uint8 *stream, int len)
         memmove(gAudioBuffer, gAudioBuffer+(len/2), gAudioBufferPointer - (len/2));
         gAudioBufferPointer = gAudioBufferPointer - (len/2);
     }
+#else
+    // expand to pseudo-stereo because rzx50/a380 dingux doesn't support mono
+    if( ( (int)gAudioBufferPointer >= (len/2)) && (gAudioBufferPointer != 0) && (!gSystemHalt) ) {
+        while(length) {
+            Uint16 sample = *src++;
+            *dst++ = sample;
+            length--;
+        }
+        memmove(gAudioBuffer, gAudioBuffer+(len/2), gAudioBufferPointer - (len/2));
+        gAudioBufferPointer = gAudioBufferPointer - (len/2);
+    }
+#endif
     SDL_CondSignal(sound_cv);
     SDL_UnlockMutex(sound_mutex);
 }
@@ -147,7 +160,10 @@ int handy_sdl_audio_init(void)
     desired = (SDL_AudioSpec *)malloc(sizeof(SDL_AudioSpec));
 
     /* Define our desired SDL audio output */
-    desired->format     = AUDIO_U8;                  // Unsigned 8-bit
+    //desired->format     = AUDIO_U8;                  // Unsigned 8-bit
+
+		// fix for retrogame
+    desired->format     = AUDIO_S8;
     desired->channels   = 2;                         // Pseudo stereo
     desired->freq       = HANDY_AUDIO_SAMPLE_FREQ;   // Freq : 22050 
     desired->samples    = 256;                       // Samples (power of two)

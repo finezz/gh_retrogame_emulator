@@ -11,7 +11,7 @@ v20180313(CFW v1.2):
   New: Add emulator: GameBatte (backlight = menu)
   New: Add emulator: GnGeo (SELECT + START = menu) (Wiki: https://github.com/ymartel06/GnGeo-Pi/wiki)
   New: Add emulator: gpSP (X = menu)
-  New: Add emulator: Handy320 (SELECT = exit)
+  New: Add emulator: Handy320 (SELECT = exit, R = menu, L = scale)
   New: Add emulator: jzIntv (SELECT = menu)
   New: Add emulator: NP2
   New: Add emulator: OnScrioter (Experimental)

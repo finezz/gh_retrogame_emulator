@@ -219,6 +219,7 @@ CSystem::CSystem(char* gamefile,char* romfile)
 		FILE	*fp;
 
 		// Open the cartridge file for reading
+		printf("fopen: %s\n", gamefile);
 		if((fp=fopen(gamefile,"rb"))==NULL)
 		{
 			CLynxException lynxerr;

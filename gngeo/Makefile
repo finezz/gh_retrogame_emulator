@@ -159,7 +159,7 @@ CCASDEPMODE = depmode=gcc3
 CCASFLAGS = -g -O2
 CCDEPMODE = depmode=gcc3
 CC_FOR_BUILD = gcc
-CFLAGS = -g -O2 -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT -O3 -Wall -Wno-unused -funroll-loops                     -ffast-math -g
+CFLAGS = -g -O2 -I/usr/include/SDL -DRETROGAME -D_GNU_SOURCE=1 -D_REENTRANT -O3 -Wall -Wno-unused -funroll-loops -ffast-math -g
 CPP = mipsel-linux-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

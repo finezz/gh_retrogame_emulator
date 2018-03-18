@@ -131,7 +131,7 @@ int                stype = 1;                // Scaling/Scanline routine.
     Default = 1 (SDLEmu v1)
 */
 
-int                filter = 0;                // Scaling/Scanline routine.
+int                filter = 6;                // Scaling/Scanline routine.
 
 
 /*
@@ -590,7 +590,8 @@ int main(int argc, char *argv[])
                         SDL_Flip(mainSurface);
                         break;
                     }
-                    if(handy_sdl_event.key.keysym.sym == SDLK_TAB) {
+                    //if(handy_sdl_event.key.keysym.sym == SDLK_TAB) {
+                    if(handy_sdl_event.key.keysym.sym == 51) { // fix for retrogame
                         gui_Run();
                         KeyMask = 0;
                         break;

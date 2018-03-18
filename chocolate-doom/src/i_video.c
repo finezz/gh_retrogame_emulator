@@ -732,8 +732,8 @@ static key_combo_t key_combos[SDLK_LAST] = {
 	/*
 	 * SHOULDERS
 	 */
-	[SDLK_TAB] = {SDLK_LEFTBRACKET, 0},
-	[SDLK_BACKSPACE] = {SDLK_RIGHTBRACKET, 0},
+	//[SDLK_TAB] = {SDLK_LEFTBRACKET, 0},
+	//[SDLK_BACKSPACE] = {SDLK_RIGHTBRACKET, 0},
 
 	/*
 	 * FACE BUTTONS

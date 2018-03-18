@@ -393,6 +393,7 @@ void M_BindHereticControls(void)
 	M_UnbindAll();
 	M_BindCommonDefaults();
 
+	printf("%s\n", __func__);
 	key_invleft = 'l';
 	key_invright = 'r';
 	key_prevweapon = KEY_BACKSPACE;
@@ -417,6 +418,7 @@ void M_BindHexenControls(void)
 	M_UnbindAll();
 	M_BindCommonDefaults();
 
+	printf("%s\n", __func__);
 	key_invleft = 'l';
 	key_invright = 'r';
 	key_prevweapon = '[';
@@ -443,6 +445,7 @@ void M_BindStrifeControls(void)
     M_UnbindAll();
     M_BindCommonDefaults();
 
+	printf("%s\n", __func__);
 	key_invleft = 'l';
 	key_invright = 'r';
 	key_prevweapon = '[';

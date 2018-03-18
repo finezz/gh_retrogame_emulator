@@ -524,7 +524,7 @@ UBYTE *handy_sdl_display_callback(ULONG objref)
 inline void handy_sdl_draw_filter(int filtertype, SDL_Surface *src, SDL_Surface *dst, Uint8 *delta)
 {
 #ifdef DINGUX
-    Uint8 *dst_offset = (Uint8 *)dst->pixels + (dst->w - 320) + (dst->h - 204) * dst->w;
+    Uint8 *dst_offset = (Uint8 *)dst->pixels + (dst->w - 320) + (/*dst->h*/240 - 204) * 2 * dst->w; // fix for retrogame
 
     switch( filter ) {
         case 0: break;
