@@ -655,7 +655,7 @@ int VideoInit()
 				break;
 			}
 		}
-		screen = SDL_SetVideoMode(surfacewidth, 480/*surfaceheight*/, 16, SDL_SWSURFACE);
+		screen = SDL_SetVideoMode(surfacewidth, 480/*surfaceheight*/, 16, SDL_HWSURFACE);
 	}
 
 	if(!screen) {

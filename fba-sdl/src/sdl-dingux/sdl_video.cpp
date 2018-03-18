@@ -1916,7 +1916,7 @@ int VideoInit()
 		SDL_InitSubSystem(SDL_INIT_VIDEO);
 	}
 
-	screen = SDL_SetVideoMode(320, 480, 16, flags);
+	screen = SDL_SetVideoMode(320, 480, 16, /*flags*/SDL_HWSURFACE);
 	/*{
 		int i = 0; // 0 - 320x240, 1 - 400x240, 2 - 480x272
 		int surfacewidth, surfaceheight;
