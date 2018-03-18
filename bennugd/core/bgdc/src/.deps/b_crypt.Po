@@ -33,7 +33,7 @@ b_crypt.o: ../../common/b_crypt.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/string.h \
  ../../include/b_crypt.h \
- /home/steward/Downloads/bennugd/core/../3rdparty/des-4.04b/des.h
+ /home/steward/Github/gh_retrogame_emulator/bennugd/core/../3rdparty/des-4.04b/des.h
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdio.h:
 
@@ -103,4 +103,4 @@ b_crypt.o: ../../common/b_crypt.c \
 
 ../../include/b_crypt.h:
 
-/home/steward/Downloads/bennugd/core/../3rdparty/des-4.04b/des.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/core/../3rdparty/des-4.04b/des.h:

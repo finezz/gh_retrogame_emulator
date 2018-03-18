@@ -1,6 +1,6 @@
 libgrbase_la-libgrbase.lo: libgrbase.c \
- /home/steward/Downloads/bennugd/modules/../core/include/bgddl.h \
- /home/steward/Downloads/bennugd/modules/../core/include/arrange.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/features.h \
@@ -8,13 +8,13 @@ libgrbase_la-libgrbase.lo: libgrbase.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sys/cdefs.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wordsize.h \
- /home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance.h \
- /home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/instance_st.h \
- /home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h \
  libgrbase.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdlib.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stddef.h \
@@ -39,12 +39,12 @@ libgrbase_la-libgrbase.lo: libgrbase.c \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/sgidefs.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/alloca.h \
  g_pal.h g_bitmap.h g_clear.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  g_region.h g_grlib.h g_blendop.h g_conversion.h libgrbase_exports.h
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgddl.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgddl.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/arrange.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/arrange.h:
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/lib/gcc/mipsel-buildroot-linux-uclibc/5.4.0/include/stdint.h:
 
@@ -60,19 +60,19 @@ libgrbase_la-libgrbase.lo: libgrbase.c \
 
 /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wordsize.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/typedef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/typedef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/sysprocs_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/sysprocs_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/i_procdef_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/i_procdef_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/instance_st.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/instance_st.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/commons_defs.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/commons_defs.h:
 
 libgrbase.h:
 
@@ -126,7 +126,7 @@ g_bitmap.h:
 
 g_clear.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 g_region.h:
 

@@ -29,7 +29,7 @@ libvideo_la-g_regions.lo: g_regions.c libvideo.h ../libgrbase/libgrbase.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/stdint.h \
  /home/steward/Downloads/buildroot-2017.02.9/output/host/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/bits/wchar.h \
  ../libgrbase/g_pal.h ../libgrbase/g_bitmap.h ../libgrbase/g_clear.h \
- /home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h \
+ /home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h \
  ../libgrbase/g_region.h ../libgrbase/g_grlib.h ../libgrbase/g_blendop.h \
  ../libgrbase/g_conversion.h g_video.h /usr/include/SDL/SDL.h \
  /usr/include/SDL/SDL_main.h /usr/include/SDL/SDL_stdinc.h \
@@ -130,7 +130,7 @@ libvideo.h:
 
 ../libgrbase/g_clear.h:
 
-/home/steward/Downloads/bennugd/modules/../core/include/bgdcore.h:
+/home/steward/Github/gh_retrogame_emulator/bennugd/modules/../core/include/bgdcore.h:
 
 ../libgrbase/g_region.h:
 
