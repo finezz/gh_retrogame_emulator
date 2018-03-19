@@ -138,7 +138,7 @@ old_postuninstall_cmds=""
 LTCC="mipsel-linux-gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="-g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO  -DNDEBUG -Wall -I.. -DNOCONTROLS -I\$(top_srcdir) -I\$(top_srcdir)/audio -I\$(top_srcdir)/video"
+LTCFLAGS="-g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/freetype2  -DNDEBUG -Wall -I.. -DNOCONTROLS -I\$(top_srcdir) -I\$(top_srcdir)/audio -I\$(top_srcdir)/video"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p'"

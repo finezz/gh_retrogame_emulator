@@ -41,7 +41,7 @@
 static size_t sdl_read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
 		printf("steward, %s %d %d\n", __func__, size, nmemb);
-    return SDL_RWread((SDL_RWops*)datasource, ptr, size, nmemb);
+    return size;//SDL_RWread((SDL_RWops*)datasource, ptr, size, nmemb);
 }
 
 static int sdl_seek_func(void *datasource, ogg_int64_t offset, int whence)

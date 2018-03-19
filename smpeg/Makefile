@@ -82,7 +82,7 @@ libsmpeg_la_OBJECTS = $(am_libsmpeg_la_OBJECTS)
 libsmpeg_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(libsmpeg_la_LDFLAGS) $(LDFLAGS) -o $@
-#am__EXEEXT_1 = gtv$(EXEEXT)
+am__EXEEXT_1 = gtv$(EXEEXT)
 am__EXEEXT_2 = glmovie$(EXEEXT)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
@@ -146,14 +146,14 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run tar
+ACLOCAL = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run tar
 AR = mipsel-linux-ar
 AS = mipsel-linux-as
 ASFLAGS = 
-AUTOCONF = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run automake-1.10
+AUTOCONF = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run automake-1.10
 AWK = gawk
 BINARY_AGE = 5
 CC = mipsel-linux-gcc
@@ -161,13 +161,13 @@ CCAS = mipsel-linux-gcc
 CCASDEPMODE = depmode=gcc3
 CCASFLAGS = 
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO  -DNDEBUG -Wall -I.. -DNOCONTROLS -I$(top_srcdir) -I$(top_srcdir)/audio -I$(top_srcdir)/video
+CFLAGS = -g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/freetype2  -DNDEBUG -Wall -I.. -DNOCONTROLS -I$(top_srcdir) -I$(top_srcdir)/audio -I$(top_srcdir)/video
 CPP = mipsel-linux-gcc -E
 CPPFLAGS = 
 CXX = mipsel-linux-g++
 CXXCPP = mipsel-linux-g++ -E
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO  -DNDEBUG -Wall -I.. -DNOCONTROLS -I$(top_srcdir) -I$(top_srcdir)/audio -I$(top_srcdir)/video -fno-exceptions -fno-rtti
+CXXFLAGS = -g -O2 -D_GNU_SOURCE=1 -D_REENTRANT -I/usr/include/SDL -DTHREADED_AUDIO -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/freetype2  -DNDEBUG -Wall -I.. -DNOCONTROLS -I$(top_srcdir) -I$(top_srcdir)/audio -I$(top_srcdir)/video -fno-exceptions -fno-rtti
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"smpeg\" -DVERSION=\"0.4.5\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"
 DEPDIR = .deps
@@ -182,8 +182,8 @@ EXEEXT =
 FGREP = /bin/grep -F
 GL_LIBS =  -lGL -lGLU
 GREP = /bin/grep
-GTK_CFLAGS = 
-GTK_LIBS = 
+GTK_CFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/freetype2
+GTK_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -203,7 +203,7 @@ LT_CURRENT = 1
 LT_RELEASE = 0.4
 LT_REVISION = 4
 MAJOR_VERSION = 0
-MAKEINFO = ${SHELL} /home/steward/Downloads/smpeg-0.4.5/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/steward/Github/gh_retrogame_emulator/smpeg/missing --run makeinfo
 MICRO_VERSION = 5
 MINOR_VERSION = 4
 MKDIR_P = /bin/mkdir -p
@@ -236,10 +236,10 @@ X_CFLAGS =
 X_EXTRA_LIBS = 
 X_LIBS = 
 X_PRE_LIBS =  -lSM -lICE
-abs_builddir = /home/steward/Downloads/smpeg-0.4.5
-abs_srcdir = /home/steward/Downloads/smpeg-0.4.5
-abs_top_builddir = /home/steward/Downloads/smpeg-0.4.5
-abs_top_srcdir = /home/steward/Downloads/smpeg-0.4.5
+abs_builddir = /home/steward/Github/gh_retrogame_emulator/smpeg
+abs_srcdir = /home/steward/Github/gh_retrogame_emulator/smpeg
+abs_top_builddir = /home/steward/Github/gh_retrogame_emulator/smpeg
+abs_top_srcdir = /home/steward/Github/gh_retrogame_emulator/smpeg
 ac_ct_CC = 
 ac_ct_CXX = 
 ac_ct_DUMPBIN = 
@@ -268,7 +268,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/steward/Downloads/smpeg-0.4.5/install-sh
+install_sh = $(SHELL) /home/steward/Github/gh_retrogame_emulator/smpeg/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -371,10 +371,10 @@ EXTRA_DIST = \
 	video/README		\
 	video/COPYRIGHT
 
-GTK_PLAYER = 
+#GTK_PLAYER = 
 
 # Sample MPEG players
-#GTK_PLAYER = gtv
+GTK_PLAYER = gtv
 #OPENGL_PLAYER = 
 OPENGL_PLAYER = glmovie
 
@@ -385,7 +385,7 @@ plaympeg_LDADD = libsmpeg.la
 
 # Sources for gtv
 gtv_SOURCES = gtv.c gtv.h
-gtv_LDADD =  libsmpeg.la
+gtv_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype libsmpeg.la
 
 # Sources for glmovie
 glmovie_SOURCES = glmovie-tile.c glmovie.c glmovie.h

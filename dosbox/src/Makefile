@@ -225,7 +225,7 @@ CPP = mipsel-linux-gcc -E
 CPPFLAGS =  -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 CXX = mipsel-linux-g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2 
+CXXFLAGS = -g -O2 -G0 -march=mips32 -mtune=mips32 -pipe -fno-builtin -fno-common -mno-shared -ffast-math -fomit-frame-pointer -fexpensive-optimizations -frename-registers
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -242,7 +242,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lSDL_sound  -L/usr/lib/x86_64-linux-gnu -lSDL -lpng -lz -lSDL_net -lSDL_image -lSDL_gfx
+LIBS = -lSDL_sound -lSDL_gfx -lSDL_image -L/usr/lib/x86_64-linux-gnu -lSDL -lpng -lz -lX11
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/steward/Github/gh_retrogame_emulator/dosbox/missing makeinfo
 MKDIR_P = /bin/mkdir -p

@@ -579,7 +579,7 @@ dosurface:
 		sdl.desktop.type = SCREEN_SURFACE_DINGUX;
 
 		sdl.surface=SDL_SetVideoMode(320, 480, 16, 
-									(flags & GFX_CAN_RANDOM) ? SDL_SWSURFACE : SDL_HWSURFACE);
+									/*(flags & GFX_CAN_RANDOM) ? SDL_SWSURFACE : */SDL_HWSURFACE);
 		sdl.blit.buffer=SDL_CreateRGBSurface(SDL_SWSURFACE, // for mixing menu and game screen
 									sdl.desktop.full.width,
 									sdl.desktop.full.height,
@@ -954,13 +954,30 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 	if (!sdl.updating)
 		return;
 	sdl.updating=false;
+
 	switch (sdl.desktop.type) {
 	case SCREEN_SURFACE:
 		if (SDL_MUSTLOCK(sdl.surface)) {
 			if (sdl.blit.surface) {
 				SDL_UnlockSurface(sdl.blit.surface);
-				int Blit = SDL_BlitSurface( sdl.blit.surface, 0, sdl.surface, &sdl.clip );
-				LOG(LOG_MISC,LOG_WARN)("BlitSurface returned %d",Blit);
+				//int Blit = SDL_BlitSurface( sdl.blit.surface, 0, sdl.surface, &sdl.clip );
+				//LOG(LOG_MISC,LOG_WARN)("BlitSurface returned %d",Blit);
+				{
+					int x, y, div= sdl.blit.surface->pitch == 640 ? 2 : 1;
+					int w = sdl.blit.surface->w;
+					int h = sdl.blit.surface->h;
+					uint32_t *s = (uint32_t*)sdl.blit.surface->pixels;
+					uint32_t *d = (uint32_t*)sdl.surface->pixels;
+					
+					w/= div;
+					d+= ((sdl.clip.x + sdl.clip.y * sdl.surface->pitch) / div);
+					for(y=0; y<h; y++){
+						for(x=0; x<w; x++){
+							*d++ = *s++;
+						}
+						d+= (sdl.surface->pitch / (div * 2));
+					}
+				}
 			} else {
 				SDL_UnlockSurface(sdl.surface);
 			}
@@ -974,9 +991,9 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 				} else {
 					SDL_Rect *rect = &sdl.updateRects[rectCount++];
 					rect->x = sdl.clip.x;
-					rect->y = sdl.clip.y + y;
+					rect->y = (sdl.clip.y + y) * 2; // fix for retrogame
 					rect->w = (Bit16u)sdl.draw.width;
-					rect->h = changedLines[index];
+					rect->h = (changedLines[index] * 2); // fix for retrogame
 #if 0
 					if (rect->h + rect->y > sdl.surface->h) {
 						LOG_MSG("WTF %d +  %d  >%d",rect->h,rect->y,sdl.surface->h);
@@ -996,7 +1013,24 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 				if(GFX_PDownscale) {
 					GFX_PDOWNSCALE(sdl.blit.surface, sdl.surface);
 				} else {
-					SDL_BlitSurface(sdl.blit.surface, 0, sdl.surface, &sdl.clip);
+					// fix for retrogame
+					//SDL_BlitSurface(sdl.blit.surface, 0, sdl.surface, &sdl.clip);
+					{
+						int x, y, div= sdl.blit.surface->pitch == 640 ? 2 : 1;
+						int w = sdl.blit.surface->w;
+						int h = sdl.blit.surface->h;
+						uint32_t *s = (uint32_t*)sdl.blit.surface->pixels;
+						uint32_t *d = (uint32_t*)sdl.surface->pixels;
+					
+						w/= div;
+						d+= ((sdl.clip.x + sdl.clip.y * sdl.surface->pitch) / div);
+						for(y=0; y<h; y++){
+							for(x=0; x<w; x++){
+								*d++ = *s++;
+							}
+							d+= (sdl.surface->pitch / (div * 2));
+						}
+					}
 				} 
 			} else {
 				if(SDL_MUSTLOCK(sdl.surface)) SDL_UnlockSurface(sdl.surface);

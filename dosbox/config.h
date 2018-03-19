@@ -28,13 +28,13 @@
 /* #undef BSD */
 
 /* Determines if the compilers supports always_inline attribute. */
-/* #undef C_ATTRIBUTE_ALWAYS_INLINE */
+#define C_ATTRIBUTE_ALWAYS_INLINE 1
 
 /* Determines if the compilers supports fastcall attribute. */
 /* #undef C_ATTRIBUTE_FASTCALL */
 
 /* Define to 1 to use inlined memory functions in cpu core */
-/* #undef C_CORE_INLINE */
+#define C_CORE_INLINE 1
 
 /* Define to 1 to enable internal debugger, requires libcurses */
 /* #undef C_DEBUG */
@@ -48,7 +48,7 @@
 
 /* Define to 1 to use recompiling cpu core. Can not be used together with the
    dynamic-x86 core */
-/* #undef C_DYNREC */
+#define C_DYNREC 1
 
 /* Define to 1 to enable floating point emulation */
 #define C_FPU 1
@@ -70,10 +70,10 @@
 /* #undef C_HEAVY_DEBUG */
 
 /* Define to 1 to enable IPX over Internet networking, requires SDL_net */
-#define C_IPX 1
+/* #undef C_IPX */
 
 /* Define to 1 to enable internal modem support, requires SDL_net */
-#define C_MODEM 1
+/* #undef C_MODEM */
 
 /* Define to 1 to use opengl display output support */
 /* #undef C_OPENGL */
@@ -88,13 +88,13 @@
 #define C_SSHOT 1
 
 /* The type of cpu this target has */
-#define C_TARGETCPU UNKNOWN
+#define C_TARGETCPU MIPSEL
 
 /* Define to 1 to use a unaligned memory access */
-/* #undef C_UNALIGNED_MEMORY */
+#define C_UNALIGNED_MEMORY 1
 
 /* define to 1 if you have XKBlib.h and X11 lib */
-/* #undef C_X11_XKB */
+#define C_X11_XKB 1
 
 /* libm doesn't include powf */
 /* #undef DB_HAVE_NO_POWF */
