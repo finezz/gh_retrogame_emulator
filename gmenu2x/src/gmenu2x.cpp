@@ -2203,7 +2203,11 @@ unsigned short GMenu2X::getBatteryLevel() {
     return 0;
   }
 
-  level = val / ((max - min) / 5);
+	long diff = val - min;
+	if (diff < 0){
+		diff = 0;
+	}
+  level = diff / ((max - min) / 5);
   if (level > 5) {
     level = 5;
   }
