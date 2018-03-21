@@ -825,7 +825,7 @@ bool8_32 S9xDeinitUpdate (int Width, int Height)
 {
 	uint32 spd = (Settings.SupportHiRes ? 256/2 : 0);
 	uint32 dpd = (screen->w - 256) / 2;
-	uint32 dpo = (screen->w - 256)/4 + (screen->h - 224)/2*screen->w/2;
+	uint32 dpo = (screen->w - 256)/4 + (/*screen->h*/240 - 224) * screen->w / 2; // fix for retrogame
 
 	SDL_LockSurface(screen);
 
@@ -868,6 +868,7 @@ bool8_32 S9xDeinitUpdate (int Width, int Height)
 				}
 				sp32 += spd;
 				dp32 += dpd;
+				dp32 += 160; // fix for retrogame
 			}
 		}
 	}
