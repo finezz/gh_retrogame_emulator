@@ -7,7 +7,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "font.h"
 
 #define DMA_BASE	0x13420000
 #define DSA0 			(0x00 >> 2)
@@ -147,8 +146,8 @@ int main(int argc, char* argv[])
 	printf("DSD1: 0x%x\n", mem[DSD1]);
 	unmap_it(PAGE_SIZE);
 
-	SDL_Init(SDL_INIT_VIDEO);
-	SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
+	//SDL_Init(SDL_INIT_VIDEO);
+	//SDL_Surface *screen = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
 
 	unsigned long c=0, idx=0;
 	const uint32_t size=320*480*2;

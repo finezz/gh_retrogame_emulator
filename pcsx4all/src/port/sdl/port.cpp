@@ -2,6 +2,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <unistd.h>
 
 #include "port.h"
 #include "r3000a.h"
@@ -55,8 +58,30 @@ unsigned short *SCREEN;
 static bool pcsx4all_initted = false;
 static bool emu_running = false;
 
+int dma_fd = -1;
+const uint32_t dma_size=320*480*2;
+volatile uint16_t *dma_ptr = NULL;
+
 void config_load();
 void config_save();
+
+int map_dma_buffer(void)
+{
+  dma_fd = open("/dev/mem", O_RDWR);
+  if(dma_fd < 0){ 
+    printf("failed to open /dev/mem\n");
+    return -1; 
+  }
+  return dma_ptr = mmap(0, dma_size, PROT_READ | PROT_WRITE, MAP_SHARED, dma_fd, 0x4200000);
+}
+
+void unmap_dma_buffer(void)
+{
+	if(dma_ptr){
+  	munmap(dma_ptr, dma_size);
+  	close(dma_fd);
+	}
+}
 
 static void pcsx4all_exit(void)
 {
@@ -72,6 +97,8 @@ static void pcsx4all_exit(void)
 
 	// Store config to file
 	config_save();
+
+	unmap_dma_buffer();
 }
 
 static char *home = NULL;
@@ -717,11 +744,18 @@ unsigned short pad_read(int num)
 	return (num == 0 ? pad1 : pad2);
 }
 
-void video_flip(void)
+void dma_flip(void)
 {
 	if (emu_running && Config.ShowFps) {
 		port_printf(5, 5, pl_data.stats_msg);
 	}
+}
+
+void video_flip(void)
+{
+	//if (emu_running && Config.ShowFps) {
+		//port_printf(5, 5, pl_data.stats_msg);
+	//}
 
 	if (SDL_MUSTLOCK(screen))
 		SDL_UnlockSurface(screen);
@@ -903,6 +937,9 @@ int main (int argc, char **argv)
 
 	// Check if LastDir exists.
 	probe_lastdir();
+
+	map_dma_buffer();
+	printf("dma buffer: 0x%x\n", dma_ptr);
 
 	// command line options
 	bool param_parse_error = 0;
@@ -1382,7 +1419,8 @@ void port_printf(int x, int y, const char *text)
 	};
 
   y*= 2;
-	unsigned short *screen = (SCREEN + x + y * 320);
+	//unsigned short *screen = (SCREEN + x + y * 320);
+	unsigned short *screen = (dma_ptr + x + y * 320);
 	for (int i = 0; i < strlen(text); i++) {
 		for (int l = 0; l < 8; l++) {
 			screen[l*320*2+0]=(fontdata8x8[((text[i])*8)+l]&0x80)?0xffff:0x0000;
@@ -1397,3 +1435,4 @@ void port_printf(int x, int y, const char *text)
 		screen += 8;
 	}
 }
+

@@ -27,6 +27,7 @@ void wait_ticks(unsigned s);
 void pad_update(void);
 unsigned short pad_read(int num);
 
+void dma_flip(void);
 void video_flip(void);
 #ifdef GPU_DFXVIDEO
 void video_set(unsigned short* pVideo,unsigned int width,unsigned int height);

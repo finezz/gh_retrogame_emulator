@@ -10,8 +10,12 @@
  *  - GNU LGPL, version 2.1 or later.
  * See the COPYING file in the top-level directory.
  */
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+
 #include "port.h"
 #include "gpu.h"
 
@@ -604,6 +608,8 @@ static inline void GPU_Blit640(const void* src, u16* dst16, bool isRGB24)
 	}
 }
 
+extern volatile uint16_t *dma_ptr;
+
 // Basically an adaption of old gpu_unai/gpu.cpp's gpuVideoOutput() that
 //  assumes 320x240 destination resolution (for now)
 // TODO: clean up / improve / add HW scaling support
@@ -632,7 +638,7 @@ void vout_update(void)
 		return;
 
 	bool isRGB24 = gpu.status.rgb24;
-	u16* dst16 = SCREEN;
+	u16* dst16 = dma_ptr;//SCREEN;
 	u16* src16 = (u16*)gpu.vram;
 
 	// PS1 fb read wraps around (fixes black screen in 'Tobal no. 1')
@@ -650,7 +656,7 @@ void vout_update(void)
 		src16_offs = (src16_offs + (((h1-h0) / 2) * 1024)) & src16_offs_msk;
 		h1 = h0;
 	} else if (h1 < h0) {
-		dst16 += ((h0-h1) >> sizeShift) * VIDEO_WIDTH;
+		dst16 += (((h0-h1) >> sizeShift) * VIDEO_WIDTH * 2); // fix for rs97
 	}
 
 	int incY = (h0 == 480) ? 2 : 1;
@@ -728,7 +734,8 @@ void vout_update(void)
 			}
 		} break;
 	}
-	video_flip();
+	//video_flip();
+	dma_flip();
 }
 
 int vout_init(void)
