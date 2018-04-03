@@ -41,75 +41,25 @@
 int fd=-1;
 volatile unsigned long *mem;
 
-typedef struct {
-	uint64_t pfn : 54;
-	unsigned int soft_dirty : 1;
-	unsigned int file_page : 1;
-	unsigned int swapped : 1;
-	unsigned int present : 1;
-} PagemapEntry;
-
-int pagemap_get_entry(PagemapEntry *entry, int pagemap_fd, uintptr_t vaddr)
-{
-	size_t nread;
-	ssize_t ret;
-	uint64_t data;
-
-	nread = 0;
-	while (nread < sizeof(data)) {
-		ret = pread(pagemap_fd, &data, sizeof(data), (vaddr / sysconf(_SC_PAGE_SIZE)) * sizeof(data) + nread);
-		nread += ret;
-		if(ret <= 0){
-			return 1;
-		}
-	}
-	entry->pfn = data & (((uint64_t)1 << 54) - 1);
-	entry->soft_dirty = (data >> 54) & 1;
-	entry->file_page = (data >> 61) & 1;
-	entry->swapped = (data >> 62) & 1;
-	entry->present = (data >> 63) & 1;
-	return 0;
-}
-
-int virt_to_phys_user(uintptr_t *paddr, pid_t pid, uintptr_t vaddr)
-{
-	char pagemap_file[BUFSIZ];
-	int pagemap_fd;
-
-	snprintf(pagemap_file, sizeof(pagemap_file), "/proc/%ju/pagemap", (uintmax_t)pid);
-	pagemap_fd = open(pagemap_file, O_RDONLY);
-	if (pagemap_fd < 0) {
-		return 1;
-	}
-	PagemapEntry entry;
-	if (pagemap_get_entry(&entry, pagemap_fd, vaddr)) {
-		return 1;
-	}
-	close(pagemap_fd);
-	*paddr = (entry.pfn * sysconf(_SC_PAGE_SIZE)) + (vaddr % sysconf(_SC_PAGE_SIZE));
-	return 0;
-}
 int map_it(unsigned long addr, unsigned long size)
 {
-  int fd = open("/dev/mem", O_RDWR);
+  fd = open("/dev/mem", O_RDWR | O_SYNC);
   if(fd < 0){
     printf("failed to open /dev/mem\n");
     return -1;
   }
-  return mem = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, addr);
+  mem = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, addr);
+	return 0;
 }
 
 void unmap_it(unsigned long size)
 {
-	munmap(mem, size);
+	munmap((void*)mem, size);
 	close(fd);
 }
 
 int main(int argc, char* argv[])
 {
-	//uintptr_t paddr;
-	//virt_to_phys_user(&paddr, getpid(), frame);
-	//printf("paddr: 0x%x\n", paddr);
 	uint32_t dma_addr;
 
 	map_it(LCD_BASE, PAGE_SIZE);
@@ -146,8 +96,8 @@ int main(int argc, char* argv[])
 	printf("DSD1: 0x%x\n", mem[DSD1]);
 	unmap_it(PAGE_SIZE);
 
-	//SDL_Init(SDL_INIT_VIDEO);
-	//SDL_Surface *screen = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Surface *screen = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
 
 	unsigned long c=0, idx=0;
 	const uint32_t size=320*480*2;
@@ -167,7 +117,7 @@ int main(int argc, char* argv[])
 		}
 		SDL_Delay(100);
 	}
-	umap_it(size);
+	unmap_it(size);
 	SDL_Delay(5000);
 	SDL_Quit();
   return 0;    

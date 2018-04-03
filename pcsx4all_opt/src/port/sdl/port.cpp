@@ -59,7 +59,7 @@ static bool pcsx4all_initted = false;
 static bool emu_running = false;
 
 int dma_fd = -1;
-const uint32_t dma_size=320*480*2;
+const uint32_t dma_size=/*320*480*2*/ ((1024 * 512 * 2 * 2) + 4096);
 volatile uint16_t *dma_ptr = NULL;
 
 void config_load();
